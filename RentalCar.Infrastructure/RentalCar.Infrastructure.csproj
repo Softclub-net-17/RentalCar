@@ -11,4 +11,15 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\EntityConfigurations\" />
+    <Folder Include="Persistence\Seeds\" />
+    <Folder Include="Persistence\Repositories\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RentalCar.Application\RentalCar.Application.csproj" />
+  </ItemGroup>
+
 </Project>

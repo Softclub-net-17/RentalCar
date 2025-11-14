@@ -10,4 +10,15 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Validations\" />
+    <Folder Include="Common\Security\" />
+    <Folder Include="Common\Results\" />
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RentalCar.Domain\RentalCar.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
