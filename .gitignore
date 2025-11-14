@@ -1,1 +1,13 @@
-.vs
+# IDE
+.vs/
+*.user
+*.suo
+
+# Build artifacts
+bin/
+obj/
+
+# NuGet
+*.nupkg
+project.lock.json
+project.assets.json
