@@ -19,7 +19,7 @@ public class CarAttributeCreateCommandHandler(ICarAttributeRepository carAttribu
             return Result<string>.Fail(errors, ErrorType.Validation);
         }
 
-        var carAttribute = CarAttributeMappers.ToEntity(command);
+        var carAttribute = command.ToEntity();
 
         await carAttributeRepository.CreateAsync(carAttribute);
         await unitOfWork.SaveChangesAsync();

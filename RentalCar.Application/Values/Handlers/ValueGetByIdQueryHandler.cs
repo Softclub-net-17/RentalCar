@@ -10,7 +10,7 @@ namespace RentalCar.Application.Values.Handlers;
 public class ValueGetByIdQueryHandler(
     IValueRepository valueRepository,
     IUnitOfWork unitOfWork)
-    : ICommandHandler<ValueGetByIdQuery, Result<ValueGetDto>>
+    : IQueryHandler<ValueGetByIdQuery, Result<ValueGetDto>>
 {
     public async Task<Result<ValueGetDto>> HandleAsync(ValueGetByIdQuery command)
     {

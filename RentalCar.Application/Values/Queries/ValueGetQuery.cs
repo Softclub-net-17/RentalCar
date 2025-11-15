@@ -4,7 +4,7 @@ using RentalCar.Application.Values.DTOS;
 
 namespace RentalCar.Application.Values.Queries;
 
-public class ValueGetQuery : ICommand<Result<List<ValueGetDto>>>
+public class ValueGetQuery : IQuery<Result<List<ValueGetDto>>>
 {
     
 }

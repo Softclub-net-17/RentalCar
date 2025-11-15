@@ -6,7 +6,7 @@ namespace RentalCar.Application.CarAttributes.Mappers;
 
 public static class CarAttributeMappers
 {
-    public static CarAttribute ToEntity(CarAttributeCreateCommand command)
+    public static CarAttribute ToEntity(this CarAttributeCreateCommand command)
     {
         return new CarAttribute
         {
@@ -14,7 +14,7 @@ public static class CarAttributeMappers
         };
     }
     
-    public static List<CarAttributeGetDto> ToDto(IEnumerable<CarAttribute> carAttributes)
+    public static List<CarAttributeGetDto> ToDto(this IEnumerable<CarAttribute> carAttributes)
     {
         return carAttributes.Select(car => new CarAttributeGetDto()
         {
@@ -23,7 +23,7 @@ public static class CarAttributeMappers
         }).ToList();
     }
 
-    public static CarAttributeGetDto ToDto(CarAttribute car)
+    public static CarAttributeGetDto ToDto(this CarAttribute car)
     {
         return new CarAttributeGetDto
         {

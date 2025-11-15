@@ -1,6 +1,15 @@
-﻿namespace RentalCar.Infrastructure;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RentalCar.Domain.Interfaces;
+using RentalCar.Infrastructure.Persistence.Repositories;
 
-public class DependencyInjection
+namespace RentalCar.Infrastructure;
+
+public static class DependencyInjection
 {
-    
+    public static void AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<ICarAttributeRepository, CarAttributeRepository>();
+        services.AddScoped<IValueRepository, ValueRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+    }
 }

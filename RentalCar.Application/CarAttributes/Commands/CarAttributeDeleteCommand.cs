@@ -3,7 +3,7 @@ using RentalCar.Application.Interfaces;
 
 namespace RentalCar.Application.CarAttributes.Commands;
 
-public class CarAttributeDeleteCommand : ICommand<Result<string>>
+public class CarAttributeDeleteCommand(int id) : ICommand<Result<string>>
 {
-    public int Id { get; set; }
+    public int Id { get; set; } = id;
 }

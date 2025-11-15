@@ -8,7 +8,7 @@ using RentalCar.Domain.Interfaces;
 namespace RentalCar.Application.Values.Handlers;
 
 public class ValueGetQueryHandler(IValueRepository valueRepository,
-    IUnitOfWork unitOfWork) : ICommandHandler<ValueGetQuery, Result<List<ValueGetDto>>>
+    IUnitOfWork unitOfWork) : IQueryHandler<ValueGetQuery, Result<List<ValueGetDto>>>
 {
     public async Task<Result<List<ValueGetDto>>> HandleAsync(ValueGetQuery command)
     {

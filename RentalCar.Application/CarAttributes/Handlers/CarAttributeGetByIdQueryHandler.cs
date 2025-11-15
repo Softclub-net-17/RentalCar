@@ -10,7 +10,7 @@ namespace RentalCar.Application.CarAttributes.Handlers;
 public class CarAttributeGetByIdQueryHandler(
     ICarAttributeRepository carAttributeRepository,
     IUnitOfWork unitOfWork)
-    : ICommandHandler<CarAttributeGetByIdQuery, Result<CarAttributeGetDto>>
+    : IQueryHandler<CarAttributeGetByIdQuery, Result<CarAttributeGetDto>>
 {
     public async Task<Result<CarAttributeGetDto>> HandleAsync(CarAttributeGetByIdQuery command)
     {

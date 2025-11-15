@@ -5,7 +5,7 @@ using RentalCar.Domain.Entities;
 
 namespace RentalCar.Application.CarAttributes.Queries;
 
-public class CarAttributeGetQuery : ICommand<Result<List<CarAttributeGetDto>>>
+public class CarAttributeGetQuery : IQuery<Result<List<CarAttributeGetDto>>>
 {
     
 }

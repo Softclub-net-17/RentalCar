@@ -9,7 +9,8 @@ using RentalCar.Domain.Interfaces;
 namespace RentalCar.Application.CarAttributes.Handlers;
 
 public class CarAttributeGetQueryHandler(ICarAttributeRepository carAttributeRepository,
-    IUnitOfWork unitOfWork) : ICommandHandler<CarAttributeGetQuery, Result<List<CarAttributeGetDto>>>
+    IUnitOfWork unitOfWork)
+    : IQueryHandler<CarAttributeGetQuery, Result<List<CarAttributeGetDto>>>
 {
     public async Task<Result<List<CarAttributeGetDto>>> HandleAsync(CarAttributeGetQuery command)
     {

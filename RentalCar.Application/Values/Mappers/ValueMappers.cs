@@ -15,7 +15,7 @@ public static class ValueMappers
         };
     }
     
-    public static List<ValueGetDto> ToDto(IEnumerable<Value> carAttributes)
+    public static List<ValueGetDto> ToDto(this IEnumerable<Value> carAttributes)
     {
         return carAttributes.Select(car => new ValueGetDto()
         {
@@ -25,7 +25,7 @@ public static class ValueMappers
         }).ToList();
     }
 
-    public static ValueGetDto ToDto(Value car)
+    public static ValueGetDto ToDto(this Value car)
     {
         return new ValueGetDto
         {
