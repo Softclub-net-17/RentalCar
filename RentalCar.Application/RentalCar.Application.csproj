@@ -11,10 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Validations\" />
     <Folder Include="Common\Security\" />
-    <Folder Include="Common\Results\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>
