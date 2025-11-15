@@ -6,6 +6,16 @@
 # Build artifacts
 bin/
 obj/
+RentalCar.Application/obj/
+RentalCar.Infrastructure/obj/
+RentalCar.Domain/obj/
+RentalCar.WebApi/obj/
+RentalCar.Application/bin/
+RentalCar.Infrastructure/bin/
+RentalCar.Domain/bin/
+RentalCar.WebApi/bin/
+RentalCar.WebApi/appsettings.json
+RentalCar.WebApi/appsettings.Development.json
 
 # NuGet
 *.nupkg
