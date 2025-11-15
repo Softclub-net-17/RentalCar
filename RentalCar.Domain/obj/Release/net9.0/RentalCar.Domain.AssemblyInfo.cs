@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RentalCar.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdd18832e5a0d67e3cc75ec5eec4fbcc422a7c39")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c44df8edbba7f75239f75dae4035571c6329f3f2")]
 [assembly: System.Reflection.AssemblyProductAttribute("RentalCar.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RentalCar.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
