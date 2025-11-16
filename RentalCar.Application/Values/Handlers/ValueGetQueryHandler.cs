@@ -7,13 +7,14 @@ using RentalCar.Domain.Interfaces;
 
 namespace RentalCar.Application.Values.Handlers;
 
-public class ValueGetQueryHandler(IValueRepository valueRepository,
-    IUnitOfWork unitOfWork) : IQueryHandler<ValueGetQuery, Result<List<ValueGetDto>>>
+public class ValueGetQueryHandler(
+    IValueRepository valueRepository
+    ) : IQueryHandler<ValueGetQuery, Result<List<ValueGetDto>>>
 {
     public async Task<Result<List<ValueGetDto>>> HandleAsync(ValueGetQuery command)
     {
         var value = await valueRepository.GetAllAsync();
-        var items = ValueMappers.ToDto(value);
+        var items = value.ToDto();
         
         return Result<List<ValueGetDto>>.Ok(items);
     }

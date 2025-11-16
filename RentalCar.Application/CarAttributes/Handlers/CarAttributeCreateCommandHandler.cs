@@ -6,9 +6,11 @@ using RentalCar.Domain.Interfaces;
 
 namespace RentalCar.Application.CarAttributes.Handlers;
 
-public class CarAttributeCreateCommandHandler(ICarAttributeRepository carAttributeRepository, 
+public class CarAttributeCreateCommandHandler(
+    ICarAttributeRepository carAttributeRepository, 
     IUnitOfWork unitOfWork,
-    IValidator<CarAttributeCreateCommand> validator) : ICommandHandler<CarAttributeCreateCommand, Result<string>>
+    IValidator<CarAttributeCreateCommand> validator
+    ) : ICommandHandler<CarAttributeCreateCommand, Result<string>>
 {
     public async Task<Result<string>> HandleAsync(CarAttributeCreateCommand command)
     {

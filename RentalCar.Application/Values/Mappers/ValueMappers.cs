@@ -15,29 +15,29 @@ public static class ValueMappers
         };
     }
     
-    public static List<ValueGetDto> ToDto(this IEnumerable<Value> carAttributes)
+    public static List<ValueGetDto> ToDto(this IEnumerable<Value> values)
     {
-        return carAttributes.Select(car => new ValueGetDto()
+        return values.Select(value => new ValueGetDto()
         {
-            Id = car.Id,
-            Name = car.Name,
-            CarAttributeId = car.CarAttributeId,
+            Id = value.Id,
+            Name = value.Name,
+            CarAttributeId = value.CarAttributeId,
         }).ToList();
     }
 
-    public static ValueGetDto ToDto(this Value car)
+    public static ValueGetDto ToDto(this Value value)
     {
         return new ValueGetDto
         {
-            Id = car.Id,
-            Name = car.Name,
-            CarAttributeId = car.CarAttributeId,
+            Id = value.Id,
+            Name = value.Name,
+            CarAttributeId = value.CarAttributeId,
         };
     }
 
-    public static void MapFrom(this ValueUpdateCommand command, Value car)
+    public static void MapFrom(this ValueUpdateCommand command, Value value)
     {
-        car.Name = command.Name;
-        car.CarAttributeId = command.CarAttributeId;
+        value.Name = command.Name;
+        value.CarAttributeId = command.CarAttributeId;
     }
 }

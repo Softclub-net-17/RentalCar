@@ -10,6 +10,7 @@ namespace RentalCar.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles = "Admin")]
 public class CarAttributeController(
     IQueryHandler<CarAttributeGetQuery, Result<List<CarAttributeGetDto>>> getAllHandler,
     IQueryHandler<CarAttributeGetByIdQuery, Result<CarAttributeGetDto>> getByIdHandler,

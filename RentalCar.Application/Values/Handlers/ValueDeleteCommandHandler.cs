@@ -6,8 +6,10 @@ using RentalCar.Domain.Interfaces;
 
 namespace RentalCar.Application.Values.Handlers;
 
-public class ValueDeleteCommandHandler(IValueRepository valueRepository,
-    IUnitOfWork unitOfWork) : ICommandHandler<ValueDeleteCommand, Result<string>>
+public class ValueDeleteCommandHandler(
+    IValueRepository valueRepository,
+    IUnitOfWork unitOfWork
+    ) : ICommandHandler<ValueDeleteCommand, Result<string>>
 {
     public async Task<Result<string>> HandleAsync(ValueDeleteCommand command)
     {

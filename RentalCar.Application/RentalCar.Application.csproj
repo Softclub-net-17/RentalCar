@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Security\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\RentalCar.Domain\RentalCar.Domain.csproj" />
   </ItemGroup>
 

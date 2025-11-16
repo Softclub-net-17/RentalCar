@@ -8,19 +8,18 @@ using RentalCar.Domain.Interfaces;
 namespace RentalCar.Application.Values.Handlers;
 
 public class ValueGetByIdQueryHandler(
-    IValueRepository valueRepository,
-    IUnitOfWork unitOfWork)
-    : IQueryHandler<ValueGetByIdQuery, Result<ValueGetDto>>
+    IValueRepository valueRepository
+    ) : IQueryHandler<ValueGetByIdQuery, Result<ValueGetDto>>
 {
     public async Task<Result<ValueGetDto>> HandleAsync(ValueGetByIdQuery command)
     {
-        var carAttribute = await valueRepository.GetByIdAsync(command.Id);
+        var value = await valueRepository.GetByIdAsync(command.Id);
 
-        if (carAttribute == null)
+        if (value == null)
             return Result<ValueGetDto>.Fail("CarAttribute attribute not found.", ErrorType.NotFound);
 
-        var car = ValueMappers.ToDto(carAttribute);
+        var item = value.ToDto();
 
-        return Result<ValueGetDto>.Ok(car);
+        return Result<ValueGetDto>.Ok(item);
     }
 }

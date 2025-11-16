@@ -6,9 +6,11 @@ using RentalCar.Domain.Interfaces;
 
 namespace RentalCar.Application.CarAttributes.Handlers;
 
-public class CarAttributeUpdateCommandHandler(ICarAttributeRepository carAttributeRepository,
+public class CarAttributeUpdateCommandHandler(
+    ICarAttributeRepository carAttributeRepository,
     IUnitOfWork unitOfWork,
-    IValidator<CarAttributeUpdateCommand> validator) : ICommandHandler<CarAttributeUpdateCommand, Result<string>>
+    IValidator<CarAttributeUpdateCommand> validator
+    ) : ICommandHandler<CarAttributeUpdateCommand, Result<string>>
 {
     public async Task<Result<string>> HandleAsync(CarAttributeUpdateCommand command)
     {
@@ -18,15 +20,15 @@ public class CarAttributeUpdateCommandHandler(ICarAttributeRepository carAttribu
             return Result<string>.Fail(string.Join(";", validationResult.Errors.Select(s => s)), ErrorType.Validation);
         }
         
-        var student = await carAttributeRepository.GetByIdAsync(command.Id);
-        if (student == null)
+        var carAttribute = await carAttributeRepository.GetByIdAsync(command.Id);
+        if (carAttribute == null)
         {
             return Result<string>.Fail("CarAttribute not found.", ErrorType.NotFound);
         }
         
-        command.MapFrom(student);
+        command.MapFrom(carAttribute);
 
-        await carAttributeRepository.UpdateAsync(student);
+        await carAttributeRepository.UpdateAsync(carAttribute);
         await unitOfWork.SaveChangesAsync();
         
         return Result<string>.Ok(null, "CarAttribute updated successfully.");

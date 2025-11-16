@@ -8,9 +8,8 @@ using RentalCar.Domain.Interfaces;
 namespace RentalCar.Application.CarAttributes.Handlers;
 
 public class CarAttributeGetByIdQueryHandler(
-    ICarAttributeRepository carAttributeRepository,
-    IUnitOfWork unitOfWork)
-    : IQueryHandler<CarAttributeGetByIdQuery, Result<CarAttributeGetDto>>
+    ICarAttributeRepository carAttributeRepository
+    ) : IQueryHandler<CarAttributeGetByIdQuery, Result<CarAttributeGetDto>>
 {
     public async Task<Result<CarAttributeGetDto>> HandleAsync(CarAttributeGetByIdQuery command)
     {
@@ -19,8 +18,8 @@ public class CarAttributeGetByIdQueryHandler(
         if (carAttribute == null)
             return Result<CarAttributeGetDto>.Fail("CarAttribute attribute not found.", ErrorType.NotFound);
 
-        var car = CarAttributeMappers.ToDto(carAttribute);
+        var item = carAttribute.ToDto();
 
-        return Result<CarAttributeGetDto>.Ok(car);
+        return Result<CarAttributeGetDto>.Ok(item);
     }
 }
