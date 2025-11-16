@@ -23,12 +23,12 @@ public static class CarAttributeMappers
         }).ToList();
     }
 
-    public static CarAttributeGetDto ToDto(this CarAttribute car)
+    public static CarAttributeGetDto ToDto(this CarAttribute carAttribute)
     {
         return new CarAttributeGetDto
         {
-            Id = car.Id,
-            Name = car.Name
+            Id = carAttribute.Id,
+            Name = carAttribute.Name
         };
     }
 

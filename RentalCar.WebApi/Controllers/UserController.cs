@@ -2,27 +2,26 @@
 using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
-using RentalCar.Application.Values.Commands;
-using RentalCar.Application.Values.DTOS;
-using RentalCar.Application.Values.Queries;
+using RentalCar.Application.Users.Commands;
+using RentalCar.Application.Users.DTOS;
+using RentalCar.Application.Users.Queries;
 
 namespace RentalCar.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 [Authorize(Roles = "Admin")]
-public class ValueController(
-    IQueryHandler<ValueGetQuery, Result<List<ValueGetDto>>> getAllHandler,
-    IQueryHandler<ValueGetByIdQuery, Result<ValueGetDto>> getByIdHandler,
-    ICommandHandler<ValueCreateCommand, Result<string>> createHandler,
-    ICommandHandler<ValueUpdateCommand, Result<string>> updateHandler,
-    ICommandHandler<ValueDeleteCommand, Result<string>> deleteHandler)
+public class UserController(
+    IQueryHandler<UserGetQuery, Result<List<UserGetDto>>> getAllHandler,
+    IQueryHandler<UserGetByIdQuery, Result<UserGetDto>> getByIdHandler,
+    ICommandHandler<UserUpdateCommand, Result<string>> updateHandler,
+    ICommandHandler<UserDeleteCommand, Result<string>> deleteHandler)
     : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAllAsync()
     {
-        var result = await getAllHandler.HandleAsync(new ValueGetQuery());
+        var result = await getAllHandler.HandleAsync(new UserGetQuery());
         if (!result.IsSuccess)
             return HandleError(result);
 
@@ -32,25 +31,15 @@ public class ValueController(
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetByIdAsync(int id)
     {
-        var result = await getByIdHandler.HandleAsync(new ValueGetByIdQuery(id));
+        var result = await getByIdHandler.HandleAsync(new UserGetByIdQuery(id));
         if (!result.IsSuccess)
             return HandleError(result);
 
         return Ok(result.Data);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateAsync(ValueCreateCommand command)
-    {
-        var result = await createHandler.HandleAsync(command);
-        if (!result.IsSuccess)
-            return HandleError(result);
-
-        return Created("", new { message = result.Message });
-    }
-
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateAsync(int id, [FromBody] ValueUpdateCommand command)
+    public async Task<IActionResult> UpdateAsync(int id, [FromBody] UserUpdateCommand command)
     {
         command.Id = id;
         var result = await updateHandler.HandleAsync(command);
@@ -63,7 +52,7 @@ public class ValueController(
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync(int id)
     {
-        var result = await deleteHandler.HandleAsync(new ValueDeleteCommand(id));
+        var result = await deleteHandler.HandleAsync(new UserDeleteCommand(id));
         if (!result.IsSuccess)
             return HandleError(result);
 
