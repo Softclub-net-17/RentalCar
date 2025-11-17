@@ -24,7 +24,7 @@ namespace RentalCar.Application.Categories.Handlers
             await repository.DeactivateAsync(category);
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Fail("Category deactivated successfully");
+            return Result<string>.Ok("Category deactivated successfully");
         }
     }
 }

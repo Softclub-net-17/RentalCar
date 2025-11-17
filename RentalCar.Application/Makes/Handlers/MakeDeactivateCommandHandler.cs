@@ -23,7 +23,7 @@ namespace RentalCar.Application.Makes.Handlers
             await repository.DeactivateAsync(make);
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Fail("Make deactivated successfully");
+            return Result<string>.Ok("Make deactivated successfully");
         }
     }
 }
