@@ -6,7 +6,8 @@ using RentalCar.Domain.Interfaces;
 
 namespace RentalCar.Application.Values.Handlers;
 
-public class ValueUpdateCommandHandler(IValueRepository valueRepository,
+public class ValueUpdateCommandHandler(
+    IValueRepository valueRepository,
     IUnitOfWork unitOfWork,
     IValidator<ValueUpdateCommand> validator) 
     : ICommandHandler<ValueUpdateCommand, Result<string>>
@@ -19,15 +20,15 @@ public class ValueUpdateCommandHandler(IValueRepository valueRepository,
             return Result<string>.Fail(string.Join(";", validationResult.Errors.Select(s => s)), ErrorType.Validation);
         }
         
-        var student = await valueRepository.GetByIdAsync(command.Id);
-        if (student == null)
+        var value = await valueRepository.GetByIdAsync(command.Id);
+        if (value == null)
         {
             return Result<string>.Fail("Value not found.", ErrorType.NotFound);
         }
         
-        command.MapFrom(student);
+        command.MapFrom(value);
 
-        await valueRepository.UpdateAsync(student);
+        await valueRepository.UpdateAsync(value);
         await unitOfWork.SaveChangesAsync();
         
         return Result<string>.Ok(null, "Value updated successfully.");

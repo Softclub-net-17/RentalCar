@@ -6,9 +6,11 @@ using RentalCar.Domain.Interfaces;
 
 namespace RentalCar.Application.Values.Handlers;
 
-public class ValueCreateCommandHandler(IValueRepository valueRepository,
+public class ValueCreateCommandHandler(
+    IValueRepository valueRepository,
     IUnitOfWork unitOfWork,
-    IValidator<ValueCreateCommand> validator) : ICommandHandler<ValueCreateCommand, Result<string>>
+    IValidator<ValueCreateCommand> validator
+    ) : ICommandHandler<ValueCreateCommand, Result<string>>
 {
     public async Task<Result<string>> HandleAsync(ValueCreateCommand command)
     {

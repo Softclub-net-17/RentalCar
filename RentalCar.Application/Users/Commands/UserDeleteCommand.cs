@@ -1,9 +1,9 @@
 ﻿using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 
-namespace RentalCar.Application.Values.Commands;
+namespace RentalCar.Application.Users.Commands;
 
-public class ValueDeleteCommand(int id) : ICommand<Result<string>>
+public class UserDeleteCommand(int id) : ICommand<Result<string>>
 {
     public int Id { get; set; } = id;
 }
