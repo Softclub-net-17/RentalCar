@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 using RentalCar.Application.Values.Commands;
@@ -8,7 +9,8 @@ using RentalCar.Application.Values.Queries;
 namespace RentalCar.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/values")]
+[Authorize(Roles = "Admin")]
 public class ValueController(
     IQueryHandler<ValueGetQuery, Result<List<ValueGetDto>>> getAllHandler,
     IQueryHandler<ValueGetByIdQuery, Result<ValueGetDto>> getByIdHandler,

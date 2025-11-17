@@ -5,8 +5,10 @@ using RentalCar.Domain.Interfaces;
 
 namespace RentalCar.Application.CarAttributes.Handlers;
 
-public class CarAttributeDeleteCommandHandler(ICarAttributeRepository carAttributeRepository,
-    IUnitOfWork unitOfWork) : ICommandHandler<CarAttributeDeleteCommand, Result<string>>
+public class CarAttributeDeleteCommandHandler(
+    ICarAttributeRepository carAttributeRepository,
+    IUnitOfWork unitOfWork
+    ) : ICommandHandler<CarAttributeDeleteCommand, Result<string>>
 {
     public async Task<Result<string>> HandleAsync(CarAttributeDeleteCommand command)
     {
