@@ -9,7 +9,7 @@ using RentalCar.Application.Users.Queries;
 namespace RentalCar.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/users")]
 [Authorize(Roles = "Admin")]
 public class UserController(
     IQueryHandler<UserGetQuery, Result<List<UserGetDto>>> getAllHandler,

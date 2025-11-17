@@ -9,7 +9,7 @@ using RentalCar.Application.Interfaces;
 namespace RentalCar.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/car-attributes")]
 [Authorize(Roles = "Admin")]
 public class CarAttributeController(
     IQueryHandler<CarAttributeGetQuery, Result<List<CarAttributeGetDto>>> getAllHandler,

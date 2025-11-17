@@ -18,13 +18,7 @@ public class UserUpdateValidator : IValidator<UserUpdateCommand>
         
         if (!instance.Email.Contains('@'))
             validationResult.AddError("Email is not in correct format.");
-
-        if (string.IsNullOrWhiteSpace(instance.Password))
-            validationResult.AddError("Password is required.");
-
-        if (instance.Password.Length < 6)
-            validationResult.AddError("Password must be at least 6 characters.");
-
+        
         return validationResult;
     }
 }

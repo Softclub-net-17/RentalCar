@@ -6,10 +6,9 @@ namespace RentalCar.Application.Users.Mappers;
 
 public static class UserMappers
 {
-    public static void MapToEntity(this UserUpdateCommand command, User user, string hashedPassword)
+    public static void MapToEntity(this UserUpdateCommand command, User user)
     {
         user.Email = command.Email;
-        user.PasswordHash = hashedPassword;
         user.Role = command.Role;
     }
     

@@ -28,10 +28,8 @@ public class UserUpdateCommandHandler(
 
         if (await userRepository.ExistsByEmailAsync(command.Email) && command.Email != user.Email)
             return Result<string>.Fail("Email already exists.", ErrorType.Conflict);
-
-        var hashedPassword = PasswordHasher.HashPassword(command.Password);
-
-        command.MapToEntity(user, hashedPassword);
+        
+        command.MapToEntity(user);
 
         await userRepository.UpdateAsync(user);
         await unitOfWork.SaveChangesAsync();

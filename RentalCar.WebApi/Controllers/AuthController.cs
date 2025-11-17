@@ -6,7 +6,7 @@ using RentalCar.Application.Interfaces;
 namespace RentalCar.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/auth")]
 public class AuthController(
     ICommandHandler<LoginCommand, Result<string>> loginCommandHandler,
     ICommandHandler<RegisterCommand, Result<string>> registerCommandHandler) 
