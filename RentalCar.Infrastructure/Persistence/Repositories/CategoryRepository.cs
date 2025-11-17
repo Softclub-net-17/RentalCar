@@ -11,21 +11,10 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
 {
     internal class CategoryRepository(ApplicationDbContext context) : ICategoryRepository
     {
-        public Task ActivateAsync(Category category)
-        {
-            category.IsActive = true;
-            return Task.CompletedTask;
-        }
 
         public async Task CreateAsync(Category category)
         {
             await context.Categories.AddAsync(category);
-        }
-
-        public Task DeactivateAsync(Category category)
-        {
-            category.IsActive = false;
-            return Task.CompletedTask;
         }
 
         public async Task<bool> ExistsAsync(string name)

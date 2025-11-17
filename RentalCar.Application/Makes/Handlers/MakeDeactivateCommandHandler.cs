@@ -20,7 +20,7 @@ namespace RentalCar.Application.Makes.Handlers
             if (make == null)
                 return Result<string>.Fail("Make not found", ErrorType.NotFound);
 
-            await repository.DeactivateAsync(make);
+            make.IsActive = false;
             await unitOfWork.SaveChangesAsync();
 
             return Result<string>.Ok("Make deactivated successfully");

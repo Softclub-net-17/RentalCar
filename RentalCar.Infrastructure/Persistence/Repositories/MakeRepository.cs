@@ -11,21 +11,10 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
 {
     public class MakeRepository(ApplicationDbContext context) : IMakeRepository
     {
-        public Task ActivateAsync(Make make)
-        {
-            make.IsActive = true;
-            return Task.CompletedTask;
-        }
 
         public async Task CreateAsync(Make make)
         {
             await context.Makes.AddAsync(make);
-        }
-
-        public Task DeactivateAsync(Make make)
-        {
-            make.IsActive = false;
-            return Task.CompletedTask;
         }
 
         public async Task<bool> ExistsAsync(string name)

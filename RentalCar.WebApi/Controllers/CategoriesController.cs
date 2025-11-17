@@ -10,7 +10,7 @@ using RentalCar.Application.Interfaces;
 
 namespace RentalCar.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/categories")]
     [ApiController]
     public class CategoriesController
         (ICommandHandler<CategoryCreateCommand, Result<string>> create,

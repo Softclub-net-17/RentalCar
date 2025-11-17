@@ -21,7 +21,7 @@ namespace RentalCar.Application.Categories.Handlers
             if (category == null)
                 return Result<string>.Fail("Category not found", ErrorType.NotFound);
 
-            await repository.DeactivateAsync(category);
+            category.IsActive = false;
             await unitOfWork.SaveChangesAsync();
 
             return Result<string>.Ok("Category deactivated successfully");

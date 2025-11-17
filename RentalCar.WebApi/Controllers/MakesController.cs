@@ -11,7 +11,7 @@ using RentalCar.Application.Makes.Queries;
 
 namespace RentalCar.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/makes")]
     [ApiController]
     public class MakesController
              (ICommandHandler<MakeCreateCommand, Result<string>> create,

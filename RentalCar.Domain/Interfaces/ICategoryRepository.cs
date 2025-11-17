@@ -13,8 +13,6 @@ namespace RentalCar.Domain.Interfaces
         Task<Category?> GetByIdAsync(int id);
         Task CreateAsync(Category category);
         Task UpdateAsync(Category category);
-        Task DeactivateAsync(Category category);
-        Task ActivateAsync(Category category);
         Task<bool> ExistsAsync(string name);
     }
 }

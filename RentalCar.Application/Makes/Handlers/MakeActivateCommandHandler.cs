@@ -23,7 +23,7 @@ namespace RentalCar.Application.Makes.Handlers
                 return Result<string>.Fail("Make not found", ErrorType.NotFound);
             }
 
-            await repository.ActivateAsync(make);
+            make.IsActive = true;
             await unitOfWork.SaveChangesAsync();
 
             return Result<string>.Ok("Make activated successfully");

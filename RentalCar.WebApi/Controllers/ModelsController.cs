@@ -7,7 +7,7 @@ using RentalCar.Application.Models.Queries;
 
 namespace RentalCar.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/models")]
     [ApiController]
     public class ModelsController
                (ICommandHandler<ModelCreateCommand, Result<string>> create,

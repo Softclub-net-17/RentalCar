@@ -24,7 +24,7 @@ namespace RentalCar.Application.Categories.Handlers
                 return Result<string>.Fail("Category not found", ErrorType.NotFound);
             }
 
-            await repository.ActivateAsync(category);
+            category.IsActive = true;
             await unitOfWork.SaveChangesAsync();
 
             return Result<string>.Ok("Category activated successfully");
