@@ -34,6 +34,13 @@ using RentalCar.Application.Values.DTOS;
 using RentalCar.Application.Values.Handlers;
 using RentalCar.Application.Values.Queries;
 using RentalCar.Application.Values.Validators;
+using RentalCar.Application.Cars.Commands;
+using RentalCar.Application.Cars.Handlers;
+using RentalCar.Application.Cars.Queries;
+using RentalCar.Application.Cars.DTOs;
+using RentalCar.Application.Cars.Validators;
+using RentalCar.Application.Images.Commands;
+using RentalCar.Application.Images.Handlers;
 
 namespace RentalCar.Application;
 
@@ -74,6 +81,8 @@ public static class DependencyInjection
         services.AddScoped<IValidator<MakeUpdateCommand>, MakeUpdateValidator>();
         services.AddScoped<IValidator<ModelCreateCommand>, ModelCreateValidator>();
         services.AddScoped<IValidator<ModelUpdateCommand>, ModelUpdateValidator>();
+        services.AddScoped<IValidator<CarCreateCommand>, CarCreateValidator>();
+        services.AddScoped<IValidator<CarUpdateCommand>, CarUpdateValidator>();
 
         //categories
         services.AddScoped<ICommandHandler<CategoryCreateCommand, Result<string>>, CategoryCreateCommandHandler>();
@@ -94,5 +103,16 @@ public static class DependencyInjection
         services.AddScoped<ICommandHandler<ModelUpdateCommand, Result<string>>, ModelUpdateCommandHandler>();
         services.AddScoped<ICommandHandler<ModelDeleteCommand, Result<string>>, ModelDeleteCommandHandler>();
         services.AddScoped<IQueryHandler<ModelsGetQuery, Result<List<ModelGetDto>>>, ModelGetQueryHandler>();
+
+        //cars
+        services.AddScoped<ICommandHandler<CarCreateCommand, Result<string>>, CarCreateCommandHandler>();
+        services.AddScoped<ICommandHandler<CarUpdateCommand, Result<string>>, CarUpdateCommandHandler>();
+        services.AddScoped<ICommandHandler<CarDeleteCommand, Result<string>>, CarDeleteCommandHandler>();
+        services.AddScoped<IQueryHandler<CarsGetQuery, Result<List<CarsGetDto>>>, CarGetQueryHandler>();
+
+        //images
+        services.AddScoped<ICommandHandler<ImageCreateCommand, Result<string>>, ImageCreateCommandHandler>();
+        services.AddScoped<ICommandHandler<ImageDeleteCommand, Result<string>>, ImageDeleteCommandHandler>();
+
     }
 }
