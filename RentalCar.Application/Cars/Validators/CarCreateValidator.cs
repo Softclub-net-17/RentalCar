@@ -1,0 +1,31 @@
+﻿using RentalCar.Application.Cars.Commands;
+using RentalCar.Application.Common.Validations;
+using RentalCar.Application.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RentalCar.Application.Cars.Validators
+{
+    public class CarCreateValidator : IValidator<CarCreateCommand>
+    {
+        public ValidationResult Validate(CarCreateCommand instance)
+        {
+            var result = new ValidationResult();
+
+
+            if (string.IsNullOrWhiteSpace(instance.Color))
+                result.AddError("Color is required");
+
+            if (instance.Color.Length > 20)
+                result.AddError("Color name is too long");
+
+            if (instance.Description.Length > 1024)
+                result.AddError("Description is too long");
+
+            return result;
+        }
+    }
+}
