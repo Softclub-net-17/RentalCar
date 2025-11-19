@@ -5,9 +5,6 @@ using RentalCar.Application.Cars.DTOs;
 using RentalCar.Application.Cars.Queries;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
-using RentalCar.Application.Models.Commands;
-using RentalCar.Application.Models.DTOs;
-using RentalCar.Application.Models.Queries;
 
 namespace RentalCar.WebApi.Controllers
 {
@@ -41,7 +38,7 @@ namespace RentalCar.WebApi.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] CarUpdateCommand command)
+        public async Task<IActionResult> UpdateAsync(int id, [FromForm] CarUpdateCommand command)
         {
             command.Id = id;
             var result = await update.HandleAsync(command);

@@ -3,13 +3,7 @@ using RentalCar.Application.Cars.Mappers;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Images.Mappers;
 using RentalCar.Application.Interfaces;
-using RentalCar.Domain.Entities;
 using RentalCar.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentalCar.Application.Cars.Handlers
 {

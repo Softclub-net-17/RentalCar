@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace RentalCar.Application.Cars.Commands
 {
     public class CarUpdateCommand : ICommand<Result<string>>
     {
-        [JsonIgnore]
+        [SwaggerIgnore]
         public int Id { get; set; }
         public decimal PricePerHour { get; set; }
         public string Description { get; set; } = string.Empty;
