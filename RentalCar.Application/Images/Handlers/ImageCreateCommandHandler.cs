@@ -24,13 +24,14 @@ namespace RentalCar.Application.Images.Handlers
             if (carExist == null)
                 return Result<string>.Fail("Car not found", ErrorType.NotFound);
 
-            // Сохраняем файл
-            var fileName = await fileService.SaveFileAsync("cars", command.File);
-
-            // Создаём сущность
+             foreach(var file in command.Files)
+            {
+            var fileName = await fileService.SaveFileAsync("cars", file);
             var image = ImageMappers.ToEntity(fileName, command.CarId);
-
             await repository.CreateAsync(image);
+            }
+
+
             await unitOfWork.SaveChangesAsync();
 
             return Result<string>.Ok("Image created");

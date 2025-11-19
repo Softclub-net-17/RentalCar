@@ -12,6 +12,7 @@ namespace RentalCar.Domain.Interfaces
         Task<Image?> GetByIdAsync(int id);
         Task CreateAsync(Image image);
         Task DeleteAsync(Image image);
+        Task<List<Image>> GetByCarId(int carId);
 
     }
 }

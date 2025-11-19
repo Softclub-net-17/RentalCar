@@ -20,5 +20,6 @@ namespace RentalCar.Application.Cars.DTOs
         public int Year { get; set; }
         public int Seats { get; set; }
         public int ModelId { get; set; }
+        public List<string> Images { get; set; }
     }
 }

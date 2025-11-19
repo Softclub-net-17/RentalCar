@@ -54,7 +54,8 @@ namespace RentalCar.Application.Cars.Mappers
                 Millage= c.Millage,
                 Year = c.Year,
                 Seats = c.Seats,
-                ModelId = c.ModelId
+                ModelId = c.ModelId,
+                Images = c.Images.Select(i => i.PhotoUrl).ToList(),
             }).ToList();
         }
     }

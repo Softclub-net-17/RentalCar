@@ -16,15 +16,24 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
             await context.Images.AddAsync(image);
         }
 
-        public  Task DeleteAsync(Image image)
+        public Task DeleteAsync(Image image)
         {
             context.Remove(image);
             return Task.CompletedTask;
         }
+
+        public async Task<List<Image>> GetByCarId(int carId)
+        {
+            return await context.Images.Where(carid => carid.CarId == carId).ToListAsync();
+            
+        }
+
         public async Task<Image?> GetByIdAsync(int id)
         {
             return await context.Images.FindAsync(id);
         }
+
+        
 
     }
 }

@@ -2,17 +2,14 @@
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 using RentalCar.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentalCar.Application.Cars.Handlers
 {
     public class CarDeleteCommandHandler
         (IUnitOfWork unitOfWork,
-        ICarRepository carRepository) : ICommandHandler<CarDeleteCommand, Result<string>>
+        ICarRepository carRepository,
+        ICarImageRepository imageRepository,
+        IFileService fileService) : ICommandHandler<CarDeleteCommand, Result<string>>
     {
         public async Task<Result<string>> HandleAsync(CarDeleteCommand command)
         {
@@ -20,6 +17,13 @@ namespace RentalCar.Application.Cars.Handlers
             if (car == null)
             {
                 return Result<string>.Fail("Car not found.", ErrorType.NotFound);
+            }
+
+            var images = await imageRepository.GetByCarId(car.Id);
+            foreach(var image in images)
+            {
+                fileService.DeleteFileAsync("cars", image.PhotoUrl);
+                await imageRepository.DeleteAsync(image);
             }
 
             await carRepository.DeleteAsync(car);

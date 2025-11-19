@@ -30,14 +30,14 @@ namespace RentalCar.Infrastructure.Services.Files
             await file.CopyToAsync(stream);
             return file.FileName;
         }
-        public void DeleteFileAsync(string folder, string filename)
+        public Task DeleteFileAsync(string folder, string filename)
         {
             var webRootPath = _environment.WebRootPath;
             var fullPath = Path.Combine(webRootPath, folder);
             if (File.Exists(fullPath))
                 File.Delete(fullPath);
 
-
+            return Task.CompletedTask;
         } 
     }
 }
