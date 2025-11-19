@@ -20,6 +20,8 @@ public static class DependencyInjection
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IMakeRepository, MakeRepository>();
         services.AddScoped<IModelRepository, ModelRepository>();
+        services.AddScoped<ICarValueRepository, CarValueRepository>();
+        services.AddScoped<IReservationRepository, ReservationRepository>();
 
     }
 }
