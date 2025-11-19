@@ -22,6 +22,9 @@ namespace RentalCar.Application.Cars.Validators
             if (instance.Color.Length > 20)
                 result.AddError("Color name is too long");
 
+            if (instance.Description.Length > 1024)
+                result.AddError("Description is too long");
+
             return result;
         }
     }

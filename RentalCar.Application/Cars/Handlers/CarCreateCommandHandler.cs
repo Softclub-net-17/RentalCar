@@ -46,8 +46,6 @@ namespace RentalCar.Application.Cars.Handlers
                 var fileName = await fileService.SaveFileAsync(UploadFolders.Cars, picture);
                 var image = ImageMappers.ToEntity(fileName, car.Id);
                 await imageRepository.CreateAsync(image);
-                // var image = ImageMappers.ToEntity(fileName, car.Id);
-                // await imageRepo.Create(image);
             }
 
             await unitOfWork.SaveChangesAsync();

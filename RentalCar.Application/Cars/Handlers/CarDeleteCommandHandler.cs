@@ -1,4 +1,5 @@
 ﻿using RentalCar.Application.Cars.Commands;
+using RentalCar.Application.Common.Constants;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 using RentalCar.Domain.Interfaces;
@@ -22,10 +23,10 @@ namespace RentalCar.Application.Cars.Handlers
             var images = await imageRepository.GetByCarId(car.Id);
             foreach(var image in images)
             {
-                fileService.DeleteFileAsync("cars", image.PhotoUrl);
+               await fileService.DeleteFileAsync(UploadFolders.Cars, image.PhotoUrl);
                 await imageRepository.DeleteAsync(image);
             }
-
+                        
             await carRepository.DeleteAsync(car);
             await unitOfWork.SaveChangesAsync();
 

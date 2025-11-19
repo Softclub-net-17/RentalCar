@@ -55,7 +55,7 @@ namespace RentalCar.Application.Cars.Mappers
                 Year = c.Year,
                 Seats = c.Seats,
                 ModelId = c.ModelId,
-                Images = c.Images?.Select(i => i.PhotoUrl).ToList() ?? new List<string>(),
+                Images = c.Images.Select(i => i.PhotoUrl).ToList() ?? new List<string>(),
             }).ToList();
         }
     }
