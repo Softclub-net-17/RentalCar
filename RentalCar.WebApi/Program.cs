@@ -13,8 +13,7 @@ builder.Services.AddAuthConfigurations(builder.Configuration);
 builder.Services.AddConnectionConfigurations(builder.Configuration);
 builder.Services.AddRepositories(builder.Configuration);
 builder.Services.AddApplicationServices();
-
-
+builder.Services.AddCorsConfigurations();
 builder.Services.AddConnectionConfigurations(builder.Configuration);
 
 var app = builder.Build();
@@ -41,6 +40,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
