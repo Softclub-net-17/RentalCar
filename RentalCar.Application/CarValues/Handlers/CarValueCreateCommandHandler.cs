@@ -22,6 +22,11 @@ public class CarValueCreateCommandHandler(
             return Result<string>.Fail(errors, ErrorType.Validation);
         }
         
+        var carValueExists = await carValueRepository.AnyAsync(command.CarId, command.ValueId);
+
+        if (carValueExists)
+            return Result<string>.Fail("Car already contains this value.", ErrorType.Conflict);
+
         var carExists = await carRepository.GetByIdAsync(command.CarId);
         if (carExists  == null)
             return Result<string>.Fail("Car not found", ErrorType.NotFound);

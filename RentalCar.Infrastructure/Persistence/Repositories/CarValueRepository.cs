@@ -21,6 +21,11 @@ public class CarValueRepository(ApplicationDbContext context) : ICarValueReposit
     {
         return await context.CarValues.FirstOrDefaultAsync(x => x.CarId == carId && x.ValueId == valueId);
     }
+    
+    public async Task<bool> AnyAsync(int carId, int valueId)
+    {
+        return await context.CarValues.AnyAsync(x => x.CarId == carId && x.ValueId == valueId);
+    }
 
     public Task DeleteAsync(CarValue carValue)
     {
