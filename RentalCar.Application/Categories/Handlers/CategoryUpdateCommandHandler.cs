@@ -44,7 +44,7 @@ namespace RentalCar.Application.Categories.Handlers
             await repository.UpdateAsync(category);
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Category updated successfully");
+            return Result<string>.Ok(null,"Category updated successfully");
 
         }
     }

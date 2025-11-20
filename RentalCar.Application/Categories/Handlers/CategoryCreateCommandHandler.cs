@@ -38,7 +38,7 @@ namespace RentalCar.Application.Categories.Handlers
             await repository.CreateAsync(category);
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Category created successfully");
+            return Result<string>.Ok(null,"Category created successfully");
 
         }
     }

@@ -27,7 +27,7 @@ namespace RentalCar.Application.Categories.Handlers
             category.IsActive = true;
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Category activated successfully");
+            return Result<string>.Ok(null,"Category activated successfully");
         }
     }
 }

@@ -49,7 +49,7 @@ namespace RentalCar.Application.Cars.Handlers
             }
 
             await unitOfWork.SaveChangesAsync();
-            return Result<string>.Ok("Car created successfully");
+            return Result<string>.Ok(null,"Car created successfully");
 
         }
     }

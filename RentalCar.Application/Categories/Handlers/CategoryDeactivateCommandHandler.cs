@@ -24,7 +24,7 @@ namespace RentalCar.Application.Categories.Handlers
             category.IsActive = false;
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Category deactivated successfully");
+            return Result<string>.Ok(null,"Category deactivated successfully");
         }
     }
 }

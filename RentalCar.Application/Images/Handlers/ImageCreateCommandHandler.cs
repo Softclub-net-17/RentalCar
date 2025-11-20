@@ -34,7 +34,7 @@ namespace RentalCar.Application.Images.Handlers
 
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Image created");
+            return Result<string>.Ok(null,"Image created");
         }
     }
 

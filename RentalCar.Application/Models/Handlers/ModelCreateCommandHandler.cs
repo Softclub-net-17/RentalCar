@@ -29,7 +29,7 @@ namespace RentalCar.Application.Models.Handlers
             await repository.CreateAsync(model);
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Model created successfully");
+            return Result<string>.Ok(null,"Model created successfully");
         }
     }
 }

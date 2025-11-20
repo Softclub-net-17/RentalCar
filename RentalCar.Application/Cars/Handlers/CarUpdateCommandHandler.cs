@@ -52,7 +52,7 @@ namespace RentalCar.Application.Cars.Handlers
 
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Car updated successfully");
+            return Result<string>.Ok(null,"Car updated successfully");
 
         }
     }

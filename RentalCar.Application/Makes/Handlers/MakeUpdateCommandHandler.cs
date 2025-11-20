@@ -45,7 +45,7 @@ namespace RentalCar.Application.Makes.Handlers
             await makeRepository.UpdateAsync(make);
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Make updated successfully");
+            return Result<string>.Ok(null,"Make updated successfully");
         }
     }
 }
