@@ -22,16 +22,9 @@ public class CarValueRepository(ApplicationDbContext context) : ICarValueReposit
         return await context.CarValues.FirstOrDefaultAsync(x => x.CarId == carId && x.ValueId == valueId);
     }
 
-    public async Task DeleteAsync(CarValue carValue)
+    public Task DeleteAsync(CarValue carValue)
     {
-        var existing = await context.CarValues
-            .FirstOrDefaultAsync(x =>
-                x.CarId == carValue.CarId &&
-                x.ValueId == carValue.ValueId);
-
-        if (existing is null)
-            return;
-
-        context.CarValues.Remove(existing);
+        context.CarValues.Remove(carValue);
+        return Task.CompletedTask;
     }
 }

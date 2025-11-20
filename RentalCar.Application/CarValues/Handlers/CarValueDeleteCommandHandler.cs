@@ -13,14 +13,14 @@ public class CarValueDeleteCommandHandler(
     public async Task<Result<string>> HandleAsync(CarValueDeleteCommand command)
     {
         var carValue = await carValueRepository.GetByIdAsync(command.CarId, command.ValueId);
-        if (carValue == null)
-        {
+
+        if (carValue is null)
             return Result<string>.Fail("CarValue not found.", ErrorType.NotFound);
-        }
 
         await carValueRepository.DeleteAsync(carValue);
         await unitOfWork.SaveChangesAsync();
 
         return Result<string>.Ok(null, "CarValue deleted successfully.");
     }
+
 }

@@ -8,6 +8,8 @@ namespace RentalCar.Application.CarValues.Handlers;
 
 public class CarValueCreateCommandHandler(
     ICarValueRepository carValueRepository,
+    ICarRepository carRepository,
+    IValueRepository valueRepository,
     IUnitOfWork unitOfWork,
     IValidator<CarValueCreateCommand> validator) : ICommandHandler<CarValueCreateCommand, Result<string>>
 {
@@ -19,6 +21,14 @@ public class CarValueCreateCommandHandler(
             var errors = string.Join("; ", validationResult.Errors.Select(e => e));
             return Result<string>.Fail(errors, ErrorType.Validation);
         }
+        
+        var carExists = await carRepository.GetByIdAsync(command.CarId);
+        if (carExists  == null)
+            return Result<string>.Fail("Car not found", ErrorType.NotFound);
+
+        var valueExists = await valueRepository.GetByIdAsync(command.ValueId);
+        if (valueExists == null)
+            return Result<string>.Fail("Value not found", ErrorType.NotFound);
 
         var carValue = command.ToEntity();
 

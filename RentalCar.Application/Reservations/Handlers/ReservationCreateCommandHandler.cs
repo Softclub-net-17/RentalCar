@@ -35,18 +35,11 @@ public class ReservationCreateCommandHandler(
         if (busy)
             return Result<string>.Fail("Car is already reserved for the selected dates.", ErrorType.Conflict);
 
-        var hours = (command.EndDate - command.StartDate).TotalHours;
-        if (hours <= 0)
-            return Result<string>.Fail("Invalid date range. Duration cannot be zero or negative.", ErrorType.Validation);
-
-        var totalPrice = (decimal)hours * car.PricePerHour;
-
-        var reservation = command.ToEntity();
-        reservation.TotalPrice = totalPrice;
+        var reservation = command.ToEntity(car);
 
         await reservationRepository.CreateAsync(reservation);
         await unitOfWork.SaveChangesAsync();
 
-        return Result<string>.Ok(null,$"Reservation created successfully. Hours: {hours:F0}, Total price: {totalPrice}.");
+        return Result<string>.Ok(null,$"Reservation created successfully. Total price: {reservation.TotalPrice}.");
     }
 }
