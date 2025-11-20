@@ -36,7 +36,7 @@ namespace RentalCar.Application.Makes.Handlers
             await repository.CreateAsync(make);
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Make created successfully");
+            return Result<string>.Ok(null,"Make created successfully");
         }
     }
 }

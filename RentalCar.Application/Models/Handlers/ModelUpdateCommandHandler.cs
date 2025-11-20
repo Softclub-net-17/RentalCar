@@ -38,7 +38,7 @@ namespace RentalCar.Application.Models.Handlers
             await repository.UpdateAsync(model);
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Model updated successfully");
+            return Result<string>.Ok(null,"Model updated successfully");
         }
     }
 }

@@ -49,13 +49,16 @@ public class ReservationUpdateCommandHandler(
             return Result<string>.Fail("Car not found.", ErrorType.NotFound);
 
         var extraCost = (decimal)extraHours * car.PricePerHour;
+        
+        extraHours = Math.Round(extraHours, 0);
 
         reservation.TotalPrice += extraCost;
         reservation.ReturnDate = returnDate;
+        reservation.EndDate = returnDate;
 
         await reservationRepository.UpdateAsync(reservation);
         await unitOfWork.SaveChangesAsync();
 
-        return Result<string>.Ok(null,$"Car returned late. Extra hours: {extraHours:F0}, Extra cost: {extraCost}.");
+        return Result<string>.Ok(null,$"Late return: {extraCost:F0} added.");
     }
 }

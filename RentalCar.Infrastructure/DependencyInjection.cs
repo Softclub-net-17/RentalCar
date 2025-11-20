@@ -4,6 +4,7 @@ using RentalCar.Application.Interfaces;
 using RentalCar.Domain.Interfaces;
 using RentalCar.Infrastructure.Persistence.Repositories;
 using RentalCar.Infrastructure.Services.Auth;
+using RentalCar.Infrastructure.Services.Files;
 
 namespace RentalCar.Infrastructure;
 
@@ -20,6 +21,9 @@ public static class DependencyInjection
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IMakeRepository, MakeRepository>();
         services.AddScoped<IModelRepository, ModelRepository>();
+        services.AddScoped<ICarRepository, CarRepository>();
+        services.AddScoped<ICarImageRepository, ImageRepository>();
+        services.AddScoped<IFileService, FileService>();
         services.AddScoped<ICarValueRepository, CarValueRepository>();
         services.AddScoped<IReservationRepository, ReservationRepository>();
 
