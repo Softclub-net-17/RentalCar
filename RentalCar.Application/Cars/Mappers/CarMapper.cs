@@ -30,6 +30,15 @@ namespace RentalCar.Application.Cars.Mappers
                 ValueId = valueId
             }).ToList();
         }
+        
+        public static List<CarValue> ToCarValues(this CarUpdateCommand command, int carId)
+        {
+            return command.ValueIds.Select(valueId => new CarValue
+            {
+                CarId = carId,
+                ValueId = valueId
+            }).ToList();
+        }
 
         public static void MapFrom(this CarUpdateCommand command, Car car)
         {
@@ -43,9 +52,9 @@ namespace RentalCar.Application.Cars.Mappers
             car.ModelId = command.ModelId;
         }
 
-        public static List<CarsGetDto> ToDto(this IEnumerable<Car> cars)
+        public static List<CarGetDto> ToDto(this IEnumerable<Car> cars)
         {
-            return cars.Select(c => new CarsGetDto()
+            return cars.Select(c => new CarGetDto()
             {
                 Id = c.Id,
                 Title = c.Title,
@@ -63,9 +72,9 @@ namespace RentalCar.Application.Cars.Mappers
         }
 
 
-        public static CarsGetDto ToDto(this Car car)
+        public static CarGetDto ToDto(this Car car)
         {
-            return new CarsGetDto()
+            return new CarGetDto()
             {
                 Id = car.Id,
                 Title = car.Title,

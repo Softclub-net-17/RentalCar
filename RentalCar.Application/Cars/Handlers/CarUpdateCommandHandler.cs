@@ -42,16 +42,11 @@ namespace RentalCar.Application.Cars.Handlers
             foreach (var old in oldValues)
                 await carValueRepository.DeleteAsync(old);
 
-            foreach (var valueId in command.ValueIds)
+            var carValues = command.ToCarValues(car.Id);
+            foreach (var item in carValues)
             {
-                var value = await valueRepository.GetByIdAsync(valueId);
-                if (value == null)
-                    return Result<string>.Fail($"Value not found", ErrorType.NotFound);
-
-                var carValue = new CarValue { CarId = car.Id, ValueId = valueId };
-                await carValueRepository.CreateAsync(carValue);
+                await carValueRepository.CreateAsync(item);
             }
-
 
             var oldImages = await carImageRepository.GetByCarId(car.Id);
 

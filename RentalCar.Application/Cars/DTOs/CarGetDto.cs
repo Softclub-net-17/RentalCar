@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentalCar.Application.Cars.DTOs
 {
-    public class CarsGetDto 
+    public class CarGetDto 
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;

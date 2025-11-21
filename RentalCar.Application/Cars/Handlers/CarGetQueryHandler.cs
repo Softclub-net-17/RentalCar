@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 namespace RentalCar.Application.Cars.Handlers
 {
     public class CarGetQueryHandler
-        (ICarRepository carRepository) : IQueryHandler<CarsGetQuery, Result<List<CarsGetDto>>>
+        (ICarRepository carRepository) : IQueryHandler<CarGetQuery, Result<List<CarGetDto>>>
     {
-        public async Task<Result<List<CarsGetDto>>> HandleAsync(CarsGetQuery query)
+        public async Task<Result<List<CarGetDto>>> HandleAsync(CarGetQuery query)
         {
             var cars = await carRepository.GetAllAsync();
             var items = cars.ToDto();
 
-            return Result<List<CarsGetDto>>.Ok(items);
+            return Result<List<CarGetDto>>.Ok(items);
         }
     }
 }
