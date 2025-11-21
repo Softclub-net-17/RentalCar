@@ -52,6 +52,7 @@ using RentalCar.Application.Images.Handlers;
 
 namespace RentalCar.Application;
 
+
 public static class DependencyInjection
 {
     public static void AddApplicationServices(this IServiceCollection services)
@@ -91,7 +92,7 @@ public static class DependencyInjection
         // register
         services.AddScoped<ICommandHandler<RegisterCommand, Result<string>>, RegisterCommandHandler>();
         services.AddScoped<ICommandHandler<LoginCommand, Result<string>>, LoginCommandHandler>();
-
+        
         //validators
         services.AddScoped<IValidator<CarAttributeCreateCommand>, CarAttributeCreateValidator>();
         services.AddScoped<IValidator<CarAttributeUpdateCommand>, CarAttributeUpdateValidator>();
@@ -137,11 +138,13 @@ public static class DependencyInjection
         services.AddScoped<ICommandHandler<CarCreateCommand, Result<string>>, CarCreateCommandHandler>();
         services.AddScoped<ICommandHandler<CarUpdateCommand, Result<string>>, CarUpdateCommandHandler>();
         services.AddScoped<ICommandHandler<CarDeleteCommand, Result<string>>, CarDeleteCommandHandler>();
-        services.AddScoped<IQueryHandler<CarsGetQuery, Result<List<CarsGetDto>>>, CarGetQueryHandler>();
+        services.AddScoped<IQueryHandler<CarGetQuery, Result<List<CarGetDto>>>, CarGetQueryHandler>();
+        services.AddScoped<IQueryHandler<CarGetByIdQuery, Result<CarGetDto>>, CarsGetByIdQueryHandler>();
+
 
         //images
         services.AddScoped<ICommandHandler<ImageCreateCommand, Result<string>>, ImageCreateCommandHandler>();
         services.AddScoped<ICommandHandler<ImageDeleteCommand, Result<string>>, ImageDeleteCommandHandler>();
-
+        
     }
 }

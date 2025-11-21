@@ -13,10 +13,17 @@ public class CarValueRepository(ApplicationDbContext context) : ICarValueReposit
 
     public Task UpdateAsync(CarValue carValue)
     {
-         context.CarValues.Update(carValue);
-         return Task.CompletedTask;
+        context.CarValues.Update(carValue);
+        return Task.CompletedTask;
     }
-    
+
+    public async Task<IEnumerable<CarValue>> GetByCarIdAsync(int carId)
+    {
+        return await context.CarValues.Where(cv => cv.CarId == carId).ToListAsync();
+    }
+
+
+
     public async Task<CarValue?> GetByIdAsync(int carId, int valueId)
     {
         return await context.CarValues.FirstOrDefaultAsync(x => x.CarId == carId && x.ValueId == valueId);

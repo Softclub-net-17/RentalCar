@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RentalCar.Application.Cars.Queries
 {
-    public class CarsGetQuery : IQuery<Result<List<CarsGetDto>>>
+    public class CarGetQuery : IQuery<Result<List<CarGetDto>>>
     {
 
     }

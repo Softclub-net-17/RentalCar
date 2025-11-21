@@ -20,6 +20,7 @@ namespace RentalCar.Application.Cars.Commands
         public int Year { get; set; }
         public int Seats { get; set; }
         public int ModelId { get; set; }
+        public List<int> ValueIds { get; set; } = [];
         public List<IFormFile> Pictures { get; set; } = [];
 
     }

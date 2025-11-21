@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentalCar.Application.Cars.DTOs
 {
-    public class CarsGetDto 
+    public class CarGetDto 
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
@@ -20,6 +20,7 @@ namespace RentalCar.Application.Cars.DTOs
         public int Year { get; set; }
         public int Seats { get; set; }
         public int ModelId { get; set; }
-        public List<string> Images { get; set; }
+        public List<string> Values { get; set; } = new();
+        public List<string> Images { get; set; } = new();
     }
 }
