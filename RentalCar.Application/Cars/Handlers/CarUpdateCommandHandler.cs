@@ -4,6 +4,7 @@ using RentalCar.Application.Common.Constants;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Images.Mappers;
 using RentalCar.Application.Interfaces;
+using RentalCar.Domain.Entities;
 using RentalCar.Domain.Interfaces;
 
 namespace RentalCar.Application.Cars.Handlers
@@ -11,6 +12,8 @@ namespace RentalCar.Application.Cars.Handlers
     public class CarUpdateCommandHandler
         (IUnitOfWork unitOfWork,
         ICarRepository carRepository,
+        IValueRepository valueRepository,
+        ICarValueRepository carValueRepository,
         IValidator<CarUpdateCommand> validator,
         ICarImageRepository carImageRepository,
         IFileService fileService) : ICommandHandler<CarUpdateCommand, Result<string>>
@@ -34,6 +37,21 @@ namespace RentalCar.Application.Cars.Handlers
             command.MapFrom(car);
 
             await carRepository.UpdateAsync(car);
+            
+            var oldValues = await carValueRepository.GetByCarIdAsync(car.Id);
+            foreach (var old in oldValues)
+                await carValueRepository.DeleteAsync(old);
+
+            foreach (var valueId in command.ValueIds)
+            {
+                var value = await valueRepository.GetByIdAsync(valueId);
+                if (value == null)
+                    return Result<string>.Fail($"Value not found", ErrorType.NotFound);
+
+                var carValue = new CarValue { CarId = car.Id, ValueId = valueId };
+                await carValueRepository.CreateAsync(carValue);
+            }
+
 
             var oldImages = await carImageRepository.GetByCarId(car.Id);
 

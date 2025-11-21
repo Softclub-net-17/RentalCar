@@ -1,13 +1,6 @@
 ﻿using RentalCar.Application.Cars.Commands;
 using RentalCar.Application.Cars.DTOs;
-using RentalCar.Application.Categories.Commands;
-using RentalCar.Application.Categories.DTOs;
 using RentalCar.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentalCar.Application.Cars.Mappers
 {
@@ -27,6 +20,15 @@ namespace RentalCar.Application.Cars.Mappers
                 Seats = command.Seats,
                 ModelId = command.ModelId,
             };
+        }
+        
+        public static List<CarValue> ToCarValues(this CarCreateCommand command, int carId)
+        {
+            return command.ValueIds.Select(valueId => new CarValue
+            {
+                CarId = carId,
+                ValueId = valueId
+            }).ToList();
         }
 
         public static void MapFrom(this CarUpdateCommand command, Car car)
@@ -49,14 +51,35 @@ namespace RentalCar.Application.Cars.Mappers
                 Title = c.Title,
                 PricePerHour = c.PricePerHour,
                 Description = c.Description,
-                Color= c.Color,
+                Color = c.Color,
                 Tinting = c.Tinting,
-                Millage= c.Millage,
+                Millage = c.Millage,
                 Year = c.Year,
                 Seats = c.Seats,
                 ModelId = c.ModelId,
-                Images = c.Images.Select(i => i.PhotoUrl).ToList() ?? new List<string>(),
+                Images = c.Images.Select(i => i.PhotoUrl).ToList(),
+                Values = c.CarValues.Select(v => v.Value.Name).ToList()
             }).ToList();
+        }
+
+
+        public static CarsGetDto ToDto(this Car car)
+        {
+            return new CarsGetDto()
+            {
+                Id = car.Id,
+                Title = car.Title,
+                PricePerHour = car.PricePerHour,
+                Description = car.Description,
+                Color = car.Color,
+                Tinting = car.Tinting,
+                Millage = car.Millage,
+                Year = car.Year,
+                Seats = car.Seats,
+                ModelId = car.ModelId,
+                Images = car.Images.Select(i => i.PhotoUrl).ToList(),
+                Values = car.CarValues.Select(v => v.Value.Name).ToList()
+            };
         }
     }
 }

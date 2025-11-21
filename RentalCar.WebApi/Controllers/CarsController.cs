@@ -10,10 +10,11 @@ namespace RentalCar.WebApi.Controllers
 {
     [Route("api/cars")]
     [ApiController]
-    public class CarsController
-               (ICommandHandler<CarCreateCommand, Result<string>> create,
+    public class CarsController(
+        ICommandHandler<CarCreateCommand, Result<string>> create,
          ICommandHandler<CarUpdateCommand, Result<string>> update,
          ICommandHandler<CarDeleteCommand, Result<string>> delete,
+         IQueryHandler<CarsGetByIdQuery, Result<CarsGetDto>> getByIdHandler,
          IQueryHandler<CarsGetQuery, Result<List<CarsGetDto>>> getall)
         : ControllerBase
     {
@@ -21,6 +22,16 @@ namespace RentalCar.WebApi.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var result = await getall.HandleAsync(new CarsGetQuery());
+            if (!result.IsSuccess)
+                return HandleError(result);
+
+            return Ok(result.Data);
+        }
+        
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            var result = await getByIdHandler.HandleAsync(new CarsGetByIdQuery(id));
             if (!result.IsSuccess)
                 return HandleError(result);
 
