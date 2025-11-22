@@ -34,10 +34,13 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
 
         public async Task<Car?> GetByIdAsync(int id)
         {
-            return await context.Cars.Include(c => c.Images)   
-                .Include(cv => cv.CarValues)
-                .ThenInclude(v => v.Value)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            return await context.Cars
+            .Include(c => c.Images)
+            .Include(c => c.Images)
+            .Include(c => c.CarValues)
+            .ThenInclude(cv => cv.Value)
+            .ThenInclude(ca => ca.CarAttribute)
+            .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public Task UpdateAsync(Car car)

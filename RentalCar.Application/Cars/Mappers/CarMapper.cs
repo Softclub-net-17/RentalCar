@@ -93,7 +93,13 @@ namespace RentalCar.Application.Cars.Mappers
                 Seats = car.Seats,
                 ModelId = car.ModelId,
                 Images = car.Images.Select(i => i.PhotoUrl).ToList(),
-                Values = car.CarValues.Select(v => v.Value.Name).ToList()
+                CarAttributes = car.CarValues.Select(cv => new CarAttributesGetDto
+                {
+                    AttributeId = cv.Value.CarAttribute.Id,
+                    ValueId = cv.Value.Id,
+                    AttributeName = cv.Value.CarAttribute.Name,
+                    ValueName = cv.Value.Name
+                }).ToList()
             };
         }
     }
