@@ -14,15 +14,25 @@ namespace RentalCar.WebApi.Controllers;
 public class CarAttributeController(
     IQueryHandler<CarAttributeGetQuery, Result<List<CarAttributeGetDto>>> getAllHandler,
     IQueryHandler<CarAttributeGetByIdQuery, Result<CarAttributeGetDto>> getByIdHandler,
+    IQueryHandler<CarGetAttributesWithValuesQuery,Result<List<GetCarAttributesWithValuesDto>>> getAttributesWithValues,
     ICommandHandler<CarAttributeCreateCommand, Result<string>> createHandler,
     ICommandHandler<CarAttributeUpdateCommand, Result<string>> updateHandler,
     ICommandHandler<CarAttributeDeleteCommand, Result<string>> deleteHandler)
     : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("all")]
     public async Task<IActionResult> GetAllAsync()
     {
         var result = await getAllHandler.HandleAsync(new CarAttributeGetQuery());
+        if (!result.IsSuccess)
+            return HandleError(result);
+
+        return Ok(result.Data);
+    }
+    [HttpGet("withvalues")]
+    public async Task<IActionResult> GetCarAttributesWithValues()
+    {
+        var result = await getAttributesWithValues.HandleAsync(new CarGetAttributesWithValuesQuery());
         if (!result.IsSuccess)
             return HandleError(result);
 

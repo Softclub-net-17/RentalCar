@@ -1,13 +1,6 @@
 ﻿using RentalCar.Application.Cars.Commands;
 using RentalCar.Application.Cars.DTOs;
-using RentalCar.Application.Categories.Commands;
-using RentalCar.Application.Categories.DTOs;
 using RentalCar.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentalCar.Application.Cars.Mappers
 {
@@ -56,6 +49,13 @@ namespace RentalCar.Application.Cars.Mappers
                 Seats = c.Seats,
                 ModelId = c.ModelId,
                 Images = c.Images.Select(i => i.PhotoUrl).ToList() ?? new List<string>(),
+                CarAttributes = c.CarValues.Select(cv => new CarAttributesGetDto
+                {
+                    AttributeId = cv.Value.CarAttribute.Id,
+                    ValueId = cv.Value.Id,
+                    AttributeName = cv.Value.CarAttribute.Name,
+                    ValueName = cv.Value.Name
+                }).ToList()
             }).ToList();
         }
     }
