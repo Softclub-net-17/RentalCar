@@ -23,6 +23,8 @@ public static class DependencyInjection
         services.AddScoped<ICarRepository, CarRepository>();
         services.AddScoped<ICarImageRepository, ImageRepository>();
         services.AddScoped<IFileService, FileService>();
+        services.AddScoped<ICarValueRepository, CarValueRepository>();
+        services.AddScoped<IReservationRepository, ReservationRepository>();
 
     }
 }

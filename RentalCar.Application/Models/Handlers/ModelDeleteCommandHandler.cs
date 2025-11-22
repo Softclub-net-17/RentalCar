@@ -24,7 +24,7 @@ namespace RentalCar.Application.Models.Handlers
             await modelRepository.DeleteAsync(model);
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Model deleted successfully.");
+            return Result<string>.Ok(null,"Model deleted successfully.");
         }
     }
 }

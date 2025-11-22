@@ -13,7 +13,7 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
     {
         public async Task CreateAsync(Car car)
         {
-             await context.Cars.AddAsync(car);
+            await context.Cars.AddAsync(car);
         }
 
         public Task DeleteAsync(Car car)
@@ -24,17 +24,25 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
 
         public async Task<IEnumerable<Car>> GetAllAsync()
         {
-            return await context.Cars.Include(c => c.CarValues).ThenInclude(cv => cv.Value).ThenInclude(ca => ca.CarAttribute).Include(c => c.Images).ToListAsync();
+            return await context.Cars
+            .Include(c => c.Images)
+            .Include(c => c.CarValues)
+            .ThenInclude(cv => cv.Value)
+            .ThenInclude(ca => ca.CarAttribute)
+            .ToListAsync();
         }
 
         public async Task<Car?> GetByIdAsync(int id)
         {
-            return await context.Cars.FindAsync(id);
+            return await context.Cars.Include(c => c.Images)   
+                .Include(cv => cv.CarValues)
+                .ThenInclude(v => v.Value)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public Task UpdateAsync(Car car)
         {
-             context.Cars.Update(car);
+            context.Cars.Update(car);
             return Task.CompletedTask;
         }
     }

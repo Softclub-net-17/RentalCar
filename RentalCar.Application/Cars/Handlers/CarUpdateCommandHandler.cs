@@ -4,6 +4,7 @@ using RentalCar.Application.Common.Constants;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Images.Mappers;
 using RentalCar.Application.Interfaces;
+using RentalCar.Domain.Entities;
 using RentalCar.Domain.Interfaces;
 
 namespace RentalCar.Application.Cars.Handlers
@@ -11,6 +12,8 @@ namespace RentalCar.Application.Cars.Handlers
     public class CarUpdateCommandHandler
         (IUnitOfWork unitOfWork,
         ICarRepository carRepository,
+        IValueRepository valueRepository,
+        ICarValueRepository carValueRepository,
         IValidator<CarUpdateCommand> validator,
         ICarImageRepository carImageRepository,
         IFileService fileService) : ICommandHandler<CarUpdateCommand, Result<string>>
@@ -34,6 +37,16 @@ namespace RentalCar.Application.Cars.Handlers
             command.MapFrom(car);
 
             await carRepository.UpdateAsync(car);
+            
+            var oldValues = await carValueRepository.GetByCarIdAsync(car.Id);
+            foreach (var old in oldValues)
+                await carValueRepository.DeleteAsync(old);
+
+            var carValues = command.ToCarValues(car.Id);
+            foreach (var item in carValues)
+            {
+                await carValueRepository.CreateAsync(item);
+            }
 
             var oldImages = await carImageRepository.GetByCarId(car.Id);
 
@@ -52,7 +65,7 @@ namespace RentalCar.Application.Cars.Handlers
 
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Car updated successfully");
+            return Result<string>.Ok(null,"Car updated successfully");
 
         }
     }

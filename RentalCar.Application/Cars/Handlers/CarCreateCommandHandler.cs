@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentalCar.Domain.Entities;
 
 namespace RentalCar.Application.Cars.Handlers
 {
@@ -19,8 +20,11 @@ namespace RentalCar.Application.Cars.Handlers
         ICarRepository repository,
         IModelRepository modelRepository,
         IMakeRepository makeRepository,
+        ICarValueRepository carValueRepository,
+        IValueRepository valueRepository,
         IFileService fileService,
-        ICarImageRepository imageRepository) : ICommandHandler<CarCreateCommand, Result<string>>
+        ICarImageRepository imageRepository)
+        : ICommandHandler<CarCreateCommand, Result<string>>
     {
         public async Task<Result<string>> HandleAsync(CarCreateCommand command)
         {
@@ -40,6 +44,13 @@ namespace RentalCar.Application.Cars.Handlers
             var car = command.ToEntity(model.Name, make!.Name);
             await repository.CreateAsync(car);
             await unitOfWork.SaveChangesAsync();
+            
+            var carValues = command.ToCarValues(car.Id);
+
+            foreach (var item in carValues)
+            {
+                await carValueRepository.CreateAsync(item);
+            }
 
             foreach (var picture in command.Pictures)
             {
@@ -49,8 +60,8 @@ namespace RentalCar.Application.Cars.Handlers
             }
 
             await unitOfWork.SaveChangesAsync();
-            return Result<string>.Ok("Car created successfully");
-
+            
+            return Result<string>.Ok(null,"Car created successfully");
         }
     }
 }

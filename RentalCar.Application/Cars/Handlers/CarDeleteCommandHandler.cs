@@ -30,7 +30,7 @@ namespace RentalCar.Application.Cars.Handlers
             await carRepository.DeleteAsync(car);
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Car deleted successfully.");
+            return Result<string>.Ok(null,"Car deleted successfully.");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace RentalCar.Application.Images.Handlers
             await repository.DeleteAsync(image);
             await unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Ok("Image deleted");
+            return Result<string>.Ok(null,"Image deleted");
         }
     }
 }

@@ -8,5 +8,8 @@ namespace RentalCar.Domain.Entities
         public string Email { get; set; } = null!;
         public Role Role { get; set; }
         public string PasswordHash { get; set; } = null!;
+        
+        // navigation
+        public List<Reservation> Reservations { get; set; } = new ();
     }
 }
