@@ -9,4 +9,5 @@ public interface ICarAttributeRepository
     Task CreateAsync(CarAttribute carAttribute);
     Task UpdateAsync(CarAttribute carAttribute);
     Task DeleteAsync(CarAttribute carAttribute);
+    Task<IEnumerable<CarAttribute>> GetCarAttributesWithValuesAsync();
 }

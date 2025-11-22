@@ -1,5 +1,4 @@
-﻿using RentalCar.Application.Categories.DTOs;
-using RentalCar.Application.Common.Results;
+﻿using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 using RentalCar.Application.Models.DTOs;
 using RentalCar.Application.Models.Mappers;

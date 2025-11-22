@@ -10,11 +10,6 @@ using RentalCar.Application.CarAttributes.Validators;
 using RentalCar.Application.CarValues.Commands;
 using RentalCar.Application.CarValues.Handlers;
 using RentalCar.Application.CarValues.Validator;
-using RentalCar.Application.Categories.Commands;
-using RentalCar.Application.Categories.DTOs;
-using RentalCar.Application.Categories.Handlers;
-using RentalCar.Application.Categories.Queries;
-using RentalCar.Application.Categories.Validators;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 using RentalCar.Application.Users.Commands;
@@ -59,6 +54,7 @@ public static class DependencyInjection
     {
         // car attributes
         services.AddScoped<IQueryHandler<CarAttributeGetQuery, Result<List<CarAttributeGetDto>>>, CarAttributeGetQueryHandler>();
+        services.AddScoped<IQueryHandler<CarGetAttributesWithValuesQuery, Result<List<GetCarAttributesWithValuesDto>>>, GetCarAttributesWithValuesHandler>();
         services.AddScoped<IQueryHandler<CarAttributeGetByIdQuery, Result<CarAttributeGetDto>>, CarAttributeGetByIdQueryHandler>();
         services.AddScoped<ICommandHandler<CarAttributeCreateCommand, Result<string>>, CarAttributeCreateCommandHandler>();
         services.AddScoped<ICommandHandler<CarAttributeUpdateCommand, Result<string>>, CarAttributeUpdateCommandHandler>();
@@ -88,6 +84,7 @@ public static class DependencyInjection
         services.AddScoped<IQueryHandler<UserGetByIdQuery, Result<UserGetDto>>, UserGetByIdQueryHandler>();
         services.AddScoped<ICommandHandler<UserUpdateCommand, Result<string>>, UserUpdateCommandHandler>();
         services.AddScoped<ICommandHandler<UserDeleteCommand, Result<string>>, UserDeleteCommandHandler>();
+        services.AddScoped<IQueryHandler<UserGetMeQuery, Result<UserGetDto>>, UserGetMeQueryHandler>();
 
         // register
         services.AddScoped<ICommandHandler<RegisterCommand, Result<string>>, RegisterCommandHandler>();
@@ -105,21 +102,12 @@ public static class DependencyInjection
         services.AddScoped<IValidator<UserUpdateCommand>, UserUpdateValidator>();
         services.AddScoped<IValidator<RegisterCommand>, RegisterValidator>();
         services.AddScoped<IValidator<LoginCommand>, LoginValidator>();
-        services.AddScoped<IValidator<CategoryCreateCommand>, CategoryCreateValidator>();
-        services.AddScoped<IValidator<CategoryUpdateCommand>, CategoryUpdateValidator>();
         services.AddScoped<IValidator<MakeCreateCommand>, MakeCreateValidator>();
         services.AddScoped<IValidator<MakeUpdateCommand>, MakeUpdateValidator>();
         services.AddScoped<IValidator<ModelCreateCommand>, ModelCreateValidator>();
         services.AddScoped<IValidator<ModelUpdateCommand>, ModelUpdateValidator>();
         services.AddScoped<IValidator<CarCreateCommand>, CarCreateValidator>();
         services.AddScoped<IValidator<CarUpdateCommand>, CarUpdateValidator>();
-
-        //categories
-        services.AddScoped<ICommandHandler<CategoryCreateCommand, Result<string>>, CategoryCreateCommandHandler>();
-        services.AddScoped<ICommandHandler<CategoryUpdateCommand, Result<string>>, CategoryUpdateCommandHandler>();
-        services.AddScoped<ICommandHandler<CategoryActivateCommand, Result<string>>, CategoryActivateCommandHandler>();
-        services.AddScoped<ICommandHandler<CategoryDeactivateCommand, Result<string>>, CategoryDeactivateCommandHandler>();
-        services.AddScoped<IQueryHandler<CategoriesGetQuery, Result<List<CategoryGetDto>>>, CategoryGetQueryHandler>();
 
         //makes
         services.AddScoped<ICommandHandler<MakeCreateCommand, Result<string>>, MakeCreateCommandHandler>();

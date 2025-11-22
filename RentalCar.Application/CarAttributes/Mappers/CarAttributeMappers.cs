@@ -1,5 +1,6 @@
 ﻿using RentalCar.Application.CarAttributes.Commands;
 using RentalCar.Application.CarAttributes.DTOS;
+using RentalCar.Application.Values.DTOS;
 using RentalCar.Domain.Entities;
 
 namespace RentalCar.Application.CarAttributes.Mappers;
@@ -20,6 +21,20 @@ public static class CarAttributeMappers
         {
             Id = car.Id,
             Name = car.Name
+        }).ToList();
+    }
+    public static List<GetCarAttributesWithValuesDto> ToCarAttributeDto(this IEnumerable<CarAttribute> carAttribute)
+    {
+        return carAttribute.Select(car => new GetCarAttributesWithValuesDto
+        {
+            Id = car.Id,
+            Name = car.Name,
+            Values = car.Values?.Select(value => new ValueGetDto
+            {
+                Id = value.Id,
+                Name = value.Name,
+                CarAttributeId = value.CarAttributeId
+            }).ToList() ?? new List<ValueGetDto>()
         }).ToList();
     }
 

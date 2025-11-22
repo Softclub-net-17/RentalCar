@@ -66,8 +66,14 @@ namespace RentalCar.Application.Cars.Mappers
                 Year = c.Year,
                 Seats = c.Seats,
                 ModelId = c.ModelId,
-                Images = c.Images.Select(i => i.PhotoUrl).ToList(),
-                Values = c.CarValues.Select(v => v.Value.Name).ToList()
+                Images = c.Images.Select(i => i.PhotoUrl).ToList() ?? new List<string>(),
+                CarAttributes = c.CarValues.Select(cv => new CarAttributesGetDto
+                {
+                    AttributeId = cv.Value.CarAttribute.Id,
+                    ValueId = cv.Value.Id,
+                    AttributeName = cv.Value.CarAttribute.Name,
+                    ValueName = cv.Value.Name
+                }).ToList()
             }).ToList();
         }
 
@@ -87,7 +93,13 @@ namespace RentalCar.Application.Cars.Mappers
                 Seats = car.Seats,
                 ModelId = car.ModelId,
                 Images = car.Images.Select(i => i.PhotoUrl).ToList(),
-                Values = car.CarValues.Select(v => v.Value.Name).ToList()
+                CarAttributes = car.CarValues.Select(cv => new CarAttributesGetDto
+                {
+                    AttributeId = cv.Value.CarAttribute.Id,
+                    ValueId = cv.Value.Id,
+                    AttributeName = cv.Value.CarAttribute.Name,
+                    ValueName = cv.Value.Name
+                }).ToList()
             };
         }
     }

@@ -1,6 +1,4 @@
-﻿using RentalCar.Application.Categories.Commands;
-using RentalCar.Application.Categories.DTOs;
-using RentalCar.Application.Makes.Commands;
+﻿using RentalCar.Application.Makes.Commands;
 using RentalCar.Application.Makes.DTOs;
 using RentalCar.Domain.Entities;
 using System;
@@ -19,14 +17,12 @@ namespace RentalCar.Application.Makes.Mappers
             {
                 Name = command.Name,
                 IsActive = true,
-                CategoryId = command.CategoryId,
             };
         }
 
         public static void MapFrom(this MakeUpdateCommand command, Make make)
         {
             make.Name = command.Name;
-            make.CategoryId = command.CategoryId;
         }
 
         public static List<MakeGetDto> ToDto(this IEnumerable<Make> makes)
@@ -36,7 +32,6 @@ namespace RentalCar.Application.Makes.Mappers
                 Id = c.Id,
                 Name = c.Name,
                 IsActive = c.IsActive,
-                CategoryId = c.CategoryId,
             }).ToList();
         }
     }
