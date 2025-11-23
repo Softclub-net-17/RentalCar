@@ -26,10 +26,6 @@ namespace RentalCar.Infrastructure.Persistence.EntityConfigurations
 
             builder.Property(x => x.Id)
                 .IsRequired();
-
-            builder.HasOne(m => m.Category)
-                .WithMany(c => c.Makes)
-                .HasForeignKey(m => m.CategoryId);
         }
     }
 }

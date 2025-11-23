@@ -6,7 +6,6 @@ namespace RentalCar.Infrastructure
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<Category> Categories { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Make> Makes { get; set; }
         public DbSet<Model> Models { get; set; }
@@ -21,6 +20,5 @@ namespace RentalCar.Infrastructure
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }

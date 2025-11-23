@@ -15,6 +15,7 @@ namespace RentalCar.WebApi.Controllers.Admin;
 public class UserController(
     IQueryHandler<UserGetQuery, Result<List<UserGetDto>>> getAllHandler,
     IQueryHandler<UserGetByIdQuery, Result<UserGetDto>> getByIdHandler,
+    IQueryHandler<UserGetMeQuery, Result<UserGetDto>> getmehandler,
     ICommandHandler<UserUpdateCommand, Result<string>> updateHandler,
     ICommandHandler<UserDeleteCommand, Result<string>> deleteHandler)
     : ControllerBase
@@ -28,6 +29,17 @@ public class UserController(
 
         return Ok(result.Data);
     }
+
+    [HttpGet("me")]
+    public async Task<IActionResult> GetMe()
+    {
+        var result = await getmehandler.HandleAsync(new UserGetMeQuery());
+        if (!result.IsSuccess)
+            return HandleError(result);
+
+        return Ok(result.Data);
+    }
+
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetByIdAsync(int id)

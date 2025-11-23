@@ -32,4 +32,10 @@ public class CarAttributeRepository(ApplicationDbContext context) : ICarAttribut
         context.CarAttributes.Remove(carAttribute);
         return Task.CompletedTask;
     }
+
+    public async Task<IEnumerable<CarAttribute>> GetCarAttributesWithValuesAsync()
+    {
+        return await context.CarAttributes.Include(ca => ca.Values)
+            .ToListAsync();
+    }
 }

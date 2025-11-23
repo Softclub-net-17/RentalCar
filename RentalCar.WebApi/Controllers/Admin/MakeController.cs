@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RentalCar.Application.Categories.Commands;
-using RentalCar.Application.Categories.DTOs;
-using RentalCar.Application.Categories.Queries;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 using RentalCar.Application.Makes.Commands;
