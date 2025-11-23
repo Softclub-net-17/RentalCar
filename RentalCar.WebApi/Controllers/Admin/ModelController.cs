@@ -1,30 +1,28 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RentalCar.Application.Categories.Commands;
-using RentalCar.Application.Categories.DTOs;
-using RentalCar.Application.Categories.Queries;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
-using RentalCar.Application.Makes.Commands;
-using RentalCar.Application.Makes.DTOs;
-using RentalCar.Application.Makes.Queries;
+using RentalCar.Application.Models.Commands;
+using RentalCar.Application.Models.DTOs;
+using RentalCar.Application.Models.Queries;
 
-namespace RentalCar.WebApi.Controllers
+namespace RentalCar.WebApi.Controllers.Admin
 {
-    [Route("api/makes")]
+    [ApiExplorerSettings(GroupName = "admin")]
+    [Route("api/admin/models")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
-    public class MakesController
-             (ICommandHandler<MakeCreateCommand, Result<string>> create,
-         ICommandHandler<MakeUpdateCommand, Result<string>> update,
-         ICommandHandler<MakeActivateCommand, Result<string>> activate,
-         ICommandHandler<MakeDeactivateCommand, Result<string>> deactivate,
-         IQueryHandler<MakeGetQuery, Result<List<MakeGetDto>>> getall)
+    public class ModelController(
+        ICommandHandler<ModelCreateCommand, Result<string>> create,
+         ICommandHandler<ModelUpdateCommand, Result<string>> update,
+         ICommandHandler<ModelDeleteCommand, Result<string>> delete,
+         IQueryHandler<ModelsGetQuery, Result<List<ModelGetDto>>> getall)
         : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var result = await getall.HandleAsync(new MakeGetQuery());
+            var result = await getall.HandleAsync(new ModelsGetQuery());
             if (!result.IsSuccess)
                 return HandleError(result);
 
@@ -32,7 +30,7 @@ namespace RentalCar.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(MakeCreateCommand command)
+        public async Task<IActionResult> CreateAsync(ModelCreateCommand command)
         {
             var result = await create.HandleAsync(command);
             if (!result.IsSuccess)
@@ -42,7 +40,7 @@ namespace RentalCar.WebApi.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] MakeUpdateCommand command)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] ModelUpdateCommand command)
         {
             command.Id = id;
             var result = await update.HandleAsync(command);
@@ -52,20 +50,11 @@ namespace RentalCar.WebApi.Controllers
             return Ok(new { message = result.Message });
         }
 
-        [HttpPut("activate/{id:int}")]
-        public async Task<IActionResult> ActivateAsync(int id)
-        {
-            var result = await activate.HandleAsync(new MakeActivateCommand(id));
-            if (!result.IsSuccess)
-                return HandleError(result);
 
-            return Ok(new { message = result.Message });
-        }
-
-        [HttpPut("deactivate/{id:int}")]
-        public async Task<IActionResult> DeactivateAsync(int id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var result = await deactivate.HandleAsync(new MakeDeactivateCommand(id));
+            var result = await delete.HandleAsync(new ModelDeleteCommand(id));
             if (!result.IsSuccess)
                 return HandleError(result);
 

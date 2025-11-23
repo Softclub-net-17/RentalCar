@@ -1,29 +1,33 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RentalCar.Application.CarAttributes.Commands;
-using RentalCar.Application.CarAttributes.Queries;
 using RentalCar.Application.Categories.Commands;
 using RentalCar.Application.Categories.DTOs;
 using RentalCar.Application.Categories.Queries;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
+using RentalCar.Application.Makes.Commands;
+using RentalCar.Application.Makes.DTOs;
+using RentalCar.Application.Makes.Queries;
 
-namespace RentalCar.WebApi.Controllers
-{
-    [Route("api/categories")]
+namespace RentalCar.WebApi.Controllers.Admin;
+
+    [Route("api/admin/makes")]
+    [ApiExplorerSettings(GroupName = "admin")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
-    public class CategoriesController
-        (ICommandHandler<CategoryCreateCommand, Result<string>> create,
-         ICommandHandler<CategoryUpdateCommand, Result<string>> update,
-         ICommandHandler<CategoryActivateCommand, Result<string>> activate,
-         ICommandHandler<CategoryDeactivateCommand, Result<string>> deactivate,
-         IQueryHandler<CategoriesGetQuery, Result<List<CategoryGetDto>>> getall)
+    public class MakeController
+             (ICommandHandler<MakeCreateCommand, Result<string>> create,
+         ICommandHandler<MakeUpdateCommand, Result<string>> update,
+         ICommandHandler<MakeActivateCommand, Result<string>> activate,
+         ICommandHandler<MakeDeactivateCommand, Result<string>> deactivate,
+         IQueryHandler<MakeGetQuery, Result<List<MakeGetDto>>> getall)
         : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var result = await getall.HandleAsync(new CategoriesGetQuery());
+            var result = await getall.HandleAsync(new MakeGetQuery());
             if (!result.IsSuccess)
                 return HandleError(result);
 
@@ -31,7 +35,7 @@ namespace RentalCar.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CategoryCreateCommand command)
+        public async Task<IActionResult> CreateAsync(MakeCreateCommand command)
         {
             var result = await create.HandleAsync(command);
             if (!result.IsSuccess)
@@ -41,7 +45,7 @@ namespace RentalCar.WebApi.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] CategoryUpdateCommand command)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] MakeUpdateCommand command)
         {
             command.Id = id;
             var result = await update.HandleAsync(command);
@@ -53,8 +57,8 @@ namespace RentalCar.WebApi.Controllers
 
         [HttpPut("activate/{id:int}")]
         public async Task<IActionResult> ActivateAsync(int id)
-        { 
-            var result = await activate.HandleAsync(new CategoryActivateCommand(id));
+        {
+            var result = await activate.HandleAsync(new MakeActivateCommand(id));
             if (!result.IsSuccess)
                 return HandleError(result);
 
@@ -64,7 +68,7 @@ namespace RentalCar.WebApi.Controllers
         [HttpPut("deactivate/{id:int}")]
         public async Task<IActionResult> DeactivateAsync(int id)
         {
-            var result = await deactivate.HandleAsync(new CategoryDeactivateCommand(id));
+            var result = await deactivate.HandleAsync(new MakeDeactivateCommand(id));
             if (!result.IsSuccess)
                 return HandleError(result);
 
@@ -82,4 +86,4 @@ namespace RentalCar.WebApi.Controllers
             };
         }
     }
-}
+

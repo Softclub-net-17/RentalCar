@@ -2,21 +2,18 @@
 using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
-using RentalCar.Application.Values.Commands;
 using RentalCar.Application.Values.DTOS;
 using RentalCar.Application.Values.Queries;
 
-namespace RentalCar.WebApi.Controllers;
+namespace RentalCar.WebApi.Controllers.Client;
 
-[ApiController]
+[ApiExplorerSettings(GroupName = "client")]
 [Route("api/values")]
-[Authorize(Roles = "Admin")]
+[ApiController]
+[Authorize]
 public class ValueController(
     IQueryHandler<ValueGetQuery, Result<List<ValueGetDto>>> getAllHandler,
-    IQueryHandler<ValueGetByIdQuery, Result<ValueGetDto>> getByIdHandler,
-    ICommandHandler<ValueCreateCommand, Result<string>> createHandler,
-    ICommandHandler<ValueUpdateCommand, Result<string>> updateHandler,
-    ICommandHandler<ValueDeleteCommand, Result<string>> deleteHandler)
+    IQueryHandler<ValueGetByIdQuery, Result<ValueGetDto>> getByIdHandler)
     : ControllerBase
 {
     [HttpGet]
@@ -38,38 +35,7 @@ public class ValueController(
 
         return Ok(result.Data);
     }
-
-    [HttpPost]
-    public async Task<IActionResult> CreateAsync(ValueCreateCommand command)
-    {
-        var result = await createHandler.HandleAsync(command);
-        if (!result.IsSuccess)
-            return HandleError(result);
-
-        return Created("", new { message = result.Message });
-    }
-
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateAsync(int id, [FromBody] ValueUpdateCommand command)
-    {
-        command.Id = id;
-        var result = await updateHandler.HandleAsync(command);
-        if (!result.IsSuccess)
-            return HandleError(result);
-
-        return Ok(new { message = result.Message });
-    }
-
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteAsync(int id)
-    {
-        var result = await deleteHandler.HandleAsync(new ValueDeleteCommand(id));
-        if (!result.IsSuccess)
-            return HandleError(result);
-
-        return Ok(new { message = result.Message });
-    }
-
+    
     private IActionResult HandleError<T>(Result<T> result)
     {
         return result.ErrorType switch

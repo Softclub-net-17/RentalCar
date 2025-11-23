@@ -34,17 +34,17 @@ public static class ReservationMappers
         };
     }
     
-    public static Reservation ToEntity(this ReservationCreateCommand command, Car car)
+    public static Reservation ToEntity(this ReservationCreateCommand command, Car car,int userId)
     {
         var hours = (command.EndDate - command.StartDate).TotalHours;
 
         return new Reservation
         {
-            UserId = command.UserId,
+            UserId = userId,
             CarId = command.CarId,
             StartDate = command.StartDate,
             EndDate = command.EndDate,
-            TotalPrice = (decimal)hours * car.PricePerHour
+            TotalPrice = Math.Round((decimal)hours * car.PricePerHour, 2)
         };
     }
 

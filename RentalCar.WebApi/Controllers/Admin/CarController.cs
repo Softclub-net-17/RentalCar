@@ -1,25 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RentalCar.Application.Cars.Commands;
+using RentalCar.Application.Cars.DTOs;
+using RentalCar.Application.Cars.Queries;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
-using RentalCar.Application.Models.Commands;
-using RentalCar.Application.Models.DTOs;
-using RentalCar.Application.Models.Queries;
 
-namespace RentalCar.WebApi.Controllers
-{
-    [Route("api/models")]
-    [ApiController]
-    public class ModelsController
-               (ICommandHandler<ModelCreateCommand, Result<string>> create,
-         ICommandHandler<ModelUpdateCommand, Result<string>> update,
-         ICommandHandler<ModelDeleteCommand, Result<string>> delete,
-         IQueryHandler<ModelsGetQuery, Result<List<ModelGetDto>>> getall)
+namespace RentalCar.WebApi.Controllers.Admin;
+
+[Route("api/admin/cars")]
+[ApiExplorerSettings(GroupName = "admin")]
+[Authorize(Roles = "Admin")]
+[ApiController]
+public class CarController(
+        ICommandHandler<CarCreateCommand, Result<string>> create,
+         ICommandHandler<CarUpdateCommand, Result<string>> update,
+         ICommandHandler<CarDeleteCommand, Result<string>> delete,
+         IQueryHandler<CarGetByIdQuery, Result<CarGetDto>> getByIdHandler,
+         IQueryHandler<CarGetQuery, Result<List<CarGetDto>>> getall)
         : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var result = await getall.HandleAsync(new ModelsGetQuery());
+            var result = await getall.HandleAsync(new CarGetQuery());
+            if (!result.IsSuccess)
+                return HandleError(result);
+
+            return Ok(result.Data);
+        }
+        
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            var result = await getByIdHandler.HandleAsync(new CarGetByIdQuery(id));
             if (!result.IsSuccess)
                 return HandleError(result);
 
@@ -27,7 +41,7 @@ namespace RentalCar.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(ModelCreateCommand command)
+        public async Task<IActionResult> CreateAsync([FromForm] CarCreateCommand command)
         {
             var result = await create.HandleAsync(command);
             if (!result.IsSuccess)
@@ -37,7 +51,7 @@ namespace RentalCar.WebApi.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] ModelUpdateCommand command)
+        public async Task<IActionResult> UpdateAsync(int id, [FromForm] CarUpdateCommand command)
         {
             command.Id = id;
             var result = await update.HandleAsync(command);
@@ -51,7 +65,7 @@ namespace RentalCar.WebApi.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var result = await delete.HandleAsync(new ModelDeleteCommand(id));
+            var result = await delete.HandleAsync(new CarDeleteCommand(id));
             if (!result.IsSuccess)
                 return HandleError(result);
 
@@ -69,4 +83,4 @@ namespace RentalCar.WebApi.Controllers
             };
         }
     }
-}
+

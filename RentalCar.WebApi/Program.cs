@@ -6,8 +6,8 @@ using RentalCar.WebApi.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
-builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerConfigurations();
 builder.Services.AddAuthConfigurations(builder.Configuration);
 builder.Services.AddConnectionConfigurations(builder.Configuration);
@@ -30,12 +30,14 @@ catch (Exception e)
     Console.WriteLine($"An error occurred while seeding the db: {e.Message}");
 }
 
-
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+{ 
     app.UseSwagger();
-    app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
+    app.UseSwaggerUI(options =>
+    { 
+        options.SwaggerEndpoint("/swagger/admin/swagger.json", "Admin API");
+        options.SwaggerEndpoint("/swagger/client/swagger.json", "Client API");
+    });
 }
 
 app.UseHttpsRedirection();
