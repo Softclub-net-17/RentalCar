@@ -10,8 +10,7 @@ namespace RentalCar.WebApi.Controllers.Admin;
 [Route("api/admin/auth")]
 [ApiController]
 public class AuthController(
-    ICommandHandler<LoginCommand, Result<string>> loginCommandHandler,
-    ICommandHandler<RegisterCommand, Result<string>> registerCommandHandler) 
+    ICommandHandler<LoginCommand, Result<string>> loginCommandHandler) 
     : ControllerBase
 {
     [HttpPost("login")]
@@ -25,19 +24,6 @@ public class AuthController(
         }
         
         return Ok(result.Data);
-    }
-    
-    [HttpPost("register")]
-    public async Task<IActionResult> RegisterAsync(RegisterCommand command)
-    {
-        var result = await registerCommandHandler.HandleAsync(command);
-
-        if (!result.IsSuccess)
-        {
-            return HandleError(result);
-        }
-        
-        return Ok(result.Message);
     }
     
     private IActionResult HandleError<T>(Result<T> result)
