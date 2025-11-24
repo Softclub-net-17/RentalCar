@@ -33,7 +33,7 @@ namespace RentalCar.Infrastructure.Services.Files
         public Task DeleteFileAsync(string folder, string filename)
         {
             var webRootPath = _environment.WebRootPath;
-            var fullPath = Path.Combine(webRootPath, folder);
+            var fullPath = Path.Combine(webRootPath, folder,filename);
             if (File.Exists(fullPath))
                 File.Delete(fullPath);
 

@@ -9,15 +9,15 @@ public class DefaultUsers
 {
     public static async Task SeedAsync(ApplicationDbContext context)
     {
-        var admin = await context.Users.FirstOrDefaultAsync(user => user.Email == "muhammadkhojaev187@gmail.com");
+        var admin = await context.Users.FirstOrDefaultAsync(user => user.Email == "siyovush@gmail.com");
         
         if (admin != null)  return;
         
-        var passwordHash = PasswordHasher.HashPassword("parolnetu");
+        var passwordHash = PasswordHasher.HashPassword("12345");
 
         var newUser = new User
         {
-            Email = "muhammadkhojaev187@gmail.com",
+            Email = "siyovush@gmail.com",
             Role = Role.Admin,
             PasswordHash = passwordHash,
         };

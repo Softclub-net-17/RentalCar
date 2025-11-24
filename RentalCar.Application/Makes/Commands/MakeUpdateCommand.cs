@@ -1,4 +1,5 @@
-﻿using RentalCar.Application.Common.Results;
+﻿using Microsoft.AspNetCore.Http;
+using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,5 @@ namespace RentalCar.Application.Makes.Commands
         [JsonIgnore]
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public int CategoryId { get; set; }
     }
 }

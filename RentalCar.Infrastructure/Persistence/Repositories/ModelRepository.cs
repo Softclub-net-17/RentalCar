@@ -32,6 +32,12 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
             return await context.Models.FindAsync(id);
         }
 
+        public async Task<List<Model>> GetByMakeIdAsync(int makeId)
+        {
+            return await context.Models.Where(m => m.MakeId == makeId)
+                .ToListAsync();
+        }
+
         public Task UpdateAsync(Model model)
         {
              context.Models.Update(model);

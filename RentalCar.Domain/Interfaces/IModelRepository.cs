@@ -14,5 +14,6 @@ namespace RentalCar.Domain.Interfaces
         Task CreateAsync(Model model);
         Task UpdateAsync(Model model);
         Task DeleteAsync(Model model);
+        Task<List<Model>> GetByMakeIdAsync(int makeId); 
     }
 }
