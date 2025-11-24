@@ -6,6 +6,8 @@ using RentalCar.Application.Interfaces;
 using RentalCar.Application.Makes.Commands;
 using RentalCar.Application.Makes.DTOs;
 using RentalCar.Application.Makes.Queries;
+using RentalCar.Application.Models.DTOs;
+using RentalCar.Application.Models.Queries;
 
 namespace RentalCar.WebApi.Controllers.Admin;
 
@@ -18,13 +20,23 @@ namespace RentalCar.WebApi.Controllers.Admin;
          ICommandHandler<MakeUpdateCommand, Result<string>> update,
          ICommandHandler<MakeActivateCommand, Result<string>> activate,
          ICommandHandler<MakeDeactivateCommand, Result<string>> deactivate,
-         IQueryHandler<MakeGetQuery, Result<List<MakeGetDto>>> getall)
+         IQueryHandler<MakeGetQuery, Result<List<MakeGetDto>>> getall,
+         IQueryHandler<ModelGetByMakeIdQuery,Result<List<ModelGetDto>>> getAllModel)
         : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var result = await getall.HandleAsync(new MakeGetQuery());
+            if (!result.IsSuccess)
+                return HandleError(result);
+
+            return Ok(result.Data);
+        }
+        [HttpGet("{id:int}/models")]
+        public async Task<IActionResult> GetModelsByMakeId(int id)
+        {
+            var result = await getAllModel.HandleAsync(new ModelGetByMakeIdQuery(id));
             if (!result.IsSuccess)
                 return HandleError(result);
 

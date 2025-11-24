@@ -39,7 +39,6 @@ namespace RentalCar.Application.Makes.Handlers
                 return Result<string>.Fail("Make with this name already exists", ErrorType.Conflict);
             }
 
-
             command.MapFrom(make);
 
             await makeRepository.UpdateAsync(make);

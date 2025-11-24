@@ -102,5 +102,6 @@ namespace RentalCar.Application.Cars.Mappers
                 }).ToList()
             };
         }
+        
     }
 }
