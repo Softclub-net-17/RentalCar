@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
@@ -6,11 +7,13 @@ using RentalCar.Application.Makes.Commands;
 using RentalCar.Application.Makes.DTOs;
 using RentalCar.Application.Makes.Queries;
 
-namespace RentalCar.WebApi.Controllers
-{
-    [Route("api/makes")]
+namespace RentalCar.WebApi.Controllers.Admin;
+
+    [Route("api/admin/makes")]
+    [ApiExplorerSettings(GroupName = "admin")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
-    public class MakesController
+    public class MakeController
              (ICommandHandler<MakeCreateCommand, Result<string>> create,
          ICommandHandler<MakeUpdateCommand, Result<string>> update,
          ICommandHandler<MakeActivateCommand, Result<string>> activate,
@@ -80,4 +83,4 @@ namespace RentalCar.WebApi.Controllers
             };
         }
     }
-}
+

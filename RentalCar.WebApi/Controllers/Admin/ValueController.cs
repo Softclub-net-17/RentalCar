@@ -1,38 +1,29 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RentalCar.Application.CarAttributes.Commands;
-using RentalCar.Application.CarAttributes.DTOS;
-using RentalCar.Application.CarAttributes.Queries;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
+using RentalCar.Application.Values.Commands;
+using RentalCar.Application.Values.DTOS;
+using RentalCar.Application.Values.Queries;
 
-namespace RentalCar.WebApi.Controllers;
+namespace RentalCar.WebApi.Controllers.Admin;
 
-[ApiController]
-[Route("api/car-attributes")]
+[ApiExplorerSettings(GroupName = "admin")]
+[Route("api/admin/values")]
 [Authorize(Roles = "Admin")]
-public class CarAttributeController(
-    IQueryHandler<CarAttributeGetQuery, Result<List<CarAttributeGetDto>>> getAllHandler,
-    IQueryHandler<CarAttributeGetByIdQuery, Result<CarAttributeGetDto>> getByIdHandler,
-    IQueryHandler<CarGetAttributesWithValuesQuery,Result<List<GetCarAttributesWithValuesDto>>> getAttributesWithValues,
-    ICommandHandler<CarAttributeCreateCommand, Result<string>> createHandler,
-    ICommandHandler<CarAttributeUpdateCommand, Result<string>> updateHandler,
-    ICommandHandler<CarAttributeDeleteCommand, Result<string>> deleteHandler)
+[ApiController]
+public class ValueController(
+    IQueryHandler<ValueGetQuery, Result<List<ValueGetDto>>> getAllHandler,
+    IQueryHandler<ValueGetByIdQuery, Result<ValueGetDto>> getByIdHandler,
+    ICommandHandler<ValueCreateCommand, Result<string>> createHandler,
+    ICommandHandler<ValueUpdateCommand, Result<string>> updateHandler,
+    ICommandHandler<ValueDeleteCommand, Result<string>> deleteHandler)
     : ControllerBase
 {
-    [HttpGet("all")]
+    [HttpGet]
     public async Task<IActionResult> GetAllAsync()
     {
-        var result = await getAllHandler.HandleAsync(new CarAttributeGetQuery());
-        if (!result.IsSuccess)
-            return HandleError(result);
-
-        return Ok(result.Data);
-    }
-    [HttpGet("withvalues")]
-    public async Task<IActionResult> GetCarAttributesWithValues()
-    {
-        var result = await getAttributesWithValues.HandleAsync(new CarGetAttributesWithValuesQuery());
+        var result = await getAllHandler.HandleAsync(new ValueGetQuery());
         if (!result.IsSuccess)
             return HandleError(result);
 
@@ -42,7 +33,7 @@ public class CarAttributeController(
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetByIdAsync(int id)
     {
-        var result = await getByIdHandler.HandleAsync(new CarAttributeGetByIdQuery(id));
+        var result = await getByIdHandler.HandleAsync(new ValueGetByIdQuery(id));
         if (!result.IsSuccess)
             return HandleError(result);
 
@@ -50,7 +41,7 @@ public class CarAttributeController(
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(CarAttributeCreateCommand command)
+    public async Task<IActionResult> CreateAsync(ValueCreateCommand command)
     {
         var result = await createHandler.HandleAsync(command);
         if (!result.IsSuccess)
@@ -60,7 +51,7 @@ public class CarAttributeController(
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateAsync(int id, [FromBody] CarAttributeUpdateCommand command)
+    public async Task<IActionResult> UpdateAsync(int id, [FromBody] ValueUpdateCommand command)
     {
         command.Id = id;
         var result = await updateHandler.HandleAsync(command);
@@ -73,7 +64,7 @@ public class CarAttributeController(
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync(int id)
     {
-        var result = await deleteHandler.HandleAsync(new CarAttributeDeleteCommand(id));
+        var result = await deleteHandler.HandleAsync(new ValueDeleteCommand(id));
         if (!result.IsSuccess)
             return HandleError(result);
 

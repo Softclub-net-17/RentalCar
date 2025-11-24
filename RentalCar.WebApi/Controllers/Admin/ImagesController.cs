@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RentalCar.Application.Cars.Commands;
-using RentalCar.Application.Cars.DTOs;
-using RentalCar.Application.Cars.Queries;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Images.Commands;
 using RentalCar.Application.Interfaces;
 
-namespace RentalCar.WebApi.Controllers
-{
-    [Route("api/images")]
+namespace RentalCar.WebApi.Controllers.Admin;
+
+    [Route("api/admin/images")]
+    [ApiExplorerSettings(GroupName = "admin")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class ImagesController
            (ICommandHandler<ImageCreateCommand, Result<string>> create,
@@ -47,4 +45,3 @@ namespace RentalCar.WebApi.Controllers
             };
         }
     }
-}

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Cars.Commands;
 using RentalCar.Application.Cars.DTOs;
@@ -6,11 +6,13 @@ using RentalCar.Application.Cars.Queries;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 
-namespace RentalCar.WebApi.Controllers
-{
-    [Route("api/cars")]
-    [ApiController]
-    public class CarsController(
+namespace RentalCar.WebApi.Controllers.Admin;
+
+[Route("api/admin/cars")]
+[ApiExplorerSettings(GroupName = "admin")]
+[Authorize(Roles = "Admin")]
+[ApiController]
+public class CarController(
         ICommandHandler<CarCreateCommand, Result<string>> create,
          ICommandHandler<CarUpdateCommand, Result<string>> update,
          ICommandHandler<CarDeleteCommand, Result<string>> delete,
@@ -81,4 +83,4 @@ namespace RentalCar.WebApi.Controllers
             };
         }
     }
-}
+

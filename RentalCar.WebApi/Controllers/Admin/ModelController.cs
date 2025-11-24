@@ -1,16 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 using RentalCar.Application.Models.Commands;
 using RentalCar.Application.Models.DTOs;
 using RentalCar.Application.Models.Queries;
 
-namespace RentalCar.WebApi.Controllers
+namespace RentalCar.WebApi.Controllers.Admin
 {
-    [Route("api/models")]
+    [ApiExplorerSettings(GroupName = "admin")]
+    [Route("api/admin/models")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
-    public class ModelsController
-               (ICommandHandler<ModelCreateCommand, Result<string>> create,
+    public class ModelController(
+        ICommandHandler<ModelCreateCommand, Result<string>> create,
          ICommandHandler<ModelUpdateCommand, Result<string>> update,
          ICommandHandler<ModelDeleteCommand, Result<string>> delete,
          IQueryHandler<ModelsGetQuery, Result<List<ModelGetDto>>> getall)

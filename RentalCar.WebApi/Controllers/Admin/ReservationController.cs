@@ -6,11 +6,12 @@ using RentalCar.Application.Reservations.Commands;
 using RentalCar.Application.Reservations.DTOS;
 using RentalCar.Application.Reservations.Queries;
 
-namespace RentalCar.WebApi.Controllers;
+namespace RentalCar.WebApi.Controllers.Admin;
 
-[ApiController]
-[Route("api/reservations")]
+[Route("api/admin/reservations")]
+[ApiExplorerSettings(GroupName = "admin")]
 [Authorize(Roles = "Admin")]
+[ApiController]
 public class ReservationController(
     IQueryHandler<ReservationGetQuery, Result<List<ReservationGetDto>>> getAllHandler,
     IQueryHandler<ReservationGetByIdQuery, Result<ReservationGetDto>> getByIdHandler,

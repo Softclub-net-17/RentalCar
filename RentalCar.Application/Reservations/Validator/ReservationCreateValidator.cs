@@ -9,9 +9,6 @@ public class ReservationCreateValidator : IValidator<ReservationCreateCommand>
     public ValidationResult Validate(ReservationCreateCommand instance)
     {
         var result = new ValidationResult();
-        
-        if (instance.UserId <= 0)
-            result.AddError("UserId is required");
 
         if (instance.CarId <= 0)
             result.AddError("CarId is required");
