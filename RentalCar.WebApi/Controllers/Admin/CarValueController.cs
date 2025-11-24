@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.CarValues.Commands;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
-using RentalCar.Application.Values.Commands;
-using RentalCar.Application.Values.Queries;
 
-namespace RentalCar.WebApi.Controllers;
+namespace RentalCar.WebApi.Controllers.Admin;
 
-[ApiController]
-[Route("api/car-values")]
+[Route("api/admin/car-values")]
+[ApiExplorerSettings(GroupName = "admin")]
 [Authorize(Roles = "Admin")]
+[ApiController]
 public class CarValueController(
     ICommandHandler<CarValueCreateCommand, Result<string>> createHandler,
     ICommandHandler<CarValueUpdateCommand, Result<string>> updateHandler,

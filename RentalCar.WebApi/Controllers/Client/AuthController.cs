@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Auth.Commands;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 
-namespace RentalCar.WebApi.Controllers;
+namespace RentalCar.WebApi.Controllers.Client;
 
-[ApiController]
+[ApiExplorerSettings(GroupName = "client")]
 [Route("api/auth")]
+[ApiController]
 public class AuthController(
     ICommandHandler<LoginCommand, Result<string>> loginCommandHandler,
     ICommandHandler<RegisterCommand, Result<string>> registerCommandHandler) 

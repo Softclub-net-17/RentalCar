@@ -9,17 +9,38 @@ public static class SwaggerConfigurations
     {
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo
+            options.SwaggerDoc("client", new OpenApiInfo
             {
-                Title = "Renta Car API",
+                Title = "Client API",
                 Version = "v1",
-                Description = "API для клиентской части Renta Car системы",
+                Description = "API для клиентской части ",
                 Contact = new OpenApiContact
                 {
                     Name = "MAGA",
                     Email = "muhammadkhojaev187@gmail.com",
                     Url = new Uri("https://rentacar.tj")
                 }
+            });
+            
+            options.SwaggerDoc("admin", new OpenApiInfo
+            {
+                Title = "Admin API",
+                Version = "v1",
+                Description = "API для административной панели",
+                Contact = new OpenApiContact
+                {
+                    Name = "MAGA",
+                    Email = "muhammadkhojaev187@gmail.com",
+                    Url = new Uri("https://rentacar.tj")
+                }
+            });
+
+            options.DocInclusionPredicate((docName, apiDesc) =>
+            {
+                if (string.IsNullOrEmpty(apiDesc.GroupName))
+                    return false;
+
+                return apiDesc.GroupName == docName;
             });
             
             options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme

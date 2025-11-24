@@ -6,11 +6,12 @@ using RentalCar.Application.Users.Commands;
 using RentalCar.Application.Users.DTOS;
 using RentalCar.Application.Users.Queries;
 
-namespace RentalCar.WebApi.Controllers;
+namespace RentalCar.WebApi.Controllers.Admin;
 
-[ApiController]
-[Route("api/users")]
+[ApiExplorerSettings(GroupName = "admin")]
+[Route("api/admin/users")]
 [Authorize(Roles = "Admin")]
+[ApiController]
 public class UserController(
     IQueryHandler<UserGetQuery, Result<List<UserGetDto>>> getAllHandler,
     IQueryHandler<UserGetByIdQuery, Result<UserGetDto>> getByIdHandler,
