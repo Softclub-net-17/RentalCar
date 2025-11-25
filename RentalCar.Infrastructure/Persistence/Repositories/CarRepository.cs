@@ -36,7 +36,6 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
         {
             return await context.Cars
             .Include(c => c.Images)
-            .Include(c => c.Images)
             .Include(c => c.CarValues)
             .ThenInclude(cv => cv.Value)
             .ThenInclude(ca => ca.CarAttribute)

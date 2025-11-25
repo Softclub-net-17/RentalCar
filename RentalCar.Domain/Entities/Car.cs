@@ -12,7 +12,7 @@ namespace RentalCar.Domain.Entities
         public string Title { get; set; } = string.Empty;
         public decimal PricePerHour { get; set; }
         public string Description { get; set; } = string.Empty;
-        public string Color { get; set; }
+        public string Color { get; set; } = null!;
         public bool Tinting { get; set; }
         public int Millage { get; set; }
         public int Year { get; set; }

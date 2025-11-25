@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RentalCar.Infrastructure.Persistence.Repositories
 {
-    public class ImageRepository(ApplicationDbContext context) : ICarImageRepository
+    public class ImageRepository(ApplicationDbContext context) : IImageRepository
     {
         public async Task CreateAsync(Image image)
         {
@@ -33,7 +33,9 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
             return await context.Images.FindAsync(id);
         }
 
-        
-
+        public async Task<Image?> GetByMakeId(int makeId)
+        {
+            return await context.Images.Where(m => m.MakeId == makeId).FirstOrDefaultAsync();
+        }
     }
 }

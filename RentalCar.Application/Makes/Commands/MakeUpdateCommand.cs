@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,9 @@ namespace RentalCar.Application.Makes.Commands
 {
     public class MakeUpdateCommand : ICommand<Result<string>>
     {
-        [JsonIgnore]
+        [SwaggerIgnore]
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
+        public IFormFile? Picture { get; set; } = null;
     }
 }

@@ -15,7 +15,7 @@ namespace RentalCar.Application.Cars.Handlers
         IValueRepository valueRepository,
         ICarValueRepository carValueRepository,
         IValidator<CarUpdateCommand> validator,
-        ICarImageRepository carImageRepository,
+        IImageRepository carImageRepository,
         IFileService fileService) : ICommandHandler<CarUpdateCommand, Result<string>>
     {
         public async Task<Result<string>> HandleAsync(CarUpdateCommand command)
@@ -50,23 +50,23 @@ namespace RentalCar.Application.Cars.Handlers
 
             var oldImages = await carImageRepository.GetByCarId(car.Id);
 
-            foreach(var image in oldImages)
+            if (command.Pictures != null && command.Pictures.Any())
             {
-                await fileService.DeleteFileAsync(UploadFolders.Cars, image.PhotoUrl);
-                await carImageRepository.DeleteAsync(image);
+                foreach (var image in oldImages)
+                {
+                    await fileService.DeleteFileAsync(UploadFolders.Cars, image.PhotoUrl);
+                    await carImageRepository.DeleteAsync(image);
+                }
+                foreach (var picture in command.Pictures)
+                {
+                    var fileName = await fileService.SaveFileAsync(UploadFolders.Cars, picture);
+                    var newImage = ImageMappers.ToCarImage(fileName, car.Id);
+                    await carImageRepository.CreateAsync(newImage);
+                }
             }
-
-            foreach(var picture in command.Pictures)
-            {
-                var fileName = await fileService.SaveFileAsync(UploadFolders.Cars, picture);
-                var newImage = ImageMappers.ToEntity(fileName, car.Id);
-                await carImageRepository.CreateAsync(newImage);
-            }
-
             await unitOfWork.SaveChangesAsync();
 
             return Result<string>.Ok(null,"Car updated successfully");
-
         }
     }
 }

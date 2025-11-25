@@ -21,7 +21,7 @@ public static class DependencyInjection
         services.AddScoped<IMakeRepository, MakeRepository>();
         services.AddScoped<IModelRepository, ModelRepository>();
         services.AddScoped<ICarRepository, CarRepository>();
-        services.AddScoped<ICarImageRepository, ImageRepository>();
+        services.AddScoped<IImageRepository, ImageRepository>();
         services.AddScoped<IFileService, FileService>();
         services.AddScoped<ICarValueRepository, CarValueRepository>();
         services.AddScoped<IReservationRepository, ReservationRepository>();

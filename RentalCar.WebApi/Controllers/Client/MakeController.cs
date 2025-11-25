@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
-using RentalCar.Application.Makes.Commands;
 using RentalCar.Application.Makes.DTOs;
 using RentalCar.Application.Makes.Queries;
 using RentalCar.Application.Models.DTOs;

@@ -6,7 +6,7 @@ using RentalCar.Domain.Interfaces;
 namespace RentalCar.Application.Images.Handlers
 {
     public class ImageDeleteCommandHandler(
-        ICarImageRepository repository,
+        IImageRepository repository,
         IUnitOfWork unitOfWork)
         : ICommandHandler<ImageDeleteCommand, Result<string>>
     {

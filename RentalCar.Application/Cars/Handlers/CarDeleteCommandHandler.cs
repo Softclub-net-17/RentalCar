@@ -9,7 +9,7 @@ namespace RentalCar.Application.Cars.Handlers
     public class CarDeleteCommandHandler
         (IUnitOfWork unitOfWork,
         ICarRepository carRepository,
-        ICarImageRepository imageRepository,
+        IImageRepository imageRepository,
         IFileService fileService) : ICommandHandler<CarDeleteCommand, Result<string>>
     {
         public async Task<Result<string>> HandleAsync(CarDeleteCommand command)
