@@ -11,6 +11,7 @@ namespace RentalCar.Domain.Interfaces
     {
         Task<IEnumerable<Car>> GetAllAsync();
         Task<Car?> GetByIdAsync(int id);
+        IQueryable<Car> Query();
         Task CreateAsync(Car car);
         Task UpdateAsync(Car car);
         Task DeleteAsync(Car car);

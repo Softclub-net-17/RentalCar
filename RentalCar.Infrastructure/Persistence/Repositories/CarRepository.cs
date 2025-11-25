@@ -25,22 +25,33 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
         public async Task<IEnumerable<Car>> GetAllAsync()
         {
             return await context.Cars
-            .Include(c => c.Images)
-            .Include(c => c.CarValues)
-            .ThenInclude(cv => cv.Value)
-            .ThenInclude(ca => ca.CarAttribute)
-            .ToListAsync();
+                .Include(c => c.Images)
+                .Include(c => c.CarValues)
+                .ThenInclude(cv => cv.Value)
+                .ThenInclude(ca => ca.CarAttribute)
+                .ToListAsync();
         }
 
         public async Task<Car?> GetByIdAsync(int id)
         {
             return await context.Cars
-            .Include(c => c.Images)
-            .Include(c => c.Images)
-            .Include(c => c.CarValues)
-            .ThenInclude(cv => cv.Value)
-            .ThenInclude(ca => ca.CarAttribute)
-            .FirstOrDefaultAsync(c => c.Id == id);
+                .Include(c => c.Images)
+                .Include(c => c.CarValues)
+                .ThenInclude(cv => cv.Value)
+                .ThenInclude(ca => ca.CarAttribute)
+                .FirstOrDefaultAsync(c => c.Id == id);
+        }
+        
+        public IQueryable<Car> Query()
+        {
+            return context.Cars
+                .Include(c => c.Model)
+                .ThenInclude(m => m.Make)
+                .Include(c => c.Images)
+                .Include(c => c.CarValues)
+                .ThenInclude(cv => cv.Value)
+                .ThenInclude(v => v.CarAttribute)
+                .AsQueryable();
         }
 
         public Task UpdateAsync(Car car)

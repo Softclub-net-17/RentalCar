@@ -17,13 +17,25 @@ public class CarController(
          ICommandHandler<CarUpdateCommand, Result<string>> update,
          ICommandHandler<CarDeleteCommand, Result<string>> delete,
          IQueryHandler<CarGetByIdQuery, Result<CarGetDto>> getByIdHandler,
-         IQueryHandler<CarGetQuery, Result<List<CarGetDto>>> getall)
+         IQueryHandler<CarGetQuery, Result<List<CarGetDto>>> getall,
+        IQueryHandler<GetCarsByFilterQuery, Result<List<CarListItemDto>>> getByFilter)
         : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var result = await getall.HandleAsync(new CarGetQuery());
+            if (!result.IsSuccess)
+                return HandleError(result);
+
+            return Ok(result.Data);
+        }
+        
+        [HttpPost("filter")]
+        public async Task<IActionResult> GetByFilterAsync([FromForm] CarFilterGetDto filter)
+        {
+            var result = await getByFilter.HandleAsync(new GetCarsByFilterQuery(filter));
+
             if (!result.IsSuccess)
                 return HandleError(result);
 
@@ -83,4 +95,3 @@ public class CarController(
             };
         }
     }
-
