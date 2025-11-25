@@ -1,6 +1,6 @@
-﻿namespace RentalCar.Application.Cars.DTOs;
+﻿namespace RentalCar.Domain.ValueObject;
 
-public class CarFilterGetDto
+public class CarFilter
 {
     public int? MakeId { get; set; }
     public int? ModelId { get; set; }

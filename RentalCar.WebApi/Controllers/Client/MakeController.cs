@@ -16,7 +16,8 @@ namespace RentalCar.WebApi.Controllers.Client;
 [Authorize]
 public class MakeController(
          IQueryHandler<MakeGetQuery, Result<List<MakeGetDto>>> getall,
-         IQueryHandler<ModelGetByMakeIdQuery, Result<List<ModelGetDto>>> getAllModel)
+         IQueryHandler<ModelGetByMakeIdQuery, Result<List<ModelGetDto>>> getAllModel,
+         IQueryHandler<ModelsGetByMakeQuery, Result<List<ModelGetDto>>> getbymake)
         : ControllerBase
     {
         [HttpGet]
@@ -38,6 +39,17 @@ public class MakeController(
 
         return Ok(result.Data);
     }
+     
+        [HttpGet("models-by-make/{makeId}")]
+        public async Task<IActionResult> GetModelsByMakeAsync(int makeId)
+        {
+            var result = await getbymake.HandleAsync(new ModelsGetByMakeQuery(makeId));
+
+            if (!result.IsSuccess)
+                return HandleError(result);
+
+            return Ok(result.Data);
+        }
 
     private IActionResult HandleError<T>(Result<T> result)
         {

@@ -129,7 +129,7 @@ public static class DependencyInjection
         services.AddScoped<ICommandHandler<CarDeleteCommand, Result<string>>, CarDeleteCommandHandler>();
         services.AddScoped<IQueryHandler<CarGetQuery, Result<List<CarGetDto>>>, CarGetQueryHandler>();
         services.AddScoped<IQueryHandler<CarGetByIdQuery, Result<CarGetDto>>, CarsGetByIdQueryHandler>();
-        services.AddScoped<IQueryHandler<GetCarsByFilterQuery, Result<List<CarListItemDto>>>, GetCarsByFilterQueryHandler>();
+        services.AddScoped<IQueryHandler<CarByFilterQuery, Result<List<CarListItemDto>>>, CarByFilterQueryHandler>();
 
 
         //images

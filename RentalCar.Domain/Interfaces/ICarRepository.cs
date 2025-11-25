@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentalCar.Domain.ValueObject;
 
 namespace RentalCar.Domain.Interfaces
 {
@@ -11,7 +12,7 @@ namespace RentalCar.Domain.Interfaces
     {
         Task<IEnumerable<Car>> GetAllAsync();
         Task<Car?> GetByIdAsync(int id);
-        IQueryable<Car> Query();
+        Task<List<Car>> GetByFilterAsync(CarFilter filter);
         Task CreateAsync(Car car);
         Task UpdateAsync(Car car);
         Task DeleteAsync(Car car);

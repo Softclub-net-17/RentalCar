@@ -5,6 +5,7 @@ using RentalCar.Application.Cars.DTOs;
 using RentalCar.Application.Cars.Queries;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
+using RentalCar.Domain.ValueObject;
 
 namespace RentalCar.WebApi.Controllers.Admin;
 
@@ -14,11 +15,11 @@ namespace RentalCar.WebApi.Controllers.Admin;
 [ApiController]
 public class CarController(
         ICommandHandler<CarCreateCommand, Result<string>> create,
-         ICommandHandler<CarUpdateCommand, Result<string>> update,
-         ICommandHandler<CarDeleteCommand, Result<string>> delete,
-         IQueryHandler<CarGetByIdQuery, Result<CarGetDto>> getByIdHandler,
-         IQueryHandler<CarGetQuery, Result<List<CarGetDto>>> getall,
-        IQueryHandler<GetCarsByFilterQuery, Result<List<CarListItemDto>>> getByFilter)
+        ICommandHandler<CarUpdateCommand, Result<string>> update,
+        ICommandHandler<CarDeleteCommand, Result<string>> delete,
+        IQueryHandler<CarGetByIdQuery, Result<CarGetDto>> getByIdHandler,
+        IQueryHandler<CarGetQuery, Result<List<CarGetDto>>> getall,
+        IQueryHandler<CarByFilterQuery, Result<List<CarListItemDto>>> getByFilter)
         : ControllerBase
     {
         [HttpGet]
@@ -32,9 +33,9 @@ public class CarController(
         }
         
         [HttpPost("filter")]
-        public async Task<IActionResult> GetByFilterAsync([FromForm] CarFilterGetDto filter)
+        public async Task<IActionResult> GetByFilterAsync([FromForm] CarFilter filter)
         {
-            var result = await getByFilter.HandleAsync(new GetCarsByFilterQuery(filter));
+            var result = await getByFilter.HandleAsync(new CarByFilterQuery(filter));
 
             if (!result.IsSuccess)
                 return HandleError(result);
