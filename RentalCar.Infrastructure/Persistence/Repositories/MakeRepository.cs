@@ -24,7 +24,7 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
 
         public async Task<IEnumerable<Make>> GetAllAsync()
         {
-            return await context.Makes.ToListAsync();
+            return await context.Makes.Include(i => i.Image).ToListAsync();
         }
 
         public async Task<Make?> GetByIdAsync(int id)

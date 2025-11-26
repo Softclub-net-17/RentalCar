@@ -54,7 +54,7 @@ namespace RentalCar.WebApi.Controllers.Admin;
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] MakeUpdateCommand command)
+        public async Task<IActionResult> UpdateAsync(int id, [FromForm] MakeUpdateCommand command)
         {
             command.Id = id;
             var result = await update.HandleAsync(command);

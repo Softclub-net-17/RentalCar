@@ -8,5 +8,6 @@
 
         //navigations
         public List<Model> Models { get; set; } = null!;
+        public Image Image { get; set; } = null!;
     }
 }

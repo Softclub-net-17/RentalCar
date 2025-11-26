@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace RentalCar.Domain.Interfaces
 {
-    public interface ICarImageRepository
+    public interface IImageRepository
     {
         Task<Image?> GetByIdAsync(int id);
         Task CreateAsync(Image image);
         Task DeleteAsync(Image image);
         Task<List<Image>> GetByCarId(int carId);
+        Task<Image?> GetByMakeId(int makeId);
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using RentalCar.Application.Common.Results;
+﻿using RentalCar.Application.Common.Constants;
+using RentalCar.Application.Common.Results;
 using RentalCar.Application.Images.Commands;
 using RentalCar.Application.Images.Mappers;
 using RentalCar.Application.Interfaces;
@@ -13,24 +14,45 @@ namespace RentalCar.Application.Images.Handlers
 {
     public class ImageCreateCommandHandler(
       IFileService fileService,
-      ICarImageRepository repository,
+      IImageRepository repository,
       IUnitOfWork unitOfWork,
-      ICarRepository carRepository)
+      ICarRepository carRepository,
+      IMakeRepository makeRepository)
       : ICommandHandler<ImageCreateCommand, Result<string>>
     {
         public async Task<Result<string>> HandleAsync(ImageCreateCommand command)
         {
-            var carExist = await carRepository.GetByIdAsync(command.CarId);
-            if (carExist == null)
-                return Result<string>.Fail("Car not found", ErrorType.NotFound);
+            if (command.CarId == null && command.MakeId == null)
+                return Result<string>.Fail("Either CarId or MakeId must be provided", ErrorType.Validation);
 
-             foreach(var file in command.Files)
+
+            if (command.CarId != null)
             {
-            var fileName = await fileService.SaveFileAsync("cars", file);
-            var image = ImageMappers.ToEntity(fileName, command.CarId);
-            await repository.CreateAsync(image);
-            }
+                var car = await carRepository.GetByIdAsync(command.CarId.Value);
+                if (car == null)
+                    return Result<string>.Fail("Car not found", ErrorType.NotFound);
 
+                foreach (var file in command.Files)
+                {
+                    var fileName = await fileService.SaveFileAsync(UploadFolders.Cars, file);
+                    var image = ImageMappers.ToCarImage(fileName, car.Id);
+                    await repository.CreateAsync(image);
+                }
+            }
+            if (command.MakeId != null)
+            {
+                var make = await makeRepository.GetByIdAsync(command.MakeId.Value);
+                if (make == null)
+                    return Result<string>.Fail("Make not found", ErrorType.NotFound);
+
+                foreach (var file in command.Files)
+                {
+                    var fileName = await fileService.SaveFileAsync(UploadFolders.Makes, file);
+                    var image = ImageMappers.ToMakeImage(fileName, make.Id);
+                    await repository.CreateAsync(image);
+                    make.Image = image;
+                }
+            }
 
             await unitOfWork.SaveChangesAsync();
 
