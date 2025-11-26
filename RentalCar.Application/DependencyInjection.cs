@@ -121,7 +121,7 @@ public static class DependencyInjection
         services.AddScoped<ICommandHandler<ModelUpdateCommand, Result<string>>, ModelUpdateCommandHandler>();
         services.AddScoped<ICommandHandler<ModelDeleteCommand, Result<string>>, ModelDeleteCommandHandler>();
         services.AddScoped<IQueryHandler<ModelsGetQuery, Result<List<ModelGetDto>>>, ModelGetQueryHandler>();
-        services.AddScoped<IQueryHandler<ModelGetByMakeIdQuery, Result<List<ModelGetDto>>>,ModelGetByMakeIdQueryHandler>();
+        services.AddScoped<IQueryHandler<ModelsGetByMakeQuery, Result<List<ModelGetDto>>>,ModelsGetByMakeQueryHandler>();
 
         //cars
         services.AddScoped<ICommandHandler<CarCreateCommand, Result<string>>, CarCreateCommandHandler>();
@@ -129,6 +129,7 @@ public static class DependencyInjection
         services.AddScoped<ICommandHandler<CarDeleteCommand, Result<string>>, CarDeleteCommandHandler>();
         services.AddScoped<IQueryHandler<CarGetQuery, Result<List<CarGetDto>>>, CarGetQueryHandler>();
         services.AddScoped<IQueryHandler<CarGetByIdQuery, Result<CarGetDto>>, CarsGetByIdQueryHandler>();
+        services.AddScoped<IQueryHandler<CarByFilterQuery, Result<List<CarListItemDto>>>, CarByFilterQueryHandler>();
 
 
         //images

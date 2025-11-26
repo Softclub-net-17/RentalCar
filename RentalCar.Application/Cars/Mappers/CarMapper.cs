@@ -76,6 +76,19 @@ namespace RentalCar.Application.Cars.Mappers
                 }).ToList()
             }).ToList();
         }
+        
+        public static List<CarListItemDto> ToFilter(this IEnumerable<Car> cars)
+        {
+            return cars.Select(c => new CarListItemDto()
+            {
+                Id = c.Id,
+                Title = c.Title,
+                Make = c.Model.Make.Name,
+                Model = c.Model.Name,
+                Year = c.Year,
+                PricePerHour = c.PricePerHour,
+            }).ToList();
+        }
 
 
         public static CarGetDto ToDto(this Car car)
