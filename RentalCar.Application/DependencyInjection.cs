@@ -44,6 +44,9 @@ using RentalCar.Application.Cars.DTOs;
 using RentalCar.Application.Cars.Validators;
 using RentalCar.Application.Images.Commands;
 using RentalCar.Application.Images.Handlers;
+using RentalCar.Application.Statistics.Queries;
+using RentalCar.Application.Statistics.Handlers;
+using RentalCar.Application.Statistics.DTOs;
 
 namespace RentalCar.Application;
 
@@ -115,6 +118,7 @@ public static class DependencyInjection
         services.AddScoped<ICommandHandler<MakeActivateCommand, Result<string>>, MakeActivateCommandHandler>();
         services.AddScoped<ICommandHandler<MakeDeactivateCommand, Result<string>>, MakeDeactivateCommandHandler>();
         services.AddScoped<IQueryHandler<MakeGetQuery, Result<List<MakeGetDto>>>, MakeGetQueryHandler>();
+        services.AddScoped<IQueryHandler<ModelGetByMakeIdQuery, Result<List<ModelGetDto>>>, ModelGetByMakeIdQueryHandler>();
 
         //models
         services.AddScoped<ICommandHandler<ModelCreateCommand, Result<string>>, ModelCreateCommandHandler>();
@@ -135,6 +139,8 @@ public static class DependencyInjection
         //images
         services.AddScoped<ICommandHandler<ImageCreateCommand, Result<string>>, ImageCreateCommandHandler>();
         services.AddScoped<ICommandHandler<ImageDeleteCommand, Result<string>>, ImageDeleteCommandHandler>();
-        
+
+        //statistics
+        services.AddScoped<IQueryHandler<GetRentalStatisticsQuery, Result<StatisticsDto>>, GetRentalStatisticsQueryHandler>();
     }
 }
