@@ -83,11 +83,20 @@ namespace RentalCar.Application.Cars.Mappers
             {
                 Id = c.Id,
                 Title = c.Title,
-                Make = c.Model.Make.Name,
-                Model = c.Model.Name,
+                Make = c.Model?.Make?.Name ?? string.Empty, 
+                Model = c.Model?.Name ?? string.Empty,    
                 Year = c.Year,
                 PricePerHour = c.PricePerHour,
+                Images = c.Images?.Select(i => i.PhotoUrl).ToList() ?? new List<string>(),
+                CarAttributes = c.CarValues?.Select(cv => new CarAttributesGetDto
+                {
+                    AttributeId = cv.Value?.CarAttribute?.Id ?? 0,
+                    ValueId = cv.Value?.Id ?? 0,
+                    AttributeName = cv.Value?.CarAttribute?.Name ?? string.Empty,
+                    ValueName = cv.Value?.Name ?? string.Empty
+                }).ToList() ?? new List<CarAttributesGetDto>()
             }).ToList();
+
         }
 
 
