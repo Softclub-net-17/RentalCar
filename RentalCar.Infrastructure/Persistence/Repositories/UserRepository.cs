@@ -42,4 +42,9 @@ public class UserRepository(ApplicationDbContext context) : IUserRepository
         context.Users.Remove(user);
         return Task.CompletedTask;
     }
+
+    public async Task<int> CountAsync()
+    {
+        return await context.Users.CountAsync();    
+    }
 }

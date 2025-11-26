@@ -11,6 +11,17 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
 {
     public class CarRepository(ApplicationDbContext context) : ICarRepository
     {
+
+        public async Task<int> CountAsync()
+        {
+            return await context.Cars.CountAsync();
+        }
+
+        public async Task<int> CountAvailableAsync()
+        {
+            return await context.Cars.CountAsync(c => !c.Reservations.Any(r => r.ReturnDate == null));
+        }
+
         public async Task CreateAsync(Car car)
         {
             await context.Cars.AddAsync(car);

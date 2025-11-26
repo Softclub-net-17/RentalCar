@@ -14,5 +14,7 @@ namespace RentalCar.Domain.Interfaces
         Task CreateAsync(Car car);
         Task UpdateAsync(Car car);
         Task DeleteAsync(Car car);
+        Task<int> CountAsync();
+        Task<int> CountAvailableAsync();
     }
 }

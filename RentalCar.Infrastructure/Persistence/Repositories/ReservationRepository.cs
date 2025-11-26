@@ -41,4 +41,22 @@ public class ReservationRepository(ApplicationDbContext context) :  IReservation
              (end >= r.StartDate && end <= r.EndDate) ||
              (start <= r.StartDate && end >= r.EndDate)));
     }
+
+    public async Task<int> CountActiveAsync()
+    {
+        return await context.Reservations.
+            CountAsync(r => r.StartDate <= DateTimeOffset.UtcNow
+         && r.EndDate >= DateTimeOffset.UtcNow
+         && r.ReturnDate == null);
+    }
+
+    public async Task<decimal> GetTodayRevenueAsync()
+    {
+        var today = DateTime.UtcNow.Date; 
+        var tomorrow = today.AddDays(1); 
+
+        return await context.Reservations
+            .Where(r => r.StartDate >= today && r.StartDate < tomorrow && r.ReturnDate != null)
+            .SumAsync(r => r.TotalPrice);
+    }
 }

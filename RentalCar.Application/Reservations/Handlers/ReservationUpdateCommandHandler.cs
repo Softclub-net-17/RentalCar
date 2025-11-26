@@ -41,9 +41,6 @@ public class ReservationUpdateCommandHandler(
 
         var extraHours = (returnDate - reservation.EndDate).TotalHours;
 
-        if (extraHours <= 0)
-            extraHours = 1;
-
         var car = await carRepository.GetByIdAsync(reservation.CarId);
         if (car is null)
             return Result<string>.Fail("Car not found.", ErrorType.NotFound);
