@@ -23,7 +23,7 @@ namespace RentalCar.Application.Cars.Handlers
         ICarValueRepository carValueRepository,
         IValueRepository valueRepository,
         IFileService fileService,
-        ICarImageRepository imageRepository)
+        IImageRepository imageRepository)
         : ICommandHandler<CarCreateCommand, Result<string>>
     {
         public async Task<Result<string>> HandleAsync(CarCreateCommand command)
@@ -55,7 +55,7 @@ namespace RentalCar.Application.Cars.Handlers
             foreach (var picture in command.Pictures)
             {
                 var fileName = await fileService.SaveFileAsync(UploadFolders.Cars, picture);
-                var image = ImageMappers.ToEntity(fileName, car.Id);
+                var image = ImageMappers.ToCarImage(fileName, car.Id);
                 await imageRepository.CreateAsync(image);
             }
 

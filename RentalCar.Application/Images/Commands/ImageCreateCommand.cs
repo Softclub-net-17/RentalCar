@@ -12,7 +12,8 @@ namespace RentalCar.Application.Images.Commands
 {
     public class ImageCreateCommand : ICommand<Result<string>>
     {
-        public List<IFormFile> Files { get; set; } 
-        public int CarId { get; set; }
+        public List<IFormFile> Files { get; set; } = null!;
+        public int? CarId { get; set; }
+        public int? MakeId { get; set; }
     }
 }

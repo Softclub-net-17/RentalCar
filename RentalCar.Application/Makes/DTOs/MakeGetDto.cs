@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,8 @@ namespace RentalCar.Application.Makes.DTOs
     public class MakeGetDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
         public bool IsActive { get; set; }
-
+        public string? Image { get; set; } = null; 
     }
 }

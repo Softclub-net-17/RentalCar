@@ -17,6 +17,7 @@ namespace RentalCar.Application.Makes.Mappers
             {
                 Name = command.Name,
                 IsActive = true,
+
             };
         }
 
@@ -32,6 +33,7 @@ namespace RentalCar.Application.Makes.Mappers
                 Id = c.Id,
                 Name = c.Name,
                 IsActive = c.IsActive,
+                Image = c.Image != null ? c.Image.PhotoUrl : null
             }).ToList();
         }
     }

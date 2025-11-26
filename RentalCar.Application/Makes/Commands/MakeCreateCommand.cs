@@ -12,7 +12,8 @@ namespace RentalCar.Application.Makes.Commands
 {
     public class MakeCreateCommand : ICommand<Result<string>>
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
+        public IFormFile? Picture { get; set; } = null;
 
     }
 }

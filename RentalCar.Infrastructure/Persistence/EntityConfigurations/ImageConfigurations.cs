@@ -23,14 +23,15 @@ namespace RentalCar.Infrastructure.Persistence.EntityConfigurations
             builder.Property(i => i.PhotoUrl)
                 .IsRequired();
 
-            builder.Property(i => i.CarId)
-                .IsRequired();
-
             builder.HasOne(i => i.Car)
                 .WithMany(c => c.Images)
                 .HasForeignKey(i => i.CarId);
 
-            
+            builder.HasOne(i => i.Make)
+                .WithOne(m => m.Image)
+                .HasForeignKey<Image>(i => i.MakeId);
+
+
         }
     }
 }

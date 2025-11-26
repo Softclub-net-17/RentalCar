@@ -10,9 +10,11 @@ namespace RentalCar.Domain.Entities
     {
         public int Id { get; set; }
         public string PhotoUrl { get; set; } = string.Empty;
-        public int CarId { get; set; }
+        public int? CarId { get; set; }
+        public int? MakeId { get; set; }
 
         //navigations
-        public Car Car { get; set; }
+        public Car? Car { get; set; }
+        public Make? Make { get; set; }
     }
 }
