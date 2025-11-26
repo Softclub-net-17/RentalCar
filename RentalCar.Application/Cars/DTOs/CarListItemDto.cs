@@ -8,4 +8,6 @@ public class CarListItemDto
     public string Model { get; set; }
     public int Year { get; set; }
     public decimal PricePerHour { get; set; }
+    public List<string> Images { get; set; } = null!;
+    public List<CarAttributesGetDto> CarAttributes { get; set; } = null!;
 }
