@@ -47,6 +47,17 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
 
         }
 
+
+        public async Task<int> CountAsync()
+        {
+            return await context.Cars.CountAsync();
+        }
+
+        public async Task<int> CountAvailableAsync()
+        {
+            return await context.Cars.CountAsync(c => !c.Reservations.Any(r => r.ReturnDate == null));
+        }
+
         public async Task CreateAsync(Car car)
         {
             await context.Cars.AddAsync(car);
@@ -77,7 +88,6 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
                 .ThenInclude(ca => ca.CarAttribute)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
-        
         public IQueryable<Car> Query()
         {
             return context.Cars

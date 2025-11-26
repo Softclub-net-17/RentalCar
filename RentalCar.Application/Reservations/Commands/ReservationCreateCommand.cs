@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using RentalCar.Application.Common.Results;
+﻿using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 
 namespace RentalCar.Application.Reservations.Commands;
