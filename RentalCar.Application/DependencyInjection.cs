@@ -115,6 +115,7 @@ public static class DependencyInjection
         services.AddScoped<ICommandHandler<MakeActivateCommand, Result<string>>, MakeActivateCommandHandler>();
         services.AddScoped<ICommandHandler<MakeDeactivateCommand, Result<string>>, MakeDeactivateCommandHandler>();
         services.AddScoped<IQueryHandler<MakeGetQuery, Result<List<MakeGetDto>>>, MakeGetQueryHandler>();
+        services.AddScoped<IQueryHandler<ModelGetByMakeIdQuery, Result<List<ModelGetDto>>>, ModelGetByMakeIdQueryHandler>();
 
         //models
         services.AddScoped<ICommandHandler<ModelCreateCommand, Result<string>>, ModelCreateCommandHandler>();
