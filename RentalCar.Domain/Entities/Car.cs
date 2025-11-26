@@ -23,7 +23,7 @@ namespace RentalCar.Domain.Entities
         public Model Model { get; set; }
         public List<Reservation> Reservations { get; set; }
 
-        public IEnumerable<Image>? Images { get; set; }
+        public IEnumerable<Image> Images { get; set; }
         public IEnumerable<CarValue> CarValues { get; set; }
 
     }
