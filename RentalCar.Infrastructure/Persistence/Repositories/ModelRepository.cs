@@ -18,7 +18,7 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
 
         public Task DeleteAsync(Model model)
         {
-             context.Models.Remove(model);
+            context.Models.Remove(model);
             return Task.CompletedTask;
         }
 
@@ -37,10 +37,18 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
             return await context.Models.Where(m => m.MakeId == makeId)
                 .ToListAsync();
         }
+        
+        public async Task<List<Model>> GetModelsByMakeWithCarsAsync(int makeId)
+        {
+            return await context.Models
+                .Where(m => m.MakeId == makeId && m.Cars.Any()) 
+                .Include(m => m.Cars)
+                .ToListAsync();
+        }
 
         public Task UpdateAsync(Model model)
         {
-             context.Models.Update(model);
+            context.Models.Update(model);
             return Task.CompletedTask;
         }
     }

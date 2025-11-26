@@ -14,15 +14,27 @@ namespace RentalCar.WebApi.Controllers.Admin
     [ApiController]
     public class ModelController(
         ICommandHandler<ModelCreateCommand, Result<string>> create,
-         ICommandHandler<ModelUpdateCommand, Result<string>> update,
-         ICommandHandler<ModelDeleteCommand, Result<string>> delete,
-         IQueryHandler<ModelsGetQuery, Result<List<ModelGetDto>>> getall)
+        ICommandHandler<ModelUpdateCommand, Result<string>> update,
+        ICommandHandler<ModelDeleteCommand, Result<string>> delete,
+        IQueryHandler<ModelsGetQuery, Result<List<ModelGetDto>>> getall,
+        IQueryHandler<ModelsGetByMakeQuery, Result<List<ModelGetDto>>> getbymake)
         : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var result = await getall.HandleAsync(new ModelsGetQuery());
+            if (!result.IsSuccess)
+                return HandleError(result);
+
+            return Ok(result.Data);
+        }
+        
+        [HttpGet("models-by-make/{makeId}")]
+        public async Task<IActionResult> GetModelsByMakeAsync(int makeId)
+        {
+            var result = await getbymake.HandleAsync(new ModelsGetByMakeQuery(makeId));
+
             if (!result.IsSuccess)
                 return HandleError(result);
 
