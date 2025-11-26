@@ -88,7 +88,6 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
                 .ThenInclude(ca => ca.CarAttribute)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
-        
         public IQueryable<Car> Query()
         {
             return context.Cars
