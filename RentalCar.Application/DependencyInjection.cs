@@ -90,6 +90,7 @@ public static class DependencyInjection
         services.AddScoped<IQueryHandler<UserGetMeQuery, Result<UserGetDto>>, UserGetMeQueryHandler>();
 
         // register
+        services.AddScoped<ICommandHandler<ChangePasswordCommand, Result<string>>, ChangePasswordCommandHandler>();
         services.AddScoped<ICommandHandler<RegisterCommand, Result<string>>, RegisterCommandHandler>();
         services.AddScoped<ICommandHandler<LoginCommand, Result<string>>, LoginCommandHandler>();
         
@@ -103,6 +104,7 @@ public static class DependencyInjection
         services.AddScoped<IValidator<ValueCreateCommand>, ValueCreateValidator>();
         services.AddScoped<IValidator<ValueUpdateCommand>, ValueUpdateValidator>();
         services.AddScoped<IValidator<UserUpdateCommand>, UserUpdateValidator>();
+        services.AddScoped<IValidator<ChangePasswordCommand>, ChangePasswordValidator>();
         services.AddScoped<IValidator<RegisterCommand>, RegisterValidator>();
         services.AddScoped<IValidator<LoginCommand>, LoginValidator>();
         services.AddScoped<IValidator<MakeCreateCommand>, MakeCreateValidator>();

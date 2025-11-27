@@ -11,7 +11,8 @@ namespace RentalCar.WebApi.Controllers.Client;
 [ApiController]
 public class AuthController(
     ICommandHandler<LoginCommand, Result<string>> loginCommandHandler,
-    ICommandHandler<RegisterCommand, Result<string>> registerCommandHandler) 
+    ICommandHandler<RegisterCommand, Result<string>> registerCommandHandler,
+    ICommandHandler<ChangePasswordCommand, Result<string>> changePasswordHandler) 
     : ControllerBase
 {
     [HttpPost("login")]
@@ -37,6 +38,18 @@ public class AuthController(
             return HandleError(result);
         }
         
+        return Ok(result.Message);
+    }
+    
+    [Authorize]
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePasswordAsync(ChangePasswordCommand command)
+    {
+        var result = await changePasswordHandler.HandleAsync(command);
+
+        if (!result.IsSuccess)
+            return HandleError(result);
+
         return Ok(result.Message);
     }
     
