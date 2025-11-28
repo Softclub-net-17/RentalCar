@@ -31,4 +31,8 @@ public static class UserMappers
             Role = user.Role
         }).ToList();
     }
+    public static void MapFrom(this User user, string passwordHash)
+    {
+        user.PasswordHash = passwordHash;
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Auth.Commands;
+using RentalCar.Application.Auth.Handlers;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 
@@ -12,7 +13,10 @@ namespace RentalCar.WebApi.Controllers.Client;
 public class AuthController(
     ICommandHandler<LoginCommand, Result<string>> loginCommandHandler,
     ICommandHandler<RegisterCommand, Result<string>> registerCommandHandler,
-    ICommandHandler<ChangePasswordCommand, Result<string>> changePasswordHandler) 
+    ICommandHandler<ChangePasswordCommand, Result<string>> changePasswordHandler,
+    ICommandHandler<RequestResetPasswordCommand, Result<string>> requestReset,
+    ICommandHandler<VerifyCodeCommand, Result<string>> verify,
+    ICommandHandler<ResetPasswordCommand, Result<string>> reset) 
     : ControllerBase
 {
     [HttpPost("login")]
@@ -52,7 +56,46 @@ public class AuthController(
 
         return Ok(result.Message);
     }
-    
+
+    [HttpPost("request-reset-password")]
+    public async Task<IActionResult> RequestResetPasswordAsync(RequestResetPasswordCommand command)
+    {
+        var result = await requestReset.HandleAsync(command);
+
+        if (!result.IsSuccess)
+        {
+            return HandleError(result);
+        }
+
+        return Ok(result.Message);
+    }
+
+    [HttpPost("verify-code")]
+    public async Task<IActionResult> VerifyCodeAsync(VerifyCodeCommand command)
+    {
+        var result = await verify.HandleAsync(command);
+
+        if (!result.IsSuccess)
+        {
+            return HandleError(result);
+        }
+
+        return Ok(result.Message);
+    }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPasswordAsync(ResetPasswordCommand command)
+    {
+        var result = await reset.HandleAsync(command);
+
+        if (!result.IsSuccess)
+        {
+            return HandleError(result);
+        }
+
+        return Ok(result.Message);
+    }
+
     private IActionResult HandleError<T>(Result<T> result)
     {
         return result.ErrorType switch

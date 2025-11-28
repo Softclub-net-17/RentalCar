@@ -10,7 +10,10 @@ public class UserRepository(ApplicationDbContext context) : IUserRepository
     {
         return await context.Users.FirstOrDefaultAsync(user => user.Email == email);
     }
-
+    public async Task<IEnumerable<User>> GetUsersByIdsAsync(List<int> ids)
+    {
+        return await context.Users.Where(user => ids.Any(id => id == user.Id)).ToListAsync();
+    }
     public async Task<bool> ExistsByEmailAsync(string email)
     {
         return await context.Users.AnyAsync(user => user.Email == email);
