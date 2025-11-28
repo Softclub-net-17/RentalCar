@@ -22,6 +22,7 @@ try
 {
     await using var scope = app.Services.CreateAsyncScope();
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context.Database.EnsureCreated();
 
     await DefaultUsers.SeedAsync(context);
 }
