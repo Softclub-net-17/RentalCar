@@ -9,7 +9,7 @@ public class DefaultUsers
 {
     public static async Task SeedAsync(ApplicationDbContext context)
     {
-        var admin = await context.Users.FirstOrDefaultAsync(user => user.Email == "siyovush@gmail.com");
+        var admin = await context.Users.FirstOrDefaultAsync(user => user.Email == "siyovush.azamov06@gmail.com");
         
         if (admin != null)  return;
         
@@ -17,7 +17,7 @@ public class DefaultUsers
 
         var newUser = new User
         {
-            Email = "siyovush@gmail.com",
+            Email = "siyovush.azamov06@gmail.com",
             Role = Role.Admin,
             PasswordHash = passwordHash,
         };

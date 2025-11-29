@@ -35,5 +35,7 @@ namespace RentalCar.WebApi.Controllers.Admin
                 _ => StatusCode(500, new { error = result.Message ?? "Internal server error" })
             };
         }
+
+
     }
 }

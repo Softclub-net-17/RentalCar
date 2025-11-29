@@ -1,4 +1,6 @@
+using Infrastructure.Services.Email;
 using RentalCar.Application;
+using RentalCar.Application.Interfaces;
 using RentalCar.Infrastructure;
 using RentalCar.Infrastructure.Persistence.Seeds;
 using RentalCar.WebApi.Extensions;
@@ -15,6 +17,8 @@ builder.Services.AddRepositories(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddCorsConfigurations();
 builder.Services.AddConnectionConfigurations(builder.Configuration);
+builder.Services.Configure<EmailSettings>(
+builder.Configuration.GetSection("SmtpSettings"));
 
 var app = builder.Build();
 

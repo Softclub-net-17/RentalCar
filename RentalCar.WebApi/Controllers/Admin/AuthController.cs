@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Auth.Commands;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
@@ -25,7 +24,6 @@ public class AuthController(
         
         return Ok(result.Data);
     }
-    
     private IActionResult HandleError<T>(Result<T> result)
     {
         return result.ErrorType switch
