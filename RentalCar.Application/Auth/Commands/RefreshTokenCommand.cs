@@ -1,6 +1,9 @@
-﻿namespace RentalCar.Application.Auth.Commands;
+﻿using RentalCar.Application.Common.Results;
+using RentalCar.Application.Interfaces;
 
-public class RefreshTokenCommand
+namespace RentalCar.Application.Auth.Commands;
+
+public class RefreshTokenCommand : ICommand<Result<string>>
 {
     
 }

@@ -91,9 +91,10 @@ public static class DependencyInjection
 
         // register
         services.AddScoped<ICommandHandler<ChangePasswordCommand, Result<string>>, ChangePasswordCommandHandler>();
+        services.AddScoped<ICommandHandler<RefreshTokenCommand, Result<string>>, RefreshTokenCommandHandler>();
         services.AddScoped<ICommandHandler<RegisterCommand, Result<string>>, RegisterCommandHandler>();
         services.AddScoped<ICommandHandler<LoginCommand, Result<string>>, LoginCommandHandler>();
-        
+
         //validators
         services.AddScoped<IValidator<CarAttributeCreateCommand>, CarAttributeCreateValidator>();
         services.AddScoped<IValidator<CarAttributeUpdateCommand>, CarAttributeUpdateValidator>();

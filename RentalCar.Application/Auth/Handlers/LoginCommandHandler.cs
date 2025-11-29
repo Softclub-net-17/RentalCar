@@ -1,4 +1,5 @@
-﻿using RentalCar.Application.Auth.Commands;
+﻿using Microsoft.AspNetCore.Http;
+using RentalCar.Application.Auth.Commands;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Common.Security;
 using RentalCar.Application.Interfaces;
@@ -9,6 +10,7 @@ namespace RentalCar.Application.Auth.Handlers;
 public class LoginCommandHandler(
     IUserRepository userRepository,
     IValidator<LoginCommand> validator,
+    IHttpContextAccessor httpContextAccessor,
     IJwtTokenService jwtTokenService
     ) : ICommandHandler<LoginCommand, Result<string>>
 {
@@ -35,8 +37,23 @@ public class LoginCommandHandler(
             return Result<string>.Fail("Invalid email or password.", ErrorType.Unauthorized);
         }
         
-        var token = jwtTokenService.GenerateToken(user);
         
-        return Result<string>.Ok(token, "Login successful.");
+        var accessToken = jwtTokenService.GenerateToken(user);
+        var refreshToken = jwtTokenService.GenerateRefreshToken(user); // лучше JWT
+
+        // 5. Запись refresh‑токена в cookie
+        httpContextAccessor.HttpContext!.Response.Cookies.Append(
+            "refreshToken",
+            refreshToken,
+            new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false, // локально
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddDays(7)
+            });
+
+        
+        return Result<string>.Ok(accessToken, "Login successful.");
     }
 }
