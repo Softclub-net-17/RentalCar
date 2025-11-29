@@ -22,6 +22,21 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
                 .ThenInclude(cv => cv.Value).ThenInclude(v => v.CarAttribute)
                 .AsQueryable();
 
+            if (!string.IsNullOrEmpty(filter.EngineType))
+                query = query.Where(c => c.CarValues.Any(cv => cv.Value.Name == filter.EngineType && cv.Value.CarAttribute.Name == "Двигатель"));
+
+            if (filter.MileageFrom.HasValue)
+                query = query.Where(c => c.Millage >= filter.MileageFrom.Value);
+
+            if (filter.MileageTo.HasValue)
+                query = query.Where(c => c.Millage <= filter.MileageTo.Value);
+
+            if (!string.IsNullOrEmpty(filter.BodyType))
+                query = query.Where(c => c.CarValues.Any(cv => cv.Value.Name == filter.BodyType && cv.Value.CarAttribute.Name == "Кузов"));
+
+            if (!string.IsNullOrEmpty(filter.Transmission))
+                query = query.Where(c => c.CarValues.Any(cv => cv.Value.Name == filter.Transmission && cv.Value.CarAttribute.Name == "Коробка"));
+
             if (filter.MakeId.HasValue)
                 query = query.Where(c => c.Model.MakeId == filter.MakeId);
 
