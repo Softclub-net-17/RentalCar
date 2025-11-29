@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RentalCar.Application;
 using RentalCar.Infrastructure;
 using RentalCar.Infrastructure.Persistence.Seeds;
@@ -23,7 +24,7 @@ try
 {
     await using var scope = app.Services.CreateAsyncScope();
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.EnsureCreated();
+    context.Database.Migrate();
 
     await DefaultUsers.SeedAsync(context);
 }
