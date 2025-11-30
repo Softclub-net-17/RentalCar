@@ -16,6 +16,7 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
         public async Task<List<Car>> GetByFilterAsync(CarFilter filter)
         {
             var query = context.Cars
+                .Include(c => c.Images)
                 .Include(c => c.Model)
                 .ThenInclude(m => m.Make)
                 .Include(c => c.CarValues)
