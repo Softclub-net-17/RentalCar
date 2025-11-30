@@ -10,6 +10,5 @@ public class CarFilter
     public int? YearTo { get; set; }
     public decimal? PriceFrom { get; set; }
     public decimal? PriceTo { get; set; }
-    public List<int>? ValueId { get; set; }
-    public int? CarAttributeId { get; set; }
+    public List<int>? AttributeValueIds { get; set; }
 }

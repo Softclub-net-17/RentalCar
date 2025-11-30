@@ -48,11 +48,8 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
             if (filter.PriceTo.HasValue)
                 query = query.Where(c => c.PricePerHour <= filter.PriceTo);
 
-            if (filter.ValueId != null && filter.ValueId.Any())
-                query = query.Where(c => c.CarValues.Any(v => filter.ValueId.Contains(v.ValueId)));
-            
-            if (filter.CarAttributeId.HasValue)
-                query = query.Where(c => c.CarValues.Any(cv => cv.Value.CarAttribute.Id == filter.CarAttributeId.Value));
+            if (filter.AttributeValueIds != null && filter.AttributeValueIds.Any())
+                query = query.Where(c => c.CarValues.Any(v => filter.AttributeValueIds.Contains(v.ValueId)));
 
             return await query.ToListAsync();
 
