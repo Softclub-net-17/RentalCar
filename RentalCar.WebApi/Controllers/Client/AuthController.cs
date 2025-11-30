@@ -12,7 +12,8 @@ namespace RentalCar.WebApi.Controllers.Client;
 public class AuthController(
     ICommandHandler<LoginCommand, Result<string>> loginCommandHandler,
     ICommandHandler<RegisterCommand, Result<string>> registerCommandHandler,
-    ICommandHandler<ChangePasswordCommand, Result<string>> changePasswordHandler) 
+    ICommandHandler<ChangePasswordCommand, Result<string>> changePasswordHandler,
+    ICommandHandler<RefreshTokenCommand, Result<string>> refreshHandler) 
     : ControllerBase
 {
     [HttpPost("login")]
@@ -27,6 +28,18 @@ public class AuthController(
         
         return Ok(result.Data);
     }
+    
+    [HttpPost("refresh")]
+    public async Task<IActionResult> RefreshAsync()
+    {
+        var result = await refreshHandler.HandleAsync(new RefreshTokenCommand());
+
+        if (!result.IsSuccess)
+            return HandleError(result);
+
+        return Ok(result.Data);
+    }
+
     
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAsync(RegisterCommand command)
