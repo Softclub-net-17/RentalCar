@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Auth.Commands;
+using RentalCar.Application.Auth.DTOs;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 
@@ -10,10 +11,10 @@ namespace RentalCar.WebApi.Controllers.Client;
 [Route("api/auth")]
 [ApiController]
 public class AuthController(
-    ICommandHandler<LoginCommand, Result<string>> loginCommandHandler,
+    ICommandHandler<LoginCommand, Result<AuthResponseDto>> loginCommandHandler,
     ICommandHandler<RegisterCommand, Result<string>> registerCommandHandler,
     ICommandHandler<ChangePasswordCommand, Result<string>> changePasswordHandler,
-    ICommandHandler<RefreshTokenCommand, Result<string>> refreshHandler) 
+    ICommandHandler<RefreshTokenCommand, Result<AuthResponseDto>> refreshHandler) 
     : ControllerBase
 {
     [HttpPost("login")]

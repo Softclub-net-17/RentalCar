@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RentalCar.Application.Auth.Commands;
+using RentalCar.Application.Auth.DTOs;
 using RentalCar.Application.Auth.Handlers;
 using RentalCar.Application.Auth.Validators;
 using RentalCar.Application.CarAttributes.Commands;
@@ -91,9 +92,9 @@ public static class DependencyInjection
 
         // register
         services.AddScoped<ICommandHandler<ChangePasswordCommand, Result<string>>, ChangePasswordCommandHandler>();
-        services.AddScoped<ICommandHandler<RefreshTokenCommand, Result<string>>, RefreshTokenCommandHandler>();
+        services.AddScoped<ICommandHandler<RefreshTokenCommand, Result<AuthResponseDto>>, RefreshTokenCommandHandler>();
         services.AddScoped<ICommandHandler<RegisterCommand, Result<string>>, RegisterCommandHandler>();
-        services.AddScoped<ICommandHandler<LoginCommand, Result<string>>, LoginCommandHandler>();
+        services.AddScoped<ICommandHandler<LoginCommand, Result<AuthResponseDto>>, LoginCommandHandler>();
 
         //validators
         services.AddScoped<IValidator<CarAttributeCreateCommand>, CarAttributeCreateValidator>();

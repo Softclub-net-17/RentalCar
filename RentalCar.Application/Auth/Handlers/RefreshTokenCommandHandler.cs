@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Http;
 using RentalCar.Application.Auth.Commands;
+using RentalCar.Application.Auth.DTOs;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 using RentalCar.Domain.Interfaces;
@@ -11,44 +12,44 @@ public class RefreshTokenCommandHandler(
     IHttpContextAccessor httpContextAccessor,
     IUserRepository userRepository,
     IJwtTokenService jwtService)
-    : ICommandHandler<RefreshTokenCommand, Result<string>>
+    : ICommandHandler<RefreshTokenCommand, Result<AuthResponseDto>>
 {
-    public async Task<Result<string>> HandleAsync(RefreshTokenCommand command)
+    public async Task<Result<AuthResponseDto>> HandleAsync(RefreshTokenCommand command)
     {
-        var ctx = httpContextAccessor.HttpContext!; 
+        var ctx = httpContextAccessor.HttpContext!;
         var request = ctx.Request;
-        var response = ctx.Response;
-
-        // 1. Получаем refresh token из cookie
+        
         if (!request.Cookies.TryGetValue("refreshToken", out var refreshToken))
-            return Result<string>.Fail("Refresh token missing.", ErrorType.Unauthorized);
+            return Result<AuthResponseDto>.Fail("Refresh token missing.", ErrorType.Unauthorized);
 
-        // 2. Если refresh-токен у тебя JWT → достаём userId
         var handler = new JwtSecurityTokenHandler();
         var jwt = handler.ReadJwtToken(refreshToken);
         var userId = int.Parse(jwt.Subject);
 
-        // 3. Находим пользователя
         var user = await userRepository.GetByIdAsync(userId);
         if (user is null)
-            return Result<string>.Fail("User not found.", ErrorType.NotFound);
+            return Result<AuthResponseDto>.Fail("User not found.", ErrorType.NotFound);
 
-        // 4. Генерируем новые токены
         var newAccessToken = jwtService.GenerateToken(user);
-        var newRefreshToken = jwtService.GenerateRefreshToken(user); // лучше тоже JWT
+        var newRefreshToken = jwtService.GenerateRefreshToken(user);
 
-        // 5. Обновляем refresh token в cookie
-        response.Cookies.Append(
+        ctx.Response.Cookies.Append(
             "refreshToken",
             newRefreshToken,
             new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false, // локально
+                Secure = false,
                 SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddDays(7)
+                Expires = DateTime.UtcNow.AddDays(30)
             });
 
-        return Result<string>.Ok(newAccessToken, "Token refreshed");
+        var response = new AuthResponseDto
+        {
+            AccessToken = newAccessToken,
+            RefreshToken = newRefreshToken
+        };
+
+        return Result<AuthResponseDto>.Ok(response, "Token refreshed");
     }
 }
