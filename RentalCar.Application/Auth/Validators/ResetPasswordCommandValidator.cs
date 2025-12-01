@@ -17,12 +17,6 @@ namespace RentalCar.Application.Auth.Validators
         {
             var validationResult = new ValidationResult();
 
-            if (string.IsNullOrWhiteSpace(instance.Email))
-                validationResult.AddError("Email is required.");
-
-            if (!instance.Email.Contains('@'))
-                validationResult.AddError("Email is not in correct format.");
-
             if (string.IsNullOrWhiteSpace(instance.NewPassword))
                 validationResult.AddError("New password is required.");
 

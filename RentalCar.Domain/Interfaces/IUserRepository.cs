@@ -13,4 +13,5 @@ public interface IUserRepository
     Task UpdateAsync(User user);
     Task DeleteAsync(User user);
     Task<int> CountAsync();
+    Task<bool> VerifyPasswordAsync(int userId, string password);
 }

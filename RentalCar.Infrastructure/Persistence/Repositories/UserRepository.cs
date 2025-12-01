@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RentalCar.Application.Common.Security;
 using RentalCar.Domain.Entities;
 using RentalCar.Domain.Interfaces;
 
@@ -49,5 +50,18 @@ public class UserRepository(ApplicationDbContext context) : IUserRepository
     public async Task<int> CountAsync()
     {
         return await context.Users.CountAsync();    
+    }
+
+    public async Task<bool> VerifyPasswordAsync(int userId, string password)
+    {
+        var user = await GetByIdAsync(userId);
+        if (user == null)
+         return false;
+
+        if (string.IsNullOrWhiteSpace(user.PasswordHash))
+            return false;
+
+        var isValid = PasswordHasher.Verify(password, user.PasswordHash);
+        return isValid;
     }
 }

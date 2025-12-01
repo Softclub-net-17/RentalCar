@@ -13,14 +13,14 @@ namespace RentalCar.Application.Auth.Validators
     {
         public ValidationResult Validate(RequestResetPasswordCommand instance)
         {
-            var result= new ValidationResult();
+            var result = new ValidationResult();
 
-            if(string.IsNullOrWhiteSpace(instance.Email))
+            if (string.IsNullOrWhiteSpace(instance.Email))
             {
                 result.AddError("Email is required.");
             }
 
-            if(!instance.Email.Contains("@"))
+            if (!instance.Email.Contains("@"))
             {
                 result.AddError("Invalid email format.");
             }

@@ -11,7 +11,11 @@ namespace RentalCar.Domain.Entities
         public int Id { get; set; }
         public string Code { get; set; } = string.Empty;
         public DateTime Expiration { get; set; }
+        public int? UserId { get; set; }
         public bool IsUsed { get; set; }
-        public string Email { get; set; } = string.Empty;
+        public string NewEmail { get; set; } = string.Empty;
+        public string CodeHash { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
     }
 }

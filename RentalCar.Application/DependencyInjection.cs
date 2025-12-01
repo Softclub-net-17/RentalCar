@@ -102,6 +102,8 @@ public static class DependencyInjection
         services.AddScoped<ICommandHandler<VerifyCodeCommand, Result<string>>, VerifyCodeCommandHandler>();
         services.AddScoped<ICommandHandler<ResetPasswordCommand, Result<string>>, ResetPasswordCommandHandler>();
         services.AddScoped<ICommandHandler<SendEmailCommand, Result<string>>, SendEmailCommandHandler>();
+        services.AddScoped<ICommandHandler<ChangeEmailCommand, Result<string>>, ChangeEmailCommandHandler>();
+        services.AddScoped<ICommandHandler<RequestChangeEmailCommand, Result<string>>, RequestChangeEmailCommandHandler>();
 
         //validators
         services.AddScoped<IValidator<CarAttributeCreateCommand>, CarAttributeCreateValidator>();
@@ -123,9 +125,10 @@ public static class DependencyInjection
         services.AddScoped<IValidator<CarCreateCommand>, CarCreateValidator>();
         services.AddScoped<IValidator<CarUpdateCommand>, CarUpdateValidator>();
         services.AddScoped<IValidator<SendEmailCommand>, SendEmailValidator>();
-        services.AddScoped<IValidator<RequestResetPasswordCommand>, RequestResetPasswordValidator>();
         services.AddScoped<IValidator<VerifyCodeCommand>, VerifyCodeCommandValidator>();
         services.AddScoped<IValidator<ResetPasswordCommand>, ResetPasswordCommandValidator>();
+        services.AddScoped<IValidator<RequestResetPasswordCommand>, RequestResetPasswordValidator>();
+        services.AddScoped<IValidator<RequestChangeEmailCommand>, RequestChangeEmailValidator>();
 
 
         //makes

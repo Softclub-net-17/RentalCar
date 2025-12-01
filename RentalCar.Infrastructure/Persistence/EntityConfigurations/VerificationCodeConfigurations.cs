@@ -8,11 +8,12 @@ public class VerificationCodeConfigurations: IEntityTypeConfiguration<Verificati
 {
     public void Configure(EntityTypeBuilder<VerificationCode> builder)
     {
-        builder.HasKey(verificationCode => verificationCode.Id);
-        builder.Property(verificationCode => verificationCode.Id).ValueGeneratedOnAdd();
-        builder.Property(verificationCode => verificationCode.Code).IsRequired();
-        builder.Property(verificationCode => verificationCode.Expiration).IsRequired();
-        builder.Property(verificationCode => verificationCode.Email).IsRequired();
-        builder.HasIndex(verificationCode => verificationCode.Email).IsUnique();
+        builder.HasKey(vc => vc.Id);
+
+        builder.Property(vc => vc.Id).ValueGeneratedOnAdd();
+        builder.Property(vc => vc.Code).IsRequired();
+        builder.Property(vc => vc.Expiration).IsRequired();
+        builder.Property(vc => vc.NewEmail).IsRequired();
+        builder.HasIndex(vc => new { vc.UserId, vc.NewEmail }).IsUnique();
     }
 }
