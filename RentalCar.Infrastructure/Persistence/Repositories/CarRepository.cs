@@ -16,11 +16,19 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
         public async Task<List<Car>> GetByFilterAsync(CarFilter filter)
         {
             var query = context.Cars
+                .Include(c => c.Images)
                 .Include(c => c.Model)
                 .ThenInclude(m => m.Make)
                 .Include(c => c.CarValues)
                 .ThenInclude(cv => cv.Value).ThenInclude(v => v.CarAttribute)
                 .AsQueryable();
+
+
+            if (filter.MileageFrom.HasValue)
+                query = query.Where(c => c.Millage >= filter.MileageFrom.Value);
+
+            if (filter.MileageTo.HasValue)
+                query = query.Where(c => c.Millage <= filter.MileageTo.Value);
 
             if (filter.MakeId.HasValue)
                 query = query.Where(c => c.Model.MakeId == filter.MakeId);

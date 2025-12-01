@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Infrastructure.Services.Email;
 using RentalCar.Application;
 using RentalCar.Application.Interfaces;
@@ -16,6 +17,7 @@ builder.Services.AddConnectionConfigurations(builder.Configuration);
 builder.Services.AddRepositories(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddCorsConfigurations();
+builder.WebHost.UseUrls("http://0.0.0.0:5049");
 builder.Services.AddConnectionConfigurations(builder.Configuration);
 builder.Services.Configure<EmailSettings>(
 builder.Configuration.GetSection("SmtpSettings"));
@@ -26,6 +28,7 @@ try
 {
     await using var scope = app.Services.CreateAsyncScope();
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate();
 
     await DefaultUsers.SeedAsync(context);
 }
