@@ -16,8 +16,8 @@ public static class SwaggerConfigurations
                 Description = "API для клиентской части ",
                 Contact = new OpenApiContact
                 {
-                    Name = "MAGA",
-                    Email = "muhammadkhojaev187@gmail.com",
+                    Name = "Siyovush",
+                    Email = "siyovush.azamov06@gmail.com",
                     Url = new Uri("https://rentacar.tj")
                 }
             });
@@ -29,8 +29,8 @@ public static class SwaggerConfigurations
                 Description = "API для административной панели",
                 Contact = new OpenApiContact
                 {
-                    Name = "MAGA",
-                    Email = "muhammadkhojaev187@gmail.com",
+                    Name = "Siyovush",
+                    Email = "siyovush.azamov06@gmail.com",
                     Url = new Uri("https://rentacar.tj")
                 }
             });
