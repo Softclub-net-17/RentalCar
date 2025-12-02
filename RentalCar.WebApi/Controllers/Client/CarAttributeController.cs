@@ -15,7 +15,7 @@ public class CarAttributeController(
     IQueryHandler<CarGetAttributesWithValuesQuery,Result<List<GetCarAttributesWithValuesDto>>> 
         getAttributesWithValues) : ControllerBase
 {
-    [HttpGet("withvalues")]
+    [HttpGet]
     public async Task<IActionResult> GetCarAttributesWithValues()
     {
         var result = await getAttributesWithValues.HandleAsync(new CarGetAttributesWithValuesQuery());
