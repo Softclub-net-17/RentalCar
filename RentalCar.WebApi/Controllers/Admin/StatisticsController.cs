@@ -14,12 +14,32 @@ namespace RentalCar.WebApi.Controllers.Admin
     [ApiExplorerSettings(GroupName = "admin")]
     [Authorize(Roles = "Admin")]
     [ApiController]
-    public class StatisticsController(IQueryHandler<GetRentalStatisticsQuery,Result<StatisticsDto>> getStatistics) : ControllerBase
+    public class StatisticsController(IQueryHandler<GetRentalStatisticsQuery,Result<StatisticsDto>> getStatistics,
+        IQueryHandler<GetWeeklyReservationsQuery,Result<List<WeeklyReservationsDto>>> getWeeklyReservations,
+        IQueryHandler<GetRevenueTrendQuery,Result<List<RevenueTrendDto>>> revenue) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> CountAsync()
         {
             var result = await getStatistics.HandleAsync(new GetRentalStatisticsQuery());
+            if (!result.IsSuccess)
+                return HandleError(result);
+
+            return Ok(result.Data);
+        }
+        [HttpGet("weekly-reservations")]
+        public async Task<IActionResult> GetWeeklyReservationsAsync()
+        {
+            var result = await getWeeklyReservations.HandleAsync(new GetWeeklyReservationsQuery());
+            if (!result.IsSuccess)
+                return HandleError(result);
+
+            return Ok(result.Data);
+        }
+        [HttpGet("revenue-trend")]
+        public async Task<IActionResult> GetRevenueTrendQuery()
+        {
+            var result = await revenue.HandleAsync(new GetRevenueTrendQuery());
             if (!result.IsSuccess)
                 return HandleError(result);
 

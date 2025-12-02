@@ -13,5 +13,7 @@ public interface IReservationRepository
     Task<List<Reservation>> GetActiveByCarIdAsync(int carId);
     Task<int> CountActiveAsync();
     Task<decimal> GetTodayRevenueAsync();
+    Task<List<Reservation>> GetReservationsInRangeAsync(DateTime startDate, DateTime endDate);
+    Task<List<Reservation>> GetReservationsInPeriodAsync(DateTime startDate, DateTime endDate);
 
 }
