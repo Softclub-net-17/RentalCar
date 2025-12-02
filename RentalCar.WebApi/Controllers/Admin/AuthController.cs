@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RentalCar.Application.Auth.Commands;
 using RentalCar.Application.Auth.DTOs;
 using RentalCar.Application.Common.Results;

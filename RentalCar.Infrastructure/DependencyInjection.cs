@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Infrastructure.Services.Email;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RentalCar.Application.Interfaces;
 using RentalCar.Domain.Interfaces;
@@ -26,5 +27,9 @@ public static class DependencyInjection
         services.AddScoped<ICarValueRepository, CarValueRepository>();
         services.AddScoped<IReservationRepository, ReservationRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<IVerificationCodeRepository, VerificationCodeRepository>();
+        services.AddScoped<IEmailService, EmailService>();
+
+
     }
 }

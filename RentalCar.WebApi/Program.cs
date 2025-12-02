@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Services.Email;
 using RentalCar.Application;
+using RentalCar.Application.Interfaces;
 using RentalCar.Infrastructure;
 using RentalCar.Infrastructure.Persistence.Seeds;
 using RentalCar.WebApi.Extensions;
@@ -17,6 +19,8 @@ builder.Services.AddApplicationServices();
 builder.Services.AddCorsConfigurations();
 builder.WebHost.UseUrls("http://0.0.0.0:5049");
 builder.Services.AddConnectionConfigurations(builder.Configuration);
+builder.Services.Configure<EmailSettings>(
+builder.Configuration.GetSection("SmtpSettings"));
 
 var app = builder.Build();
 

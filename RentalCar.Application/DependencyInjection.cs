@@ -8,10 +8,20 @@ using RentalCar.Application.CarAttributes.DTOS;
 using RentalCar.Application.CarAttributes.Handlers;
 using RentalCar.Application.CarAttributes.Queries;
 using RentalCar.Application.CarAttributes.Validators;
+using RentalCar.Application.Cars.Commands;
+using RentalCar.Application.Cars.DTOs;
+using RentalCar.Application.Cars.Handlers;
+using RentalCar.Application.Cars.Queries;
+using RentalCar.Application.Cars.Validators;
 using RentalCar.Application.CarValues.Commands;
 using RentalCar.Application.CarValues.Handlers;
 using RentalCar.Application.CarValues.Validator;
 using RentalCar.Application.Common.Results;
+using RentalCar.Application.Email.Commands;
+using RentalCar.Application.Email.Handlers;
+using RentalCar.Application.Email.Validators;
+using RentalCar.Application.Images.Commands;
+using RentalCar.Application.Images.Handlers;
 using RentalCar.Application.Interfaces;
 using RentalCar.Application.Users.Commands;
 using RentalCar.Application.Users.DTOS;
@@ -33,21 +43,14 @@ using RentalCar.Application.Reservations.DTOS;
 using RentalCar.Application.Reservations.Handlers;
 using RentalCar.Application.Reservations.Queries;
 using RentalCar.Application.Reservations.Validator;
+using RentalCar.Application.Statistics.DTOs;
+using RentalCar.Application.Statistics.Handlers;
+using RentalCar.Application.Statistics.Queries;
 using RentalCar.Application.Values.Commands;
 using RentalCar.Application.Values.DTOS;
 using RentalCar.Application.Values.Handlers;
 using RentalCar.Application.Values.Queries;
 using RentalCar.Application.Values.Validators;
-using RentalCar.Application.Cars.Commands;
-using RentalCar.Application.Cars.Handlers;
-using RentalCar.Application.Cars.Queries;
-using RentalCar.Application.Cars.DTOs;
-using RentalCar.Application.Cars.Validators;
-using RentalCar.Application.Images.Commands;
-using RentalCar.Application.Images.Handlers;
-using RentalCar.Application.Statistics.Queries;
-using RentalCar.Application.Statistics.Handlers;
-using RentalCar.Application.Statistics.DTOs;
 
 namespace RentalCar.Application;
 
@@ -94,6 +97,14 @@ public static class DependencyInjection
         services.AddScoped<ICommandHandler<ChangePasswordCommand, Result<string>>, ChangePasswordCommandHandler>();
         services.AddScoped<ICommandHandler<RefreshTokenCommand, Result<AuthResponseDto>>, RefreshTokenCommandHandler>();
         services.AddScoped<ICommandHandler<RegisterCommand, Result<string>>, RegisterCommandHandler>();
+        services.AddScoped<ICommandHandler<RegisterCommand, Result<string>>, RegisterCommandHandler>();
+        services.AddScoped<ICommandHandler<SendEmailCommand, Result<string>>, SendEmailCommandHandler>();
+        services.AddScoped<ICommandHandler<RequestResetPasswordCommand, Result<string>>, RequestResetPasswordCommandHandler>();
+        services.AddScoped<ICommandHandler<VerifyCodeCommand, Result<string>>, VerifyCodeCommandHandler>();
+        services.AddScoped<ICommandHandler<ResetPasswordCommand, Result<string>>, ResetPasswordCommandHandler>();
+        services.AddScoped<ICommandHandler<SendEmailCommand, Result<string>>, SendEmailCommandHandler>();
+        services.AddScoped<ICommandHandler<ChangeEmailCommand, Result<string>>, ChangeEmailCommandHandler>();
+        services.AddScoped<ICommandHandler<RequestChangeEmailCommand, Result<string>>, RequestChangeEmailCommandHandler>();
         services.AddScoped<ICommandHandler<LoginCommand, Result<AuthResponseDto>>, LoginCommandHandler>();
 
         //validators
@@ -115,6 +126,12 @@ public static class DependencyInjection
         services.AddScoped<IValidator<ModelUpdateCommand>, ModelUpdateValidator>();
         services.AddScoped<IValidator<CarCreateCommand>, CarCreateValidator>();
         services.AddScoped<IValidator<CarUpdateCommand>, CarUpdateValidator>();
+        services.AddScoped<IValidator<SendEmailCommand>, SendEmailValidator>();
+        services.AddScoped<IValidator<VerifyCodeCommand>, VerifyCodeCommandValidator>();
+        services.AddScoped<IValidator<ResetPasswordCommand>, ResetPasswordCommandValidator>();
+        services.AddScoped<IValidator<RequestResetPasswordCommand>, RequestResetPasswordValidator>();
+        services.AddScoped<IValidator<RequestChangeEmailCommand>, RequestChangeEmailValidator>();
+
 
         //makes
         services.AddScoped<ICommandHandler<MakeCreateCommand, Result<string>>, MakeCreateCommandHandler>();
