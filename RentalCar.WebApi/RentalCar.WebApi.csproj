@@ -24,4 +24,9 @@
     <Folder Include="wwwroot\uploads\makes\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="appsettings.Development.json" />
+    <None Include="appsettings.json" />
+  </ItemGroup>
+
 </Project>

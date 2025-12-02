@@ -4,7 +4,7 @@ using RentalCar.Application.Interfaces;
 
 namespace RentalCar.Application.Auth.Commands;
 
-public class RefreshTokenCommand : ICommand<Result<AuthResponseDto>>
+public class RefreshTokenCommand(string refreshToken) : ICommand<Result<AuthResponseDto>>
 {
-    
+    public string RefreshToken { get; set; } = refreshToken;
 }

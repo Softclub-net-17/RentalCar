@@ -33,7 +33,10 @@ public class AuthController(
     [HttpPost("refresh")]
     public async Task<IActionResult> RefreshAsync()
     {
-        var result = await refreshHandler.HandleAsync(new RefreshTokenCommand());
+        if (!Request.Cookies.TryGetValue("refreshToken", out var refreshToken))
+            return Unauthorized(new { error = "Refresh token missing" });
+
+        var result = await refreshHandler.HandleAsync(new RefreshTokenCommand(refreshToken));
 
         if (!result.IsSuccess)
             return HandleError(result);

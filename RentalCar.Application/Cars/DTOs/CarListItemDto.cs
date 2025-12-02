@@ -6,6 +6,7 @@ public class CarListItemDto
     public string Title { get; set; }
     public string Make { get; set; }
     public string Model { get; set; }
+    public int Millage { get; set; }
     public int Year { get; set; }
     public decimal PricePerHour { get; set; }
     public List<string> Images { get; set; } = null!;

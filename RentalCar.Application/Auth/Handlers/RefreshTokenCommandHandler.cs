@@ -1,7 +1,6 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Http;
-using RentalCar.Application.Auth.Commands;
+﻿using RentalCar.Application.Auth.Commands;
 using RentalCar.Application.Auth.DTOs;
+using RentalCar.Application.Auth.Mappers;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 using RentalCar.Domain.Interfaces;
@@ -9,47 +8,42 @@ using RentalCar.Domain.Interfaces;
 namespace RentalCar.Application.Auth.Handlers;
 
 public class RefreshTokenCommandHandler(
-    IHttpContextAccessor httpContextAccessor,
+    IJwtTokenService jwtService,
+    IRefreshTokenRepository refreshTokenRepository,
     IUserRepository userRepository,
-    IJwtTokenService jwtService)
+    IUnitOfWork  unitOfWork )
     : ICommandHandler<RefreshTokenCommand, Result<AuthResponseDto>>
 {
     public async Task<Result<AuthResponseDto>> HandleAsync(RefreshTokenCommand command)
     {
-        var ctx = httpContextAccessor.HttpContext!;
-        var request = ctx.Request;
-        
-        if (!request.Cookies.TryGetValue("refreshToken", out var refreshToken))
-            return Result<AuthResponseDto>.Fail("Refresh token missing.", ErrorType.Unauthorized);
+        var storedRefresh = await refreshTokenRepository.GetByTokenAsync(command.RefreshToken);
+        if (storedRefresh is null)
+            return Result<AuthResponseDto>.Fail("Invalid refresh token", ErrorType.Unauthorized);
 
-        var handler = new JwtSecurityTokenHandler();
-        var jwt = handler.ReadJwtToken(refreshToken);
-        var userId = int.Parse(jwt.Subject);
+        if (storedRefresh.IsUsed)
+            return Result<AuthResponseDto>.Fail("Refresh token already used", ErrorType.Unauthorized);
 
-        var user = await userRepository.GetByIdAsync(userId);
+        if (storedRefresh.IsRevoked)
+            return Result<AuthResponseDto>.Fail("Refresh token revoked", ErrorType.Unauthorized);
+
+        if (storedRefresh.ExpiryDate <= DateTimeOffset.UtcNow)
+            return Result<AuthResponseDto>.Fail("Refresh token expired", ErrorType.Unauthorized);
+
+        var user = await userRepository.GetByIdAsync(storedRefresh.UserId);
         if (user is null)
-            return Result<AuthResponseDto>.Fail("User not found.", ErrorType.NotFound);
+            return Result<AuthResponseDto>.Fail("User not found", ErrorType.NotFound);
 
-        var newAccessToken = jwtService.GenerateToken(user);
-        var newRefreshToken = jwtService.GenerateRefreshToken(user);
+        storedRefresh.IsUsed = true;
+        await refreshTokenRepository.UpdateAsync(storedRefresh);
 
-        ctx.Response.Cookies.Append(
-            "refreshToken",
-            newRefreshToken,
-            new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddDays(30)
-            });
+        var newAccess = jwtService.GenerateToken(user);
+        var newRefresh = jwtService.GenerateRefreshToken(user);
 
-        var response = new AuthResponseDto
-        {
-            AccessToken = newAccessToken,
-            RefreshToken = newRefreshToken
-        };
+        await refreshTokenRepository.AddAsync(newRefresh);
+        await unitOfWork.SaveChangesAsync();
 
-        return Result<AuthResponseDto>.Ok(response, "Token refreshed");
+        var dto = AuthMappers.ToAuthResponse(newAccess, newRefresh.Token);
+        
+        return Result<AuthResponseDto>.Ok(dto, "Tokens refreshed");
     }
 }

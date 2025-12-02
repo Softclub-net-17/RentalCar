@@ -10,8 +10,9 @@ namespace RentalCar.WebApi.Controllers.Admin;
 [Route("api/admin/auth")]
 [ApiController]
 public class AuthController(
-    ICommandHandler<LoginCommand, Result<AuthResponseDto>> loginCommandHandler
-) : ControllerBase
+    ICommandHandler<LoginCommand, Result<AuthResponseDto>> loginCommandHandler,
+    ICommandHandler<RefreshTokenCommand, Result<AuthResponseDto>> refreshHandler ) 
+    : ControllerBase
 {
     [HttpPost("login")]
     public async Task<IActionResult> LoginAsync(LoginCommand command)
@@ -25,10 +26,12 @@ public class AuthController(
     }
 
     [HttpPost("refresh")]
-    public async Task<IActionResult> RefreshAsync(
-        [FromServices] ICommandHandler<RefreshTokenCommand, Result<AuthResponseDto>> refreshHandler)
+    public async Task<IActionResult> RefreshAsync()
     {
-        var result = await refreshHandler.HandleAsync(new RefreshTokenCommand());
+        if (!Request.Cookies.TryGetValue("refreshToken", out var refreshToken))
+            return Unauthorized(new { error = "Refresh token missing" });
+
+        var result = await refreshHandler.HandleAsync(new RefreshTokenCommand(refreshToken));
 
         if (!result.IsSuccess)
             return HandleError(result);

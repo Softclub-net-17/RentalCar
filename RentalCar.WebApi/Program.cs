@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RentalCar.Application;
 using RentalCar.Infrastructure;
 using RentalCar.Infrastructure.Persistence.Seeds;
@@ -14,6 +15,7 @@ builder.Services.AddConnectionConfigurations(builder.Configuration);
 builder.Services.AddRepositories(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddCorsConfigurations();
+builder.WebHost.UseUrls("http://0.0.0.0:5049");
 builder.Services.AddConnectionConfigurations(builder.Configuration);
 
 var app = builder.Build();
@@ -22,7 +24,7 @@ try
 {
     await using var scope = app.Services.CreateAsyncScope();
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.EnsureCreated();
+    context.Database.Migrate();
 
     await DefaultUsers.SeedAsync(context);
 }

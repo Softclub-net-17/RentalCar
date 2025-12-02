@@ -11,5 +11,6 @@ namespace RentalCar.Domain.Entities
         
         // navigation
         public List<Reservation> Reservations { get; set; } = new ();
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
 }
