@@ -13,7 +13,7 @@ namespace RentalCar.Domain.Entities
         public int MakeId { get; set; }
 
         //navigations
-        public Make Make { get; set; }
-        public IEnumerable<Car> Cars { get; set; }
+        public Make Make { get; set; } = null!;
+        public IEnumerable<Car> Cars { get; set; } = [];
     }
 }

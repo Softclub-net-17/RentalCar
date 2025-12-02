@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -31,4 +32,21 @@ public class JwtTokenService(IOptions<JwtSettings> options) : IJwtTokenService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
+    public RefreshToken GenerateRefreshToken(User user)
+    {
+        var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+
+        return new RefreshToken
+        {
+            Token = token,
+            UserId = user.Id,
+            JwtId = Guid.NewGuid().ToString(),
+            CreatedAt = DateTime.UtcNow,
+            ExpiryDate = DateTime.UtcNow.AddDays(7),
+            IsUsed = false,
+            IsRevoked = false
+        };
+    }
+
 }

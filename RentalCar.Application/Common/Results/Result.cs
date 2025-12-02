@@ -1,4 +1,6 @@
-﻿namespace RentalCar.Application.Common.Results;
+﻿using RentalCar.Application.Auth.DTOs;
+
+namespace RentalCar.Application.Common.Results;
 
 public class Result<T>
 {

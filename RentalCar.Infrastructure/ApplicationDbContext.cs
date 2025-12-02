@@ -15,6 +15,7 @@ namespace RentalCar.Infrastructure
         public DbSet<Value> Values { get; set; }
         public DbSet<CarValue> CarValues { get; set; }
         public DbSet<VerificationCode> VerificationCodes { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

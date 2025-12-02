@@ -12,7 +12,7 @@ namespace RentalCar.Domain.Entities
         public int ValueId { get; set; }
 
         //navigations
-        public Car Car { get; set; }
-        public Value Value { get; set; }
+        public Car Car { get; set; } = null!;
+        public Value Value { get; set; } = null!;
     }
 }

@@ -20,11 +20,9 @@ namespace RentalCar.Domain.Entities
         public int ModelId { get; set; }
 
         //navigations
-        public Model Model { get; set; }
-        public List<Reservation> Reservations { get; set; }
-
-        public IEnumerable<Image> Images { get; set; }
-        public IEnumerable<CarValue> CarValues { get; set; }
-
+        public Model Model { get; set; } = null!;
+        public List<Reservation> Reservations { get; set; } = null!;
+        public IEnumerable<Image> Images { get; set; } = null!;
+        public IEnumerable<CarValue> CarValues { get; set; } = null!;
     }
 }
