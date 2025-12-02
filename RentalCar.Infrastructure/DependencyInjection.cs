@@ -13,7 +13,6 @@ public static class DependencyInjection
 {
     public static void AddRepositories(this IServiceCollection services, IConfiguration configuration)
     {
-
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
         services.AddScoped<ICarAttributeRepository, CarAttributeRepository>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
@@ -27,6 +26,7 @@ public static class DependencyInjection
         services.AddScoped<IFileService, FileService>();
         services.AddScoped<ICarValueRepository, CarValueRepository>();
         services.AddScoped<IReservationRepository, ReservationRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IVerificationCodeRepository, VerificationCodeRepository>();
         services.AddScoped<IEmailService, EmailService>();
 

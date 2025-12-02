@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RentalCar.Application.Auth.Commands;
+using RentalCar.Application.Auth.DTOs;
 using RentalCar.Application.Auth.Handlers;
 using RentalCar.Application.Auth.Validators;
 using RentalCar.Application.CarAttributes.Commands;
@@ -22,6 +23,11 @@ using RentalCar.Application.Email.Validators;
 using RentalCar.Application.Images.Commands;
 using RentalCar.Application.Images.Handlers;
 using RentalCar.Application.Interfaces;
+using RentalCar.Application.Users.Commands;
+using RentalCar.Application.Users.DTOS;
+using RentalCar.Application.Users.Handlers;
+using RentalCar.Application.Users.Queries;
+using RentalCar.Application.Users.Validators;
 using RentalCar.Application.Makes.Commands;
 using RentalCar.Application.Makes.DTOs;
 using RentalCar.Application.Makes.Handlers;
@@ -40,11 +46,6 @@ using RentalCar.Application.Reservations.Validator;
 using RentalCar.Application.Statistics.DTOs;
 using RentalCar.Application.Statistics.Handlers;
 using RentalCar.Application.Statistics.Queries;
-using RentalCar.Application.Users.Commands;
-using RentalCar.Application.Users.DTOS;
-using RentalCar.Application.Users.Handlers;
-using RentalCar.Application.Users.Queries;
-using RentalCar.Application.Users.Validators;
 using RentalCar.Application.Values.Commands;
 using RentalCar.Application.Values.DTOS;
 using RentalCar.Application.Values.Handlers;
@@ -94,8 +95,8 @@ public static class DependencyInjection
 
         // register
         services.AddScoped<ICommandHandler<ChangePasswordCommand, Result<string>>, ChangePasswordCommandHandler>();
+        services.AddScoped<ICommandHandler<RefreshTokenCommand, Result<AuthResponseDto>>, RefreshTokenCommandHandler>();
         services.AddScoped<ICommandHandler<RegisterCommand, Result<string>>, RegisterCommandHandler>();
-        services.AddScoped<ICommandHandler<LoginCommand, Result<string>>, LoginCommandHandler>();
         services.AddScoped<ICommandHandler<RegisterCommand, Result<string>>, RegisterCommandHandler>();
         services.AddScoped<ICommandHandler<SendEmailCommand, Result<string>>, SendEmailCommandHandler>();
         services.AddScoped<ICommandHandler<RequestResetPasswordCommand, Result<string>>, RequestResetPasswordCommandHandler>();
@@ -104,6 +105,7 @@ public static class DependencyInjection
         services.AddScoped<ICommandHandler<SendEmailCommand, Result<string>>, SendEmailCommandHandler>();
         services.AddScoped<ICommandHandler<ChangeEmailCommand, Result<string>>, ChangeEmailCommandHandler>();
         services.AddScoped<ICommandHandler<RequestChangeEmailCommand, Result<string>>, RequestChangeEmailCommandHandler>();
+        services.AddScoped<ICommandHandler<LoginCommand, Result<AuthResponseDto>>, LoginCommandHandler>();
 
         //validators
         services.AddScoped<IValidator<CarAttributeCreateCommand>, CarAttributeCreateValidator>();
@@ -153,6 +155,7 @@ public static class DependencyInjection
         services.AddScoped<IQueryHandler<CarGetQuery, Result<List<CarGetDto>>>, CarGetQueryHandler>();
         services.AddScoped<IQueryHandler<CarGetByIdQuery, Result<CarGetDto>>, CarsGetByIdQueryHandler>();
         services.AddScoped<IQueryHandler<CarByFilterQuery, Result<List<CarListItemDto>>>, CarByFilterQueryHandler>();
+
 
         //images
         services.AddScoped<ICommandHandler<ImageCreateCommand, Result<string>>, ImageCreateCommandHandler>();

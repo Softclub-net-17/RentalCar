@@ -1,4 +1,5 @@
 ﻿using RentalCar.Application.Auth.Commands;
+using RentalCar.Application.Auth.DTOs;
 using RentalCar.Domain.Entities;
 using RentalCar.Domain.Enums;
 
@@ -15,4 +16,14 @@ public static class AuthMappers
             PasswordHash = passwordHash,
         };
     }
+    
+    public static AuthResponseDto ToAuthResponse(string accessToken, string refreshToken)
+    {
+        return new AuthResponseDto
+        {
+            AccessToken = accessToken,
+            RefreshToken = refreshToken
+        };
+    }
+
 }

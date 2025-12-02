@@ -13,8 +13,9 @@ namespace RentalCar.WebApi.Controllers.Client;
 [Route("api/auth")]
 [ApiController]
 public class AuthController(
-    ICommandHandler<LoginCommand, Result<string>> loginCommandHandler,
+    ICommandHandler<LoginCommand, Result<AuthResponseDto>> loginCommandHandler,
     ICommandHandler<RegisterCommand, Result<string>> registerCommandHandler,
+    ICommandHandler<RefreshTokenCommand, Result<AuthResponseDto>> refreshHandler,
     ICommandHandler<ChangePasswordCommand, Result<string>> changePasswordHandler,
     ICommandHandler<RequestResetPasswordCommand, Result<string>> requestReset,
     ICommandHandler<VerifyCodeCommand, Result<string>> verify,
@@ -35,6 +36,21 @@ public class AuthController(
         
         return Ok(result.Data);
     }
+    
+    [HttpPost("refresh")]
+    public async Task<IActionResult> RefreshAsync()
+    {
+        if (!Request.Cookies.TryGetValue("refreshToken", out var refreshToken))
+            return Unauthorized(new { error = "Refresh token missing" });
+
+        var result = await refreshHandler.HandleAsync(new RefreshTokenCommand(refreshToken));
+
+        if (!result.IsSuccess)
+            return HandleError(result);
+
+        return Ok(result.Data);
+    }
+
     
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAsync(RegisterCommand command)
