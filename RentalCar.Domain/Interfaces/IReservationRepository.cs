@@ -10,6 +10,7 @@ public interface IReservationRepository
     Task UpdateAsync(Reservation reservation);
     Task DeleteAsync(Reservation reservation);
     Task<bool> IsCarBusy(int carId, DateTime start, DateTime end);
+    Task<List<Reservation>> GetActiveByCarIdAsync(int carId);
     Task<int> CountActiveAsync();
     Task<decimal> GetTodayRevenueAsync();
     Task<List<Reservation>> GetReservationsInRangeAsync(DateTime startDate, DateTime endDate);
