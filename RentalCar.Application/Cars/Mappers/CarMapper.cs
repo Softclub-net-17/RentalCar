@@ -1,6 +1,8 @@
 ﻿using RentalCar.Application.Cars.Commands;
 using RentalCar.Application.Cars.DTOs;
+using RentalCar.Application.Reservations.DTOS;
 using RentalCar.Domain.Entities;
+using RentalCar.Domain.Interfaces;
 
 namespace RentalCar.Application.Cars.Mappers
 {
@@ -52,29 +54,49 @@ namespace RentalCar.Application.Cars.Mappers
             car.ModelId = command.ModelId;
         }
 
-        public static List<CarGetDto> ToDto(this IEnumerable<Car> cars)
+        public static async Task<List<CarGetDto>> ToDto(this IEnumerable<Car> cars, IReservationRepository reservationRepository)
         {
-            return cars.Select(c => new CarGetDto()
+            var result = new List<CarGetDto>();
+
+            foreach (var c in cars)
             {
-                Id = c.Id,
-                Title = c.Title,
-                PricePerHour = c.PricePerHour,
-                Description = c.Description,
-                Color = c.Color,
-                Tinting = c.Tinting,
-                Millage = c.Millage,
-                Year = c.Year,
-                Seats = c.Seats,
-                ModelId = c.ModelId,
-                Images = c.Images.Select(i => i.PhotoUrl).ToList() ?? new List<string>(),
-                CarAttributes = c.CarValues.Select(cv => new CarAttributesGetDto
+                var reservations = await reservationRepository.GetActiveByCarIdAsync(c.Id);
+
+                result.Add(new CarGetDto
                 {
-                    AttributeId = cv.Value.CarAttribute.Id,
-                    ValueId = cv.Value.Id,
-                    AttributeName = cv.Value.CarAttribute.Name,
-                    ValueName = cv.Value.Name
-                }).ToList()
-            }).ToList();
+                    Id = c.Id,
+                    Title = c.Title,
+                    PricePerHour = c.PricePerHour,
+                    Description = c.Description,
+                    Color = c.Color,
+                    Tinting = c.Tinting,
+                    Millage = c.Millage,
+                    Year = c.Year,
+                    Seats = c.Seats,
+                    ModelId = c.ModelId,
+                    Images = c.Images.Select(i => i.PhotoUrl).ToList() ?? new List<string>(),
+                    CarAttributes = c.CarValues.Select(cv => new CarAttributesGetDto
+                    {
+                        AttributeId = cv.Value.CarAttribute.Id,
+                        ValueId = cv.Value.Id,
+                        AttributeName = cv.Value.CarAttribute.Name,
+                        ValueName = cv.Value.Name
+                    }).ToList(),
+                    BusyDates = reservations.ToBusyDatesDto()
+                });
+            }
+
+            return result;
+        }
+
+        private static List<CarBusyDateDto> ToBusyDatesDto(this IEnumerable<Reservation> reservations)
+        {
+            return reservations
+                .Select(r => new CarBusyDateDto
+                {
+                    Start = r.StartDate.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    End = r.EndDate.ToString("yyyy-MM-ddTHH:mm:ss")
+                }).ToList();
         }
         
         public static List<CarListItemDto> ToFilter(this IEnumerable<Car> cars)
@@ -101,8 +123,10 @@ namespace RentalCar.Application.Cars.Mappers
         }
 
 
-        public static CarGetDto ToDto(this Car car)
+        public static async Task<CarGetDto> ToDto(this Car car, IReservationRepository reservationRepository)
         {
+            var reservations = await reservationRepository.GetActiveByCarIdAsync(car.Id);
+
             return new CarGetDto()
             {
                 Id = car.Id,
@@ -122,7 +146,8 @@ namespace RentalCar.Application.Cars.Mappers
                     ValueId = cv.Value.Id,
                     AttributeName = cv.Value.CarAttribute.Name,
                     ValueName = cv.Value.Name
-                }).ToList()
+                }).ToList(),
+                BusyDates = reservations.ToBusyDatesDto()
             };
         }
         

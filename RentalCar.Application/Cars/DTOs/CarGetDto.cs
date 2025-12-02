@@ -1,10 +1,4 @@
-﻿using RentalCar.Application.Common.Results;
-using RentalCar.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RentalCar.Application.Reservations.DTOS;
 
 namespace RentalCar.Application.Cars.DTOs
 {
@@ -22,5 +16,7 @@ namespace RentalCar.Application.Cars.DTOs
         public int ModelId { get; set; }
         public List<string> Images { get; set; } = null!;
         public List<CarAttributesGetDto> CarAttributes { get; set; } = null!;
+        public List<CarBusyDateDto> BusyDates { get; set; } = new();
+
     }
 }
