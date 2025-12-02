@@ -160,6 +160,7 @@ public static class DependencyInjection
 
         //statistics
         services.AddScoped<IQueryHandler<GetRentalStatisticsQuery, Result<StatisticsDto>>, GetRentalStatisticsQueryHandler>();
-
+        services.AddScoped<IQueryHandler<GetWeeklyReservationsQuery, Result<List<WeeklyReservationsDto>>>, GetWeeklyReservationsQueryHandler>();
+        services.AddScoped<IQueryHandler<GetRevenueTrendQuery, Result<List<RevenueTrendDto>>>, GetRevenueTrendQueryHandler>();
     }
 }
