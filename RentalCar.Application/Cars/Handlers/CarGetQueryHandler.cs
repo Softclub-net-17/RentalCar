@@ -1,21 +1,23 @@
 ﻿using RentalCar.Application.Cars.DTOs;
-using RentalCar.Application.Cars.Mappers;
 using RentalCar.Application.Cars.Queries;
 using RentalCar.Application.Common.Results;
 using RentalCar.Application.Interfaces;
 using RentalCar.Domain.Interfaces;
+using RentalCar.Application.Cars.Mappers;
 
-namespace RentalCar.Application.Cars.Handlers
+namespace RentalCar.Application.Cars.Handlers;
+
+public class CarGetQueryHandler(
+    ICarRepository carRepository,
+    IReservationRepository reservationRepository )
+    : IQueryHandler<CarGetQuery, Result<List<CarGetDto>>>
 {
-    public class CarGetQueryHandler
-        (ICarRepository carRepository) : IQueryHandler<CarGetQuery, Result<List<CarGetDto>>>
+    public async Task<Result<List<CarGetDto>>> HandleAsync(CarGetQuery query)
     {
-        public async Task<Result<List<CarGetDto>>> HandleAsync(CarGetQuery query)
-        {
-            var cars = await carRepository.GetAllAsync();
-            var items = cars.ToDto();
+        var cars = await carRepository.GetAllAsync();
 
-            return Result<List<CarGetDto>>.Ok(items);
-        }
+        var items = await cars.ToDto(reservationRepository);
+
+        return Result<List<CarGetDto>>.Ok(items);
     }
 }

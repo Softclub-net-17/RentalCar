@@ -59,4 +59,12 @@ public class ReservationRepository(ApplicationDbContext context) :  IReservation
             .Where(r => r.StartDate >= today && r.StartDate < tomorrow && r.ReturnDate != null)
             .SumAsync(r => r.TotalPrice);
     }
+    
+    public async Task<List<Reservation>> GetActiveByCarIdAsync(int carId)
+    {
+        var now = DateTime.UtcNow;
+        return await context.Reservations
+            .Where(r => r.CarId == carId && r.EndDate >= now)
+            .ToListAsync();
+    }
 }
