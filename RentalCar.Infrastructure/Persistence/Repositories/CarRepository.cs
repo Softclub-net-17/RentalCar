@@ -20,7 +20,8 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
                 .Include(c => c.Model)
                 .ThenInclude(m => m.Make)
                 .Include(c => c.CarValues)
-                .ThenInclude(cv => cv.Value).ThenInclude(v => v.CarAttribute)
+                .ThenInclude(cv => cv.Value)
+                .ThenInclude(v => v.CarAttribute)
                 .AsQueryable();
 
 
@@ -49,7 +50,7 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
                 query = query.Where(c => c.PricePerHour <= filter.PriceTo);
 
             if (filter.AttributeValueIds != null && filter.AttributeValueIds.Any())
-                query = query.Where(c => c.CarValues.Any(v => filter.AttributeValueIds.Contains(v.ValueId)));
+                query = query.Where(c => c.CarValues.All(v => filter.AttributeValueIds.Contains(v.ValueId)));
 
             return await query.ToListAsync();
 
