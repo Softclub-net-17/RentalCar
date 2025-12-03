@@ -32,7 +32,7 @@ public class LoginCommandHandler(
         if (user == null)
             return Result<AuthResponseDto>.Fail("Invalid email or password", ErrorType.Unauthorized);
 
-        if (PasswordHasher.Verify(command.Password, user.PasswordHash))
+        if (!PasswordHasher.Verify(command.Password, user.PasswordHash))
             return Result<AuthResponseDto>.Fail("Invalid email or password", ErrorType.Unauthorized);
 
         var accessToken = jwtTokenService.GenerateToken(user);
