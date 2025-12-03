@@ -13,7 +13,7 @@ public class DefaultUsers
         
         if (admin != null)  return;
         
-        var passwordHash = PasswordHasher.HashPassword("12345");
+        var passwordHash = PasswordHasher.HashPassword("123456");
 
         var newUser = new User
         {
