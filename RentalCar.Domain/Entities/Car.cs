@@ -24,5 +24,6 @@ namespace RentalCar.Domain.Entities
         public List<Reservation> Reservations { get; set; } = null!;
         public IEnumerable<Image> Images { get; set; } = null!;
         public IEnumerable<CarValue> CarValues { get; set; } = null!;
+        public IEnumerable<Favorite> Favorites { get; set; } = null!;
     }
 }
