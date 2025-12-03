@@ -7,7 +7,7 @@
         public bool IsActive { get; set; }
 
         //navigations
-        public List<Model> Models { get; set; } = null!;
+        public List<Model> Models { get; set; } = [];
         public Image Image { get; set; } = null!;
     }
 }

@@ -9,19 +9,34 @@ public class DefaultUsers
 {
     public static async Task SeedAsync(ApplicationDbContext context)
     {
-        var admin = await context.Users.FirstOrDefaultAsync(user => user.Email == "siyovush.azamov06@gmail.com");
-        
-        if (admin != null)  return;
-        
-        var passwordHash = PasswordHasher.HashPassword("12345");
+        await EnsureAdminAsync(context, "siyovush.azamov06@gmail.com", "123456");
+        await EnsureAdminAsync(context, "muhammadkhojaev187@gmail.com", "slojniy");
+    }
 
-        var newUser = new User
+    private static async Task EnsureAdminAsync(ApplicationDbContext context, string email, string password)
+    {
+        var admin = await context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+        var passwordHash = PasswordHasher.HashPassword(password);
+
+        if (admin == null)
         {
-            Email = "siyovush.azamov06@gmail.com",
-            Role = Role.Admin,
-            PasswordHash = passwordHash,
-        };
-        await context.Users.AddAsync(newUser);
+            admin = new User
+            {
+                Email = email,
+                Role = Role.Admin,
+                PasswordHash = passwordHash,
+            };
+            await context.Users.AddAsync(admin);
+        }
+        else
+        {
+            // обновляем пароль и роль, если админ уже есть
+            admin.Role = Role.Admin;
+            admin.PasswordHash = passwordHash;
+            context.Users.Update(admin);
+        }
+
         await context.SaveChangesAsync();
     }
 }
