@@ -15,6 +15,6 @@ namespace RentalCar.Domain.Entities
         //navigations
         public CarAttribute CarAttribute { get; set; } = null!;
 
-        public IEnumerable<CarValue> CarValues { get; set; } = null!;
+        public List<CarValue> CarValues { get; set; } = [];
     }
 }

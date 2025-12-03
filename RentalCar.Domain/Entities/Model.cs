@@ -14,6 +14,6 @@ namespace RentalCar.Domain.Entities
 
         //navigations
         public Make Make { get; set; } = null!;
-        public IEnumerable<Car> Cars { get; set; } = [];
+        public List<Car> Cars { get; set; } = [];
     }
 }

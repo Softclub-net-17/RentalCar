@@ -50,8 +50,10 @@ namespace RentalCar.Infrastructure.Persistence.Repositories
                 query = query.Where(c => c.PricePerHour <= filter.PriceTo);
 
             if (filter.AttributeValueIds != null && filter.AttributeValueIds.Any())
-                query = query.Where(c => c.CarValues.All(v => filter.AttributeValueIds.Contains(v.ValueId)));
-
+            {
+                query = query.Where(c =>
+                    filter.AttributeValueIds.All(id => c.CarValues.Select(v => v.ValueId).Contains(id)));
+            }
             return await query.ToListAsync();
 
         }

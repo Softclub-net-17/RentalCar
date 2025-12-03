@@ -10,7 +10,7 @@ namespace RentalCar.Domain.Entities
         public string PasswordHash { get; set; } = null!;
         
         // navigation
-        public List<Reservation> Reservations { get; set; } = new ();
-        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+        public List<Reservation> Reservations { get; set; } = [];
+        public List<RefreshToken> RefreshTokens { get; set; } = [];
     }
 }

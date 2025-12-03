@@ -12,6 +12,6 @@ namespace RentalCar.Domain.Entities
         public string Name { get; set; } = string.Empty;
 
         //navigations
-        public IEnumerable<Value> Values { get; set; } = null!;
+        public List<Value> Values { get; set; } = [];
     }
 }
