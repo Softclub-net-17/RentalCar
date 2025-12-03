@@ -17,7 +17,8 @@ public class UserController(
     IQueryHandler<UserGetByIdQuery, Result<UserGetDto>> getByIdHandler,
     IQueryHandler<UserGetMeQuery, Result<UserGetDto>> getmehandler,
     ICommandHandler<UserUpdateCommand, Result<string>> updateHandler,
-    ICommandHandler<UserDeleteCommand, Result<string>> deleteHandler)
+    ICommandHandler<UserDeleteCommand, Result<string>> deleteHandler,
+    IQueryHandler<UserGetMeReservationQuery, Result<UserReservationGetDto>> resermehandler)
     : ControllerBase
 {
     [HttpGet]
@@ -39,7 +40,16 @@ public class UserController(
 
         return Ok(result.Data);
     }
+    
+    [HttpGet("me-reservation")]
+    public async Task<IActionResult> GetReservMe()
+    {
+        var result = await resermehandler.HandleAsync(new UserGetMeReservationQuery());
+        if (!result.IsSuccess)
+            return HandleError(result);
 
+        return Ok(result.Data);
+    }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetByIdAsync(int id)

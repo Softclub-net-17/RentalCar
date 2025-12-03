@@ -92,6 +92,7 @@ public static class DependencyInjection
         services.AddScoped<ICommandHandler<UserUpdateCommand, Result<string>>, UserUpdateCommandHandler>();
         services.AddScoped<ICommandHandler<UserDeleteCommand, Result<string>>, UserDeleteCommandHandler>();
         services.AddScoped<IQueryHandler<UserGetMeQuery, Result<UserGetDto>>, UserGetMeQueryHandler>();
+        services.AddScoped<IQueryHandler<UserGetMeReservationQuery, Result<UserReservationGetDto>>, UserGetMeReservationQueryHandler>();
 
         // register
         services.AddScoped<ICommandHandler<ChangePasswordCommand, Result<string>>, ChangePasswordCommandHandler>();

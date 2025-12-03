@@ -31,7 +31,6 @@ public class DefaultUsers
         }
         else
         {
-            // обновляем пароль и роль, если админ уже есть
             admin.Role = Role.Admin;
             admin.PasswordHash = passwordHash;
             context.Users.Update(admin);
