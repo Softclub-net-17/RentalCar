@@ -89,7 +89,7 @@ namespace RentalCar.Application.Cars.Mappers
             return result;
         }
 
-        private static List<CarBusyDateDto> ToBusyDatesDto(this IEnumerable<Reservation> reservations)
+        public static List<CarBusyDateDto> ToBusyDatesDto(this IEnumerable<Reservation> reservations)
         {
             return reservations
                 .Select(r => new CarBusyDateDto

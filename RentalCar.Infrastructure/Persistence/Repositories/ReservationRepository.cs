@@ -66,7 +66,22 @@ public class ReservationRepository(ApplicationDbContext context) :  IReservation
         return await context.Reservations
             .Where(r => r.CarId == carId && r.EndDate >= now)
             .ToListAsync();
+    } 
+    public async Task<List<Reservation>> GetMeActiveByCarIdAsync(int carId)
+    {
+        var now = DateTime.UtcNow;
+        return await context.Reservations
+            .Where(r => r.CarId == carId)
+            .ToListAsync();
+    } 
+    
+    public async Task<List<Reservation>> GetByUserIdAsync(int userId)
+    {
+        return await context.Reservations
+            .Where(r => r.UserId == userId)
+            .ToListAsync();
     }
+
 
     public async Task<List<Reservation>> GetReservationsInRangeAsync(DateTime startDate, DateTime endDate)
     {
