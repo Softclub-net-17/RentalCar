@@ -29,7 +29,7 @@ public static class DependencyInjection
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IVerificationCodeRepository, VerificationCodeRepository>();
         services.AddScoped<IEmailService, EmailService>();
-
+        services.AddScoped<IFavoriteRepository, FavoriteRepository>();
 
     }
 }

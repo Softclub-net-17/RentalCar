@@ -51,6 +51,10 @@ using RentalCar.Application.Values.DTOS;
 using RentalCar.Application.Values.Handlers;
 using RentalCar.Application.Values.Queries;
 using RentalCar.Application.Values.Validators;
+using RentalCar.Application.Favorites.Commands;
+using RentalCar.Application.Favorites.Handlers;
+using RentalCar.Application.Favorites.Queries;
+using RentalCar.Application.Favorites.DTOs;
 
 namespace RentalCar.Application;
 
@@ -166,5 +170,11 @@ public static class DependencyInjection
         services.AddScoped<IQueryHandler<GetRentalStatisticsQuery, Result<StatisticsDto>>, GetRentalStatisticsQueryHandler>();
         services.AddScoped<IQueryHandler<GetWeeklyReservationsQuery, Result<List<WeeklyReservationsDto>>>, GetWeeklyReservationsQueryHandler>();
         services.AddScoped<IQueryHandler<GetRevenueTrendQuery, Result<List<RevenueTrendDto>>>, GetRevenueTrendQueryHandler>();
+
+        //favorites
+        services.AddScoped<ICommandHandler<FavoriteCreateCommand, Result<string>>, FavoriteCreateCommandHandler>();
+        services.AddScoped<ICommandHandler<FavoriteDeleteCommand, Result<string>>, FavoriteDeleteCommandHandler>();
+        services.AddScoped<IQueryHandler<FavoritesGetQuery, Result<List<FavoriteGetDto>>>, FavoritesGetQueryHandler>();
+
     }
 }
